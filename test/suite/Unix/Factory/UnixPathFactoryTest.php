@@ -14,11 +14,11 @@ namespace Eloquent\Pathogen\Unix\Factory;
 use Eloquent\Liberator\Liberator;
 use Eloquent\Pathogen\Unix\AbsoluteUnixPath;
 use Eloquent\Pathogen\Unix\RelativeUnixPath;
-use PHPUnit_Framework_TestCase;
 
-class UnixPathFactoryTest extends PHPUnit_Framework_TestCase
+
+class UnixPathFactoryTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

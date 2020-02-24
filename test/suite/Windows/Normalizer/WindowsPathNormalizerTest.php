@@ -13,11 +13,11 @@ namespace Eloquent\Pathogen\Windows\Normalizer;
 
 use Eloquent\Liberator\Liberator;
 use Eloquent\Pathogen\Windows\Factory\WindowsPathFactory;
-use PHPUnit_Framework_TestCase;
 
-class WindowsPathNormalizerTest extends PHPUnit_Framework_TestCase
+
+class WindowsPathNormalizerTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

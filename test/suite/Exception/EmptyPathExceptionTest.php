@@ -12,9 +12,9 @@
 namespace Eloquent\Pathogen\Exception;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
 
-class EmptyPathExceptionTest extends PHPUnit_Framework_TestCase
+
+class EmptyPathExceptionTest extends \PHPUnit\Framework\TestCase
 {
     public function testException()
     {

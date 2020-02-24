@@ -12,15 +12,15 @@
 namespace Eloquent\Pathogen;
 
 use ArrayIterator;
-use PHPUnit_Framework_TestCase;
+
 
 /**
  * @covers \Eloquent\Pathogen\AbsolutePath
  * @covers \Eloquent\Pathogen\AbstractPath
  */
-class AbsolutePathTest extends PHPUnit_Framework_TestCase
+class AbsolutePathTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -65,7 +65,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorFailureAtomContainingSeparator()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo/bar'. Path atoms must not contain separators."
         );
@@ -74,7 +74,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorFailureEmptyAtom()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\EmptyPathAtomException'
         );
         new AbsolutePath(array(''));
@@ -94,7 +94,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo/bar');
 
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\UndefinedAtomException');
+        $this->expectException(__NAMESPACE__ . '\Exception\UndefinedAtomException');
         $path->atomAt(2);
     }
 
@@ -196,7 +196,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo.bar');
 
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\UndefinedAtomException');
+        $this->expectException(__NAMESPACE__ . '\Exception\UndefinedAtomException');
         $path->nameAtomAt(2);
     }
 
@@ -600,7 +600,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'baz/qux'. Path atoms must not contain separators."
         );
@@ -611,7 +611,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\EmptyPathAtomException'
         );
         $path->joinAtoms('bar', '');
@@ -640,7 +640,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'baz/qux'. Path atoms must not contain separators."
         );
@@ -651,7 +651,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\EmptyPathAtomException'
         );
         $path->joinAtomSequence(array('bar', ''));
@@ -686,7 +686,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
         $path = $this->factory->create('/foo');
         $joinPath = $this->factory->create('/bar');
 
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException(\TypeError::class);
         $path->join($joinPath);
     }
 
@@ -741,7 +741,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo.bar/baz'. Path atoms must not contain separators."
         );
@@ -771,7 +771,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo.bar/baz'. Path atoms must not contain separators."
         );
@@ -806,7 +806,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo/bar'. Path atoms must not contain separators."
         );
@@ -841,7 +841,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'bar/foo'. Path atoms must not contain separators."
         );
@@ -885,7 +885,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'bar/'. Path atoms must not contain separators."
         );
@@ -922,7 +922,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'bar/'. Path atoms must not contain separators."
         );
@@ -959,7 +959,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo.bar.baz');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'qux/.baz'. Path atoms must not contain separators."
         );
@@ -996,7 +996,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo.bar.baz');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'qux/.bar.baz'. Path atoms must not contain separators."
         );
@@ -1033,7 +1033,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo.bar.baz');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo.qux/'. Path atoms must not contain separators."
         );
@@ -1070,7 +1070,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo.bar.baz');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo.bar.qux/'. Path atoms must not contain separators."
         );
@@ -1108,7 +1108,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/');
 
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\EmptyPathException');
+        $this->expectException(__NAMESPACE__ . '\Exception\EmptyPathException');
         $path->toRelative();
     }
 
@@ -1172,7 +1172,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
         $parent = $this->factory->create('/foo');
         $child = $this->factory->create('foo/bar');
 
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException(\TypeError::class);
         $parent->isParentOf($child);
     }
 
@@ -1181,7 +1181,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
         $parent = $this->factory->create('/foo');
         $child = $this->factory->create('foo/bar');
 
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException(\TypeError::class);
         $parent->isAncestorOf($child);
     }
 
@@ -1332,7 +1332,7 @@ class AbsolutePathTest extends PHPUnit_Framework_TestCase
 
     public function testFromStringFailureRelative()
     {
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\NonAbsolutePathException');
+        $this->expectException(__NAMESPACE__ . '\Exception\NonAbsolutePathException');
         AbsolutePath::fromString('foo');
     }
 

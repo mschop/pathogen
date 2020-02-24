@@ -16,11 +16,11 @@ use Eloquent\Pathogen\AbsolutePath;
 use Eloquent\Pathogen\FileSystem\Factory\FileSystemPathFactory;
 use Eloquent\Pathogen\Unix\Normalizer\UnixPathNormalizer;
 use Eloquent\Pathogen\Windows\Normalizer\WindowsPathNormalizer;
-use PHPUnit_Framework_TestCase;
 
-class FileSystemPathNormalizerTest extends PHPUnit_Framework_TestCase
+
+class FileSystemPathNormalizerTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

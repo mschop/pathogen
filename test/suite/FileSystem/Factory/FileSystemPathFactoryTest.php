@@ -12,16 +12,16 @@
 namespace Eloquent\Pathogen\FileSystem\Factory;
 
 use Eloquent\Liberator\Liberator;
-use PHPUnit_Framework_TestCase;
+
 use Phake;
 
 /**
  * @covers \Eloquent\Pathogen\FileSystem\Factory\FileSystemPathFactory
  * @covers \Eloquent\Pathogen\FileSystem\Factory\AbstractFileSystemPathFactory
  */
-class FileSystemPathFactoryTest extends PHPUnit_Framework_TestCase
+class FileSystemPathFactoryTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

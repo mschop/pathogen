@@ -12,11 +12,11 @@
 namespace Eloquent\Pathogen\FileSystem\Factory\Consumer;
 
 use Phake;
-use PHPUnit_Framework_TestCase;
 
-class FileSystemPathFactoryTraitTest extends PHPUnit_Framework_TestCase
+
+class FileSystemPathFactoryTraitTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -12,9 +12,9 @@
 namespace Eloquent\Pathogen\Windows\Exception;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
 
-class DriveMismatchExceptionTest extends PHPUnit_Framework_TestCase
+
+class DriveMismatchExceptionTest extends \PHPUnit\Framework\TestCase
 {
     public function testException()
     {

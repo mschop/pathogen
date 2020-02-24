@@ -11,9 +11,9 @@
 
 namespace Eloquent\Pathogen\Windows;
 
-use PHPUnit_Framework_TestCase;
 
-class WindowsPathTest extends PHPUnit_Framework_TestCase
+
+class WindowsPathTest extends \PHPUnit\Framework\TestCase
 {
     public function createData()
     {
@@ -158,7 +158,7 @@ class WindowsPathTest extends PHPUnit_Framework_TestCase
 
     public function testCreateFromDriveAndAtomsFailureAnchoredAbsolute()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\InvalidPathStateException',
             "Invalid path state. Absolute Windows paths cannot be anchored."
         );

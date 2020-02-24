@@ -12,13 +12,13 @@
 namespace Eloquent\Pathogen\Exception;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+
 
 /**
  * @covers Eloquent\Pathogen\Exception\InvalidPathAtomCharacterException
  * @covers Eloquent\Pathogen\Exception\AbstractInvalidPathAtomException
  */
-class InvalidPathAtomCharacterExceptionTest extends PHPUnit_Framework_TestCase
+class InvalidPathAtomCharacterExceptionTest extends \PHPUnit\Framework\TestCase
 {
     public function testException()
     {

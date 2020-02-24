@@ -11,9 +11,9 @@
 
 namespace Eloquent\Pathogen;
 
-use PHPUnit_Framework_TestCase;
 
-class PathTest extends PHPUnit_Framework_TestCase
+
+class PathTest extends \PHPUnit\Framework\TestCase
 {
     public function createData()
     {

@@ -14,16 +14,16 @@ namespace Eloquent\Pathogen\Windows;
 use ArrayIterator;
 use Eloquent\Liberator\Liberator;
 use Eloquent\Pathogen\Factory\PathFactory;
-use PHPUnit_Framework_TestCase;
+
 
 /**
  * @covers \Eloquent\Pathogen\Windows\RelativeWindowsPath
  * @covers \Eloquent\Pathogen\RelativePath
  * @covers \Eloquent\Pathogen\AbstractPath
  */
-class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
+class RelativeWindowsPathTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -76,7 +76,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorFailureAtomContainingSeparator()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo/bar'. Path atoms must not contain separators."
         );
@@ -85,7 +85,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorFailureAtomContainingBackslash()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo\\\\bar'. Path atoms must not contain separators."
         );
@@ -116,7 +116,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
      */
     public function testConstructorFailureAtomContainingInvalidCharacter($character)
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\InvalidPathAtomCharacterException',
             sprintf(
                 'Invalid path atom %s. Path atom contains invalid character %s.',
@@ -129,7 +129,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorFailureEmptyAtom()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\EmptyPathAtomException'
         );
         new RelativeWindowsPath(array(''));
@@ -137,7 +137,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorFailureEmptyPath()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\EmptyPathException'
         );
         new RelativeWindowsPath(array());
@@ -145,7 +145,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorFailureInvalidDriveSpecifierCharacter()
     {
-        $this->setExpectedException(
+        $this->expectException(
             __NAMESPACE__ . '\Exception\InvalidDriveSpecifierException'
         );
         new RelativeWindowsPath(array('foo'), '$');
@@ -153,7 +153,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorFailureInvalidDriveSpecifierEmpty()
     {
-        $this->setExpectedException(
+        $this->expectException(
             __NAMESPACE__ . '\Exception\InvalidDriveSpecifierException'
         );
         new RelativeWindowsPath(array('foo'), '');
@@ -161,7 +161,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorFailureInvalidDriveSpecifierLength()
     {
-        $this->setExpectedException(
+        $this->expectException(
             __NAMESPACE__ . '\Exception\InvalidDriveSpecifierException'
         );
         new RelativeWindowsPath(array('foo'), 'CC');
@@ -258,7 +258,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('foo/bar');
 
-        $this->setExpectedException('Eloquent\Pathogen\Exception\UndefinedAtomException');
+        $this->expectException('Eloquent\Pathogen\Exception\UndefinedAtomException');
         $path->atomAt(2);
     }
 
@@ -385,7 +385,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('foo.bar');
 
-        $this->setExpectedException('Eloquent\Pathogen\Exception\UndefinedAtomException');
+        $this->expectException('Eloquent\Pathogen\Exception\UndefinedAtomException');
         $path->nameAtomAt(2);
     }
 
@@ -917,7 +917,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'baz/qux'. Path atoms must not contain separators."
         );
@@ -928,7 +928,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\EmptyPathAtomException'
         );
         $path->joinAtoms('bar', '');
@@ -957,7 +957,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'baz/qux'. Path atoms must not contain separators."
         );
@@ -968,7 +968,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\EmptyPathAtomException'
         );
         $path->joinAtomSequence(array('bar', ''));
@@ -1006,7 +1006,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
         $path = $this->factory->create('C:foo');
         $joinPath = $this->factory->create('C:/bar');
 
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException(\TypeError::class);
         $path->join($joinPath);
     }
 
@@ -1015,7 +1015,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
         $path = $this->factory->create('C:foo');
         $joinPath = $this->factory->create('X:bar');
 
-        $this->setExpectedException(__NAMESPACE__ . '\Exception\DriveMismatchException');
+        $this->expectException(__NAMESPACE__ . '\Exception\DriveMismatchException');
         $path->join($joinPath);
     }
 
@@ -1070,7 +1070,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo.bar/baz'. Path atoms must not contain separators."
         );
@@ -1100,7 +1100,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo.bar/baz'. Path atoms must not contain separators."
         );
@@ -1135,7 +1135,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo/bar'. Path atoms must not contain separators."
         );
@@ -1170,7 +1170,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'bar/foo'. Path atoms must not contain separators."
         );
@@ -1214,7 +1214,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'bar/'. Path atoms must not contain separators."
         );
@@ -1251,7 +1251,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'bar/'. Path atoms must not contain separators."
         );
@@ -1288,7 +1288,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo.bar.baz');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'qux/.baz'. Path atoms must not contain separators."
         );
@@ -1325,7 +1325,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo.bar.baz');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'qux/.bar.baz'. Path atoms must not contain separators."
         );
@@ -1362,7 +1362,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo.bar.baz');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo.qux/'. Path atoms must not contain separators."
         );
@@ -1399,7 +1399,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('C:foo.bar.baz');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException',
             "Invalid path atom 'foo.bar.qux/'. Path atoms must not contain separators."
         );
@@ -1463,7 +1463,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('foo/bar');
 
-        $this->setExpectedException('Eloquent\Pathogen\Exception\InvalidPathStateException');
+        $this->expectException('Eloquent\Pathogen\Exception\InvalidPathStateException');
         $path->toAbsolute();
     }
 
@@ -1471,7 +1471,7 @@ class RelativeWindowsPathTest extends PHPUnit_Framework_TestCase
     {
         $path = $this->factory->create('/foo/bar');
 
-        $this->setExpectedException('Eloquent\Pathogen\Exception\InvalidPathStateException');
+        $this->expectException('Eloquent\Pathogen\Exception\InvalidPathStateException');
         $path->toAbsolute();
     }
 

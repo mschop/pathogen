@@ -14,11 +14,11 @@ namespace Eloquent\Pathogen\Windows\Factory;
 use Eloquent\Liberator\Liberator;
 use Eloquent\Pathogen\Windows\AbsoluteWindowsPath;
 use Eloquent\Pathogen\Windows\RelativeWindowsPath;
-use PHPUnit_Framework_TestCase;
 
-class WindowsPathFactoryTest extends PHPUnit_Framework_TestCase
+
+class WindowsPathFactoryTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -174,7 +174,7 @@ class WindowsPathFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testCreateFromDriveAndAtomsFailureAnchoredAbsolute()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Eloquent\Pathogen\Exception\InvalidPathStateException',
             "Invalid path state. Absolute Windows paths cannot be anchored."
         );

@@ -13,16 +13,16 @@ use Eloquent\Pathogen\Factory\PathFactory;
 use Eloquent\Pathogen\FileSystem\Factory\PlatformFileSystemPathFactory;
 use Eloquent\Pathogen\Path;
 
-class FunctionalTest extends PHPUnit_Framework_TestCase
+class FunctionalTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->server = $_SERVER;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -71,16 +71,12 @@ class FunctionalTest extends PHPUnit_Framework_TestCase
 
     public function testDetermineAncestor()
     {
-        $this->expectOutputString(
-            'bool(true)' . PHP_EOL . 'bool(false)' . PHP_EOL
-        );
-
         $basePath = Path::fromString('/path/to/foo');
         $pathA = Path::fromString('/path/to/foo/bar');
         $pathB = Path::fromString('/path/to/somewhere/else');
 
-        var_dump($basePath->isAncestorOf($pathA)); // outputs 'bool(true)'
-        var_dump($basePath->isAncestorOf($pathB)); // outputs 'bool(false)'
+        $this->assertTrue($basePath->isAncestorOf($pathA));
+        $this->assertFalse($basePath->isAncestorOf($pathB));
     }
 
     public function testAppendExtension()

@@ -13,11 +13,11 @@ namespace Eloquent\Pathogen\Normalizer;
 
 use Eloquent\Liberator\Liberator;
 use Eloquent\Pathogen\Factory\PathFactory;
-use PHPUnit_Framework_TestCase;
 
-class PathNormalizerTest extends PHPUnit_Framework_TestCase
+
+class PathNormalizerTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

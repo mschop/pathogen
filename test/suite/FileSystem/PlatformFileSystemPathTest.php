@@ -17,12 +17,12 @@ use Eloquent\Pathogen\Unix\RelativeUnixPath;
 use Eloquent\Pathogen\Windows\AbsoluteWindowsPath;
 use Eloquent\Pathogen\Windows\RelativeWindowsPath;
 use Icecave\Isolator\Isolator;
-use PHPUnit_Framework_TestCase;
+
 use Phake;
 
-class PlatformFileSystemPathTest extends PHPUnit_Framework_TestCase
+class PlatformFileSystemPathTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +38,7 @@ class PlatformFileSystemPathTest extends PHPUnit_Framework_TestCase
         Phake::when($this->isolator)->defined('PHP_WINDOWS_VERSION_BUILD')->thenReturn(false);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Liberator::liberateClass(__NAMESPACE__ . '\Factory\PlatformFileSystemPathFactory')->instance = null;
 

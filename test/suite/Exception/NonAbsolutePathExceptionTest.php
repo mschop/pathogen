@@ -13,13 +13,13 @@ namespace Eloquent\Pathogen\Exception;
 
 use Eloquent\Pathogen\RelativePath;
 use Exception;
-use PHPUnit_Framework_TestCase;
+
 
 /**
  * @covers Eloquent\Pathogen\Exception\NonAbsolutePathException
  * @covers Eloquent\Pathogen\Exception\AbstractInvalidPathException
  */
-class NonAbsolutePathExceptionTest extends PHPUnit_Framework_TestCase
+class NonAbsolutePathExceptionTest extends \PHPUnit\Framework\TestCase
 {
     public function testException()
     {

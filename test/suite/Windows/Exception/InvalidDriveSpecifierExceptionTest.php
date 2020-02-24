@@ -12,9 +12,9 @@
 namespace Eloquent\Pathogen\Windows\Exception;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
 
-class InvalidDriveSpecifierExceptionTest extends PHPUnit_Framework_TestCase
+
+class InvalidDriveSpecifierExceptionTest extends \PHPUnit\Framework\TestCase
 {
     public function testException()
     {

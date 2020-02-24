@@ -15,9 +15,9 @@ use Eloquent\Pathogen\Unix\AbsoluteUnixPath;
 use Eloquent\Pathogen\Unix\RelativeUnixPath;
 use Eloquent\Pathogen\Windows\AbsoluteWindowsPath;
 use Eloquent\Pathogen\Windows\RelativeWindowsPath;
-use PHPUnit_Framework_TestCase;
 
-class FileSystemPathTest extends PHPUnit_Framework_TestCase
+
+class FileSystemPathTest extends \PHPUnit\Framework\TestCase
 {
     public function createData()
     {

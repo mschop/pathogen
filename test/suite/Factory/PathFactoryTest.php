@@ -14,11 +14,11 @@ namespace Eloquent\Pathogen\Factory;
 use Eloquent\Liberator\Liberator;
 use Eloquent\Pathogen\AbsolutePath;
 use Eloquent\Pathogen\RelativePath;
-use PHPUnit_Framework_TestCase;
 
-class PathFactoryTest extends PHPUnit_Framework_TestCase
+
+class PathFactoryTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

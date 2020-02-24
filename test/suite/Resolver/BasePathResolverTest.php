@@ -13,11 +13,11 @@ namespace Eloquent\Pathogen\Resolver;
 
 use Eloquent\Liberator\Liberator;
 use Eloquent\Pathogen\Factory\PathFactory;
-use PHPUnit_Framework_TestCase;
 
-class BasePathResolverTest extends PHPUnit_Framework_TestCase
+
+class BasePathResolverTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
