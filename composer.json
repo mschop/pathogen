@@ -22,7 +22,10 @@
         "icecave/isolator": "~2"
     },
     "require-dev": {
-        "eloquent/liberator": "~2"
+        "ext-xdebug": "*",
+        "eloquent/liberator": "~2",
+        "infection/infection": "^0.15.3",
+        "phpunit/phpunit": "^9.0"
     },
     "autoload": {
         "psr-4": {
