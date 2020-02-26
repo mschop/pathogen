@@ -1187,18 +1187,18 @@ class AbsolutePathTest extends \PHPUnit\Framework\TestCase
 
     public function relativeToData()
     {
-        //                                        parent                child                 expectedResult
-        return array(
-            'Self'                       => array('/foo',               '/foo',               '.'),
-            'Child'                      => array('/foo',               '/foo/bar',           'bar'),
-            'Ancestor'                   => array('/foo',               '/foo/bar/baz',       'bar/baz'),
-            'Sibling'                    => array('/foo',               '/bar',               '../bar'),
-            'Parent\'s sibling'          => array('/foo/bar/baz',       '/foo/qux',           '../../qux'),
-            'Parent\'s sibling\'s child' => array('/foo/bar/baz',       '/foo/qux/doom',      '../../qux/doom'),
-            'Completely unrelated'       => array('/foo/bar/baz',       '/qux/doom',          '../../../qux/doom'),
-            'Lengthly unrelated child'   => array('/foo/bar',           '/baz/qux/doom',      '../../baz/qux/doom'),
-            'Common suffix'              => array('/foo/bar/baz/doom',  '/foo/bar/qux/doom',  '../../qux/doom'),
-        );
+        //                                   parent                child                 expectedResult
+        return [
+            'Self'                       => ['/foo',               '/foo',               '.'],
+            'Child'                      => ['/foo',               '/foo/bar',           'bar'],
+            'Ancestor'                   => ['/foo',               '/foo/bar/baz',       'bar/baz'],
+            'Sibling'                    => ['/foo',               '/bar',               '../bar'],
+            'Parent\'s sibling'          => ['/foo/bar/baz',       '/foo/qux',           '../../qux'],
+            'Parent\'s sibling\'s child' => ['/foo/bar/baz',       '/foo/qux/doom',      '../../qux/doom'],
+            'Completely unrelated'       => ['/foo/bar/baz',       '/qux/doom',          '../../../qux/doom'],
+            'Lengthly unrelated child'   => ['/foo/bar',           '/baz/qux/doom',      '../../baz/qux/doom'],
+            'Common suffix'              => ['/foo/bar/baz/doom',  '/foo/bar/qux/doom',  '../../qux/doom'],
+        ];
     }
 
     /**

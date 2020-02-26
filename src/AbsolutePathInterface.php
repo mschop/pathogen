@@ -53,7 +53,7 @@ interface AbsolutePathInterface extends PathInterface
      *
      * @return RelativePathInterface A relative path from the supplied path to this path.
      */
-    public function relativeTo(AbsolutePathInterface $path);
+    public function relativeTo(AbsolutePathInterface $path): RelativePathInterface;
 
     /**
      * Resolve the supplied path against this path.
