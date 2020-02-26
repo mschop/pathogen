@@ -348,10 +348,10 @@ abstract class AbstractPath implements PathInterface
         }
 
         if ($caseSensitive) {
-            return false !== mb_strpos($this->string(), $needle);
+            return false !== strstr($this->string(), $needle);
         }
 
-        return false !== mb_stripos($this->string(), $needle);
+        return false !== stristr($this->string(), $needle);
     }
 
     /**
