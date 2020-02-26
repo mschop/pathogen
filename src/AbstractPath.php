@@ -370,12 +370,7 @@ abstract class AbstractPath implements PathInterface
         if (null === $caseSensitive) {
             $caseSensitive = false;
         }
-
-        if ($caseSensitive) {
-            return 0 === mb_strpos($this->string(), $needle);
-        }
-
-        return 0 === mb_stripos($this->string(), $needle);
+        return InfectionHelper::string_starts_with($this, $needle, $caseSensitive);
     }
 
     /**

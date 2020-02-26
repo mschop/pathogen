@@ -24,4 +24,18 @@ class InfectionHelper
     {
         return array_fill(0, $num, $value);
     }
+
+    /**
+     * Infection changes mb_strpos to strpos and vice versa. When testing, whether a string start with another string,
+     * this distinction does not make any difference and is therefore not testable.
+     *
+     * @param string $s
+     * @param string $needle
+     * @param bool $caseSensitive
+     * @return bool
+     */
+    public static function string_starts_with(string $s, string $needle, bool $caseSensitive = true): bool
+    {
+        return 0 === ($caseSensitive ? mb_strpos($s, $needle) : mb_stripos($s, $needle));
+    }
 }
