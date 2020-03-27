@@ -1,19 +1,14 @@
 {
-    "name": "eloquent/pathogen",
+    "name": "mschop/pathogen",
     "description": "General-purpose path library for PHP.",
     "keywords": ["path", "filesystem", "file", "manipulation"],
-    "homepage": "https://github.com/eloquent/pathogen",
+    "homepage": "https://github.com/mschop/pathogen",
     "license": "MIT",
     "authors": [
         {
-            "name": "Erin Millard",
-            "email": "ezzatron@gmail.com",
-            "homepage": "http://ezzatron.com/"
-        },
-        {
-            "name": "Darian Brown",
-            "email": "darianbr@gmail.com",
-            "homepage": "http://www.darian-brown.com/"
+            "name": "Martin Schophaus",
+            "email": "mschopdev@gmail.com",
+            "homepage": "https://mschop.de"
         }
     ],
     "require": {
