@@ -437,7 +437,7 @@ abstract class AbstractPath implements PathInterface
      * Determine if this path's name contains a substring.
      *
      * @param string       $needle        The substring to search for.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      *
      * @return boolean True if this path's name contains the substring.
      */
