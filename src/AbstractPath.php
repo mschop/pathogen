@@ -377,26 +377,13 @@ abstract class AbstractPath implements PathInterface
      * Determine if this path ends with a substring.
      *
      * @param string       $needle        The substring to search for.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      *
      * @return boolean True if this path ends with the substring.
      */
-    public function endsWith($needle, $caseSensitive = null)
+    public function endsWith(string $needle, bool $caseSensitive = false): bool
     {
-        if ('' === $needle) {
-            return true;
-        }
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
-        }
-
-        $end = mb_substr($this->string(), -mb_strlen($needle));
-
-        if ($caseSensitive) {
-            return $end === $needle;
-        }
-
-        return mb_strtolower($end) === mb_strtolower($needle);
+        return InfectionHelper::string_starts_with(strrev($this), strrev($needle), $caseSensitive);
     }
 
     /**
@@ -463,20 +450,20 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path's name contains the substring.
      */
-    public function nameContains($needle, $caseSensitive = null)
+    public function nameContains(string $needle, bool $caseSensitive = false)
     {
-        if ('' === $needle) {
+        if (empty($needle)) {
             return true;
         }
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
+
+        $name = $this->name();
+
+        if (!$caseSensitive) {
+            $name = mb_strtolower($name);
+            $needle = mb_strtolower($needle);
         }
 
-        if ($caseSensitive) {
-            return false !== mb_strpos($this->name(), $needle);
-        }
-
-        return false !== mb_stripos($this->name(), $needle);
+        return strstr($name, $needle) !== false;
     }
 
     /**

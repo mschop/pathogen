@@ -531,11 +531,11 @@ class RelativeWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                                  path                 needle       caseSensitive  expectedResult
         return array(
-            'Self'                                 => array('.',                 '',          null,          true),
-            'Prefix'                               => array('foo/bar/baz.qux',   'FOO/BAR',   null,          false),
-            'Middle'                               => array('foo/bar/baz.qux',   'BAR/BAZ',   null,          false),
-            'Suffix'                               => array('foo/bar/baz.qux',   '/BAZ.QUX',  null,          true),
-            'Not found'                            => array('foo/bar/baz.qux',   'DOOM',      null,          false),
+            'Self'                                 => array('.',                 '',          false,          true),
+            'Prefix'                               => array('foo/bar/baz.qux',   'FOO/BAR',   false,          false),
+            'Middle'                               => array('foo/bar/baz.qux',   'BAR/BAZ',   false,          false),
+            'Suffix'                               => array('foo/bar/baz.qux',   '/BAZ.QUX',  false,          true),
+            'Not found'                            => array('foo/bar/baz.qux',   'DOOM',      false,          false),
 
             'Self case sensitive'                  => array('.',                 '',          true,          true),
             'Prefix case sensitive'                => array('foo/bar/baz.qux',   'foo/bar',   true,          false),
@@ -543,11 +543,11 @@ class RelativeWindowsPathTest extends \PHPUnit\Framework\TestCase
             'Suffix case sensitive'                => array('foo/bar/baz.qux',   '/baz.qux',  true,          true),
             'Not found case sensitive'             => array('foo/bar/baz.qux',   'FOO',       true,          false),
 
-            'Self with drive'                      => array('C:.',               '',          null,          true),
-            'Prefix with drive'                    => array('C:foo/bar/baz.qux', 'c:FOO/BAR', null,          false),
-            'Middle with drive'                    => array('C:foo/bar/baz.qux', 'BAR/BAZ',   null,          false),
-            'Suffix with drive'                    => array('C:foo/bar/baz.qux', '/BAZ.QUX',  null,          true),
-            'Not found with drive'                 => array('C:foo/bar/baz.qux', 'DOOM',      null,          false),
+            'Self with drive'                      => array('C:.',               '',          false,          true),
+            'Prefix with drive'                    => array('C:foo/bar/baz.qux', 'c:FOO/BAR', false,          false),
+            'Middle with drive'                    => array('C:foo/bar/baz.qux', 'BAR/BAZ',   false,          false),
+            'Suffix with drive'                    => array('C:foo/bar/baz.qux', '/BAZ.QUX',  false,          true),
+            'Not found with drive'                 => array('C:foo/bar/baz.qux', 'DOOM',      false,          false),
 
             'Self case sensitive with drive'       => array('C:.',               '',          true,          true),
             'Prefix case sensitive with drive'     => array('C:foo/bar/baz.qux', 'C:foo/bar', true,          false),
@@ -555,11 +555,11 @@ class RelativeWindowsPathTest extends \PHPUnit\Framework\TestCase
             'Suffix case sensitive with drive'     => array('C:foo/bar/baz.qux', '/baz.qux',  true,          true),
             'Not found case sensitive with drive'  => array('C:foo/bar/baz.qux', 'FOO',       true,          false),
 
-            'Self anchored'                        => array('/.',                '',          null,          true),
-            'Prefix anchored'                      => array('/foo/bar/baz.qux',  '/FOO/BAR',  null,          false),
-            'Middle anchored'                      => array('/foo/bar/baz.qux',  'BAR/BAZ',   null,          false),
-            'Suffix anchored'                      => array('/foo/bar/baz.qux',  '/BAZ.QUX',  null,          true),
-            'Not found anchored'                   => array('/foo/bar/baz.qux',  'DOOM',      null,          false),
+            'Self anchored'                        => array('/.',                '',          false,          true),
+            'Prefix anchored'                      => array('/foo/bar/baz.qux',  '/FOO/BAR',  false,          false),
+            'Middle anchored'                      => array('/foo/bar/baz.qux',  'BAR/BAZ',   false,          false),
+            'Suffix anchored'                      => array('/foo/bar/baz.qux',  '/BAZ.QUX',  false,          true),
+            'Not found anchored'                   => array('/foo/bar/baz.qux',  'DOOM',      false,          false),
 
             'Self case sensitive anchored'         => array('/.',                '',          true,          true),
             'Prefix case sensitive anchored'       => array('/foo/bar/baz.qux',  '/foo/bar',  true,          false),
@@ -691,18 +691,22 @@ class RelativeWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                  needle      caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('C:.',                '',         null,          true),
-            'Prefix'                    => array('C:foo/bar.baz.qux',  'BAR.BAZ',  null,          true),
-            'Middle'                    => array('C:foo/bar.baz.qux',  'BAZ',      null,          true),
-            'Suffix'                    => array('C:foo/bar.baz.qux',  'BAZ.QUX',  null,          true),
-            'Not found'                 => array('C:foo/bar.baz.qux',  'DOOM',     null,          false),
-            'Match only in name'        => array('C:foo/bar.baz.qux',  'foo',      null,          false),
+            'Empty'                         => array('C:.',                '',         false,          true),
+            'Prefix'                        => array('C:foo/bar.baz.qux',  'BAR.BAZ',  false,          true),
+            'Middle'                        => array('C:foo/bar.baz.qux',  'BAZ',      false,          true),
+            'Suffix'                        => array('C:foo/bar.baz.qux',  'BAZ.QUX',  false,          true),
+            'Not found'                     => array('C:foo/bar.baz.qux',  'DOOM',     false,          false),
+            'Match only in name'            => array('C:foo/bar.baz.qux',  'foo',      false,          false),
 
-            'Empty case sensitive'      => array('C:.',                '',         true,          true),
-            'Prefix case sensitive'     => array('C:foo/bar.baz.qux',  'bar.baz',  true,          true),
-            'Middle case sensitive'     => array('C:foo/bar.baz.qux',  'baz',      true,          true),
-            'Suffix case sensitive'     => array('C:foo/bar.baz.qux',  'baz.qux',  true,          true),
-            'Not found case sensitive'  => array('C:foo/bar.baz.qux',  'BAR',      true,          false),
+            'Empty case sensitive'          => array('C:.',                '',         true,          true),
+            'Prefix case sensitive'         => array('C:foo/bar.baz.qux',  'bar.baz',  true,          true),
+            'Middle case sensitive'         => array('C:foo/bar.baz.qux',  'baz',      true,          true),
+            'Suffix case sensitive'         => array('C:foo/bar.baz.qux',  'baz.qux',  true,          true),
+            'Not found case sensitive'      => array('C:foo/bar.baz.qux',  'BAR',      true,          false),
+
+            'MB'                            => array('C:foo\bär.txt',      'bär',     true,           true),
+            'MB sensitive haystack upper'   => array('C:foo\bÄr.txt',      'bär',     false,           true),
+            'MB sensitive needle upper'     => array('C:foo\bär.txt',      'bÄr',     false,           true),
         );
     }
 
@@ -714,6 +718,15 @@ class RelativeWindowsPathTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(
             $expectedResult,
             $this->factory->create($pathString)->nameContains($needle, $caseSensitive)
+        );
+    }
+
+    public function testNameContainsDefault()
+    {
+        $this->assertSame(
+            true,
+            $this->factory->create('/foo/bar.baz.qux')->nameContains('BAR'),
+            'By default, nameContains should be case insensitive'
         );
     }
 

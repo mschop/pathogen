@@ -36,6 +36,9 @@ class InfectionHelper
      */
     public static function string_starts_with(string $s, string $needle, bool $caseSensitive = true): bool
     {
+        if (empty($needle)) {
+            return true;
+        }
         return 0 === ($caseSensitive ? mb_strpos($s, $needle) : mb_stripos($s, $needle));
     }
 }

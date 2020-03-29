@@ -401,11 +401,11 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                   needle         caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('C:/',                 '',            null,          true),
-            'Prefix'                    => array('C:/foo/bar/baz.qux',  'c:/FOO/BAR',  null,          false),
-            'Middle'                    => array('C:/foo/bar/baz.qux',  'BAR/BAZ',     null,          false),
-            'Suffix'                    => array('C:/foo/bar/baz.qux',  '/BAZ.QUX',    null,          true),
-            'Not found'                 => array('C:/foo/bar/baz.qux',  'DOOM',        null,          false),
+            'Empty'                     => array('C:/',                 '',            false,          true),
+            'Prefix'                    => array('C:/foo/bar/baz.qux',  'c:/FOO/BAR',  false,          false),
+            'Middle'                    => array('C:/foo/bar/baz.qux',  'BAR/BAZ',     false,          false),
+            'Suffix'                    => array('C:/foo/bar/baz.qux',  '/BAZ.QUX',    false,          true),
+            'Not found'                 => array('C:/foo/bar/baz.qux',  'DOOM',        false,          false),
 
             'Empty case sensitive'      => array('C:/',                 '',            true,          true),
             'Prefix case sensitive'     => array('C:/foo/bar/baz.qux',  'C:/foo/bar',  true,          false),
@@ -493,18 +493,22 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                   needle      caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('C:/',                 '',         null,          true),
-            'Prefix'                    => array('C:/foo/bar.baz.qux',  'BAR.BAZ',  null,          true),
-            'Middle'                    => array('C:/foo/bar.baz.qux',  'BAZ',      null,          true),
-            'Suffix'                    => array('C:/foo/bar.baz.qux',  'BAZ.QUX',  null,          true),
-            'Not found'                 => array('C:/foo/bar.baz.qux',  'DOOM',     null,          false),
-            'Match only in name'        => array('C:/foo/bar.baz.qux',  'foo',      null,          false),
+            'Empty'                     => array('C:/',                 '',         false,          true),
+            'Prefix'                    => array('C:/foo/bar.baz.qux',  'BAR.BAZ',  false,          true),
+            'Middle'                    => array('C:/foo/bar.baz.qux',  'BAZ',      false,          true),
+            'Suffix'                    => array('C:/foo/bar.baz.qux',  'BAZ.QUX',  false,          true),
+            'Not found'                 => array('C:/foo/bar.baz.qux',  'DOOM',     false,          false),
+            'Match only in name'        => array('C:/foo/bar.baz.qux',  'foo',      false,          false),
 
             'Empty case sensitive'      => array('C:/',                 '',         true,          true),
             'Prefix case sensitive'     => array('C:/foo/bar.baz.qux',  'bar.baz',  true,          true),
             'Middle case sensitive'     => array('C:/foo/bar.baz.qux',  'baz',      true,          true),
             'Suffix case sensitive'     => array('C:/foo/bar.baz.qux',  'baz.qux',  true,          true),
             'Not found case sensitive'  => array('C:/foo/bar.baz.qux',  'BAR',      true,          false),
+
+            'MB'                            => array('C:/foo/bär.txt',      'bär',     true,           true),
+            'MB sensitive haystack upper'   => array('C:/foo/bÄr.txt',      'bär',     false,           true),
+            'MB sensitive needle upper'     => array('C:/foo/bär.txt',      'bÄr',     false,           true),
         );
     }
 
@@ -516,6 +520,15 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(
             $expectedResult,
             $this->factory->create($pathString)->nameContains($needle, $caseSensitive)
+        );
+    }
+
+    public function testNameContainsDefault()
+    {
+        $this->assertSame(
+            true,
+            $this->factory->create('/foo/bar.baz.qux')->nameContains('BAR'),
+            'By default, nameContains should be case insensitive'
         );
     }
 
