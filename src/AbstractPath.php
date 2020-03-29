@@ -482,16 +482,13 @@ abstract class AbstractPath implements PathInterface
      * Determine if this path's name matches a wildcard pattern.
      *
      * @param string       $pattern       The pattern to check against.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      * @param integer|null $flags         Additional flags.
      *
      * @return boolean True if this path's name matches the pattern.
      */
-    public function nameMatches($pattern, $caseSensitive = null, $flags = null)
+    public function nameMatches($pattern, $caseSensitive = false, $flags = null)
     {
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
-        }
         if (null === $flags) {
             $flags = 0;
         }
