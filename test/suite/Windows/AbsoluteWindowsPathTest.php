@@ -536,11 +536,11 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                   needle      caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('C:/',                 '',         null,          true),
-            'Prefix'                    => array('C:/foo/bar.baz.qux',  'BAR.BAZ',  null,          true),
-            'Middle'                    => array('C:/foo/bar.baz.qux',  'BAZ',      null,          false),
-            'Suffix'                    => array('C:/foo/bar.baz.qux',  'BAZ.QUX',  null,          false),
-            'Not found'                 => array('C:/foo/bar.baz.qux',  'DOOM',     null,          false),
+            'Empty'                     => array('C:/',                 '',         false,          true),
+            'Prefix'                    => array('C:/foo/bar.baz.qux',  'BAR.BAZ',  false,          true),
+            'Middle'                    => array('C:/foo/bar.baz.qux',  'BAZ',      false,          false),
+            'Suffix'                    => array('C:/foo/bar.baz.qux',  'BAZ.QUX',  false,          false),
+            'Not found'                 => array('C:/foo/bar.baz.qux',  'DOOM',     false,          false),
 
             'Empty case sensitive'      => array('C:/',                 '',         true,          true),
             'Prefix case sensitive'     => array('C:/foo/bar.baz.qux',  'bar.baz',  true,          true),

@@ -461,17 +461,14 @@ abstract class AbstractPath implements PathInterface
      * Determine if this path's name starts with a substring.
      *
      * @param string       $needle        The substring to search for.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      *
      * @return boolean True if this path's name starts with the substring.
      */
-    public function nameStartsWith($needle, $caseSensitive = null)
+    public function nameStartsWith($needle, $caseSensitive = false)
     {
         if ('' === $needle) {
             return true;
-        }
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
         }
 
         if ($caseSensitive) {
