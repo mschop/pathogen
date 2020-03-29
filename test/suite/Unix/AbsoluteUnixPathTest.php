@@ -266,11 +266,11 @@ class AbsoluteUnixPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                 needle       caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('/',                 '',          null,          true),
-            'Prefix'                    => array('/foo/bar/baz.qux',  '/FOO/BAR',  null,          true),
-            'Middle'                    => array('/foo/bar/baz.qux',  'BAR/BAZ',   null,          false),
-            'Suffix'                    => array('/foo/bar/baz.qux',  '/BAZ.QUX',  null,          false),
-            'Not found'                 => array('/foo/bar/baz.qux',  'DOOM',      null,          false),
+            'Empty'                     => array('/',                 '',          false,          true),
+            'Prefix'                    => array('/foo/bar/baz.qux',  '/FOO/BAR',  false,          true),
+            'Middle'                    => array('/foo/bar/baz.qux',  'BAR/BAZ',   false,          false),
+            'Suffix'                    => array('/foo/bar/baz.qux',  '/BAZ.QUX',  false,          false),
+            'Not found'                 => array('/foo/bar/baz.qux',  'DOOM',      false,          false),
 
             'Empty case sensitive'      => array('/',                 '',          true,          true),
             'Prefix case sensitive'     => array('/foo/bar/baz.qux',  '/foo/bar',  true,          true),

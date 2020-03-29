@@ -2,4 +2,4 @@
 
 ## API changes
 
-- endsWith() & nameContains() does not support value null for parameter $caseSensitive any more
+- endsWith(), startsWith() & nameContains() does not support value null for parameter $caseSensitive any more

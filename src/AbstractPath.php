@@ -362,13 +362,10 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path starts with the substring.
      */
-    public function startsWith($needle, $caseSensitive = null)
+    public function startsWith($needle, $caseSensitive = false)
     {
         if ('' === $needle) {
             return true;
-        }
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
         }
         return InfectionHelper::string_starts_with($this, $needle, $caseSensitive);
     }
