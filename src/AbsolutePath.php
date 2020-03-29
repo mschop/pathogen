@@ -167,31 +167,22 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      *
      * @return RelativePathInterface A relative path from the supplied path to this path.
      */
-    public function relativeTo(AbsolutePathInterface $path)
+    public function relativeTo(AbsolutePathInterface $path): RelativePathInterface
     {
         $parentAtoms = $path->normalize()->atoms();
         $childAtoms = $this->normalize()->atoms();
 
         if ($childAtoms === $parentAtoms) {
-            $diffAtoms = array(static::SELF_ATOM);
+            $diffAtoms = [static::SELF_ATOM];
         } else {
-            $diffAtoms = array_diff_assoc($childAtoms, $parentAtoms);
-            $diffAtomIndices = array_keys($diffAtoms);
-            $diffAtoms = array_slice(
-                $childAtoms,
-                array_shift($diffAtomIndices)
-            );
-
-            $fillCount =
-                (count($parentAtoms) - count($childAtoms)) +
-                count($diffAtoms);
-
-            if ($fillCount > 0) {
-                $diffAtoms = array_merge(
-                    array_fill(0, $fillCount, static::PARENT_ATOM),
-                    $diffAtoms
-                );
+            $equalAmount = 0;
+            while (isset($parentAtoms[$equalAmount]) && $childAtoms[$equalAmount] && $parentAtoms[$equalAmount] === $childAtoms[$equalAmount]) {
+                $equalAmount++;
             }
+            $diffAtoms = array_merge(
+                InfectionHelper::array_fill(count($parentAtoms) - $equalAmount, self::PARENT_ATOM),
+                array_slice($childAtoms, $equalAmount),
+            );
         }
 
         return $this->createPath($diffAtoms, false, false);

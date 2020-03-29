@@ -343,11 +343,11 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                   needle         caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('C:/',                 '',            null,          true),
-            'Prefix'                    => array('C:/foo/bar/baz.qux',  'c:/FOO/BAR',  null,          true),
-            'Middle'                    => array('C:/foo/bar/baz.qux',  'BAR/BAZ',     null,          true),
-            'Suffix'                    => array('C:/foo/bar/baz.qux',  '/BAZ.QUX',    null,          true),
-            'Not found'                 => array('C:/foo/bar/baz.qux',  'DOOM',        null,          false),
+            'Empty'                     => array('C:/',                 '',            false,          true),
+            'Prefix'                    => array('C:/foo/bar/baz.qux',  'c:/FOO/BAR',  false,          true),
+            'Middle'                    => array('C:/foo/bar/baz.qux',  'BAR/BAZ',     false,          true),
+            'Suffix'                    => array('C:/foo/bar/baz.qux',  '/BAZ.QUX',    false,          true),
+            'Not found'                 => array('C:/foo/bar/baz.qux',  'DOOM',        false,          false),
 
             'Empty case sensitive'      => array('C:/',                 '',            true,          true),
             'Prefix case sensitive'     => array('C:/foo/bar/baz.qux',  'C:/foo/bar',  true,          true),
@@ -372,11 +372,11 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                   needle         caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('C:/',                 '',            null,          true),
-            'Prefix'                    => array('C:/foo/bar/baz.qux',  'c:/FOO/BAR',  null,          true),
-            'Middle'                    => array('C:/foo/bar/baz.qux',  'BAR/BAZ',     null,          false),
-            'Suffix'                    => array('C:/foo/bar/baz.qux',  '/BAZ.QUX',    null,          false),
-            'Not found'                 => array('C:/foo/bar/baz.qux',  'DOOM',        null,          false),
+            'Empty'                     => array('C:/',                 '',            false,          true),
+            'Prefix'                    => array('C:/foo/bar/baz.qux',  'c:/FOO/BAR',  false,          true),
+            'Middle'                    => array('C:/foo/bar/baz.qux',  'BAR/BAZ',     false,          false),
+            'Suffix'                    => array('C:/foo/bar/baz.qux',  '/BAZ.QUX',    false,          false),
+            'Not found'                 => array('C:/foo/bar/baz.qux',  'DOOM',        false,          false),
 
             'Empty case sensitive'      => array('C:/',                 '',            true,          true),
             'Prefix case sensitive'     => array('C:/foo/bar/baz.qux',  'C:/foo/bar',  true,          true),
@@ -401,11 +401,11 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                   needle         caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('C:/',                 '',            null,          true),
-            'Prefix'                    => array('C:/foo/bar/baz.qux',  'c:/FOO/BAR',  null,          false),
-            'Middle'                    => array('C:/foo/bar/baz.qux',  'BAR/BAZ',     null,          false),
-            'Suffix'                    => array('C:/foo/bar/baz.qux',  '/BAZ.QUX',    null,          true),
-            'Not found'                 => array('C:/foo/bar/baz.qux',  'DOOM',        null,          false),
+            'Empty'                     => array('C:/',                 '',            false,          true),
+            'Prefix'                    => array('C:/foo/bar/baz.qux',  'c:/FOO/BAR',  false,          false),
+            'Middle'                    => array('C:/foo/bar/baz.qux',  'BAR/BAZ',     false,          false),
+            'Suffix'                    => array('C:/foo/bar/baz.qux',  '/BAZ.QUX',    false,          true),
+            'Not found'                 => array('C:/foo/bar/baz.qux',  'DOOM',        false,          false),
 
             'Empty case sensitive'      => array('C:/',                 '',            true,          true),
             'Prefix case sensitive'     => array('C:/foo/bar/baz.qux',  'C:/foo/bar',  true,          false),
@@ -430,22 +430,22 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                         path                   pattern          caseSensitive  flags          expectedResult
         return array(
-            'Prefix'                      => array('C:/foo/bar/baz.qux',  'C:/FOO/BAR*',   null,          null,          true),
-            'Middle'                      => array('C:/foo/bar/baz.qux',  '*BAR/BAZ*',     null,          null,          true),
-            'Suffix'                      => array('C:/foo/bar/baz.qux',  '*/BAZ.QUX',     null,          null,          true),
-            'Surrounding'                 => array('C:/foo/bar/baz.qux',  'C:/FOO*.QUX',   null,          null,          true),
-            'Single character'            => array('C:/foo/bar/baz.qux',  '*B?R*',         null,          null,          true),
-            'Single character no match'   => array('C:/foo/bar/baz.qux',  '*F?X*',         null,          null,          false),
-            'Set'                         => array('C:/foo/bar/baz.qux',  '*BA[RZ]*',      null,          null,          true),
-            'Set no match'                => array('C:/foo/bar/baz.qux',  '*BA[X]*',       null,          null,          false),
-            'Negated set'                 => array('C:/foo/bar/baz.qux',  '*BA[!RX]*',     null,          null,          true),
-            'Negated set no match'        => array('C:/foo/bar/baz.qux',  '*BA[!RZ]*',     null,          null,          false),
-            'Range'                       => array('C:/foo/bar/baz.qux',  '*BA[A-R]*',     null,          null,          true),
-            'Range no match'              => array('C:/foo/bar/baz.qux',  '*BA[S-Y]*',     null,          null,          false),
-            'Negated range'               => array('C:/foo/bar/baz.qux',  '*BA[!S-Y]*',    null,          null,          true),
-            'Negated range no match'      => array('C:/foo/bar/baz.qux',  '*BA[!R-Z]*',    null,          null,          false),
-            'No partial match'            => array('C:/foo/bar/baz.qux',  'BAR',           null,          null,          false),
-            'Not found'                   => array('C:/foo/bar/baz.qux',  'DOOM',          null,          null,          false),
+            'Prefix'                      => array('C:/foo/bar/baz.qux',  'C:/FOO/BAR*',   false,          null,          true),
+            'Middle'                      => array('C:/foo/bar/baz.qux',  '*BAR/BAZ*',     false,          null,          true),
+            'Suffix'                      => array('C:/foo/bar/baz.qux',  '*/BAZ.QUX',     false,          null,          true),
+            'Surrounding'                 => array('C:/foo/bar/baz.qux',  'C:/FOO*.QUX',   false,          null,          true),
+            'Single character'            => array('C:/foo/bar/baz.qux',  '*B?R*',         false,          null,          true),
+            'Single character no match'   => array('C:/foo/bar/baz.qux',  '*F?X*',         false,          null,          false),
+            'Set'                         => array('C:/foo/bar/baz.qux',  '*BA[RZ]*',      false,          null,          true),
+            'Set no match'                => array('C:/foo/bar/baz.qux',  '*BA[X]*',       false,          null,          false),
+            'Negated set'                 => array('C:/foo/bar/baz.qux',  '*BA[!RX]*',     false,          null,          true),
+            'Negated set no match'        => array('C:/foo/bar/baz.qux',  '*BA[!RZ]*',     false,          null,          false),
+            'Range'                       => array('C:/foo/bar/baz.qux',  '*BA[A-R]*',     false,          null,          true),
+            'Range no match'              => array('C:/foo/bar/baz.qux',  '*BA[S-Y]*',     false,          null,          false),
+            'Negated range'               => array('C:/foo/bar/baz.qux',  '*BA[!S-Y]*',    false,          null,          true),
+            'Negated range no match'      => array('C:/foo/bar/baz.qux',  '*BA[!R-Z]*',    false,          null,          false),
+            'No partial match'            => array('C:/foo/bar/baz.qux',  'BAR',           false,          null,          false),
+            'Not found'                   => array('C:/foo/bar/baz.qux',  'DOOM',          false,          null,          false),
 
             'Case sensitive'              => array('C:/foo/bar/baz.qux',  '*bar/baz*',     true,          null,          true),
             'Case sensitive no match'     => array('C:/foo/bar/baz.qux',  '*FOO*',         true,          null,          false),
@@ -493,18 +493,22 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                   needle      caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('C:/',                 '',         null,          true),
-            'Prefix'                    => array('C:/foo/bar.baz.qux',  'BAR.BAZ',  null,          true),
-            'Middle'                    => array('C:/foo/bar.baz.qux',  'BAZ',      null,          true),
-            'Suffix'                    => array('C:/foo/bar.baz.qux',  'BAZ.QUX',  null,          true),
-            'Not found'                 => array('C:/foo/bar.baz.qux',  'DOOM',     null,          false),
-            'Match only in name'        => array('C:/foo/bar.baz.qux',  'foo',      null,          false),
+            'Empty'                     => array('C:/',                 '',         false,          true),
+            'Prefix'                    => array('C:/foo/bar.baz.qux',  'BAR.BAZ',  false,          true),
+            'Middle'                    => array('C:/foo/bar.baz.qux',  'BAZ',      false,          true),
+            'Suffix'                    => array('C:/foo/bar.baz.qux',  'BAZ.QUX',  false,          true),
+            'Not found'                 => array('C:/foo/bar.baz.qux',  'DOOM',     false,          false),
+            'Match only in name'        => array('C:/foo/bar.baz.qux',  'foo',      false,          false),
 
             'Empty case sensitive'      => array('C:/',                 '',         true,          true),
             'Prefix case sensitive'     => array('C:/foo/bar.baz.qux',  'bar.baz',  true,          true),
             'Middle case sensitive'     => array('C:/foo/bar.baz.qux',  'baz',      true,          true),
             'Suffix case sensitive'     => array('C:/foo/bar.baz.qux',  'baz.qux',  true,          true),
             'Not found case sensitive'  => array('C:/foo/bar.baz.qux',  'BAR',      true,          false),
+
+            'MB'                            => array('C:/foo/bär.txt',      'bär',     true,           true),
+            'MB sensitive haystack upper'   => array('C:/foo/bÄr.txt',      'bär',     false,           true),
+            'MB sensitive needle upper'     => array('C:/foo/bär.txt',      'bÄr',     false,           true),
         );
     }
 
@@ -519,15 +523,24 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function testNameContainsDefault()
+    {
+        $this->assertSame(
+            true,
+            $this->factory->create('/foo/bar.baz.qux')->nameContains('BAR'),
+            'By default, nameContains should be case insensitive'
+        );
+    }
+
     public function nameStartsWithData()
     {
         //                                       path                   needle      caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('C:/',                 '',         null,          true),
-            'Prefix'                    => array('C:/foo/bar.baz.qux',  'BAR.BAZ',  null,          true),
-            'Middle'                    => array('C:/foo/bar.baz.qux',  'BAZ',      null,          false),
-            'Suffix'                    => array('C:/foo/bar.baz.qux',  'BAZ.QUX',  null,          false),
-            'Not found'                 => array('C:/foo/bar.baz.qux',  'DOOM',     null,          false),
+            'Empty'                     => array('C:/',                 '',         false,          true),
+            'Prefix'                    => array('C:/foo/bar.baz.qux',  'BAR.BAZ',  false,          true),
+            'Middle'                    => array('C:/foo/bar.baz.qux',  'BAZ',      false,          false),
+            'Suffix'                    => array('C:/foo/bar.baz.qux',  'BAZ.QUX',  false,          false),
+            'Not found'                 => array('C:/foo/bar.baz.qux',  'DOOM',     false,          false),
 
             'Empty case sensitive'      => array('C:/',                 '',         true,          true),
             'Prefix case sensitive'     => array('C:/foo/bar.baz.qux',  'bar.baz',  true,          true),
@@ -552,22 +565,22 @@ class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                         path                   pattern        caseSensitive  flags        expectedResult
         return array(
-            'Prefix'                      => array('C:/foo/bar.baz.qux',  'BAR.BAZ*',    null,          null,        true),
-            'Middle'                      => array('C:/foo/bar.baz.qux',  '*BAZ*',       null,          null,        true),
-            'Suffix'                      => array('C:/foo/bar.baz.qux',  '*BAZ.QUX',    null,          null,        true),
-            'Surrounding'                 => array('C:/foo/bar.baz.qux',  'BAR.*.QUX',   null,          null,        true),
-            'Single character'            => array('C:/foo/bar.baz.qux',  '*B?R*',       null,          null,        true),
-            'Single character no match'   => array('C:/foo/bar.baz.qux',  '*B?X*',       null,          null,        false),
-            'Set'                         => array('C:/foo/bar.baz.qux',  '*BA[RZ]*',    null,          null,        true),
-            'Set no match'                => array('C:/foo/bar.baz.qux',  '*BA[X]*',     null,          null,        false),
-            'Negated set'                 => array('C:/foo/bar.baz.qux',  '*BA[!RX]*',   null,          null,        true),
-            'Negated set no match'        => array('C:/foo/bar.baz.qux',  '*BA[!RZ]*',   null,          null,        false),
-            'Range'                       => array('C:/foo/bar.baz.qux',  '*BA[A-R]*',   null,          null,        true),
-            'Range no match'              => array('C:/foo/bar.baz.qux',  '*BA[S-Y]*',   null,          null,        false),
-            'Negated range'               => array('C:/foo/bar.baz.qux',  '*BA[!S-Y]*',  null,          null,        true),
-            'Negated range no match'      => array('C:/foo/bar.baz.qux',  '*BA[!R-Z]*',  null,          null,        false),
-            'No partial match'            => array('C:/foo/bar.baz.qux',  'BAZ',         null,          null,        false),
-            'Not found'                   => array('C:/foo/bar.baz.qux',  'DOOM',        null,          null,        false),
+            'Prefix'                      => array('C:/foo/bar.baz.qux',  'BAR.BAZ*',    false,          null,        true),
+            'Middle'                      => array('C:/foo/bar.baz.qux',  '*BAZ*',       false,          null,        true),
+            'Suffix'                      => array('C:/foo/bar.baz.qux',  '*BAZ.QUX',    false,          null,        true),
+            'Surrounding'                 => array('C:/foo/bar.baz.qux',  'BAR.*.QUX',   false,          null,        true),
+            'Single character'            => array('C:/foo/bar.baz.qux',  '*B?R*',       false,          null,        true),
+            'Single character no match'   => array('C:/foo/bar.baz.qux',  '*B?X*',       false,          null,        false),
+            'Set'                         => array('C:/foo/bar.baz.qux',  '*BA[RZ]*',    false,          null,        true),
+            'Set no match'                => array('C:/foo/bar.baz.qux',  '*BA[X]*',     false,          null,        false),
+            'Negated set'                 => array('C:/foo/bar.baz.qux',  '*BA[!RX]*',   false,          null,        true),
+            'Negated set no match'        => array('C:/foo/bar.baz.qux',  '*BA[!RZ]*',   false,          null,        false),
+            'Range'                       => array('C:/foo/bar.baz.qux',  '*BA[A-R]*',   false,          null,        true),
+            'Range no match'              => array('C:/foo/bar.baz.qux',  '*BA[S-Y]*',   false,          null,        false),
+            'Negated range'               => array('C:/foo/bar.baz.qux',  '*BA[!S-Y]*',  false,          null,        true),
+            'Negated range no match'      => array('C:/foo/bar.baz.qux',  '*BA[!R-Z]*',  false,          null,        false),
+            'No partial match'            => array('C:/foo/bar.baz.qux',  'BAZ',         false,          null,        false),
+            'Not found'                   => array('C:/foo/bar.baz.qux',  'DOOM',        false,          null,        false),
 
             'Case sensitive'              => array('C:/foo/bar.baz.qux',  '*baz*',       true,          null,        true),
             'Case sensitive no match'     => array('C:/foo/bar.baz.qux',  '*BAZ*',       true,          null,        false),

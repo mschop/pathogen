@@ -194,7 +194,7 @@ interface PathInterface
      *
      * @return boolean True if this path ends with the substring.
      */
-    public function endsWith($needle, $caseSensitive = null);
+    public function endsWith(string $needle, bool $caseSensitive = false): bool;
 
     /**
      * Determine if this path matches a wildcard pattern.
@@ -228,11 +228,11 @@ interface PathInterface
      * Determine if this path's name contains a substring.
      *
      * @param string       $needle        The substring to search for.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      *
      * @return boolean True if this path's name contains the substring.
      */
-    public function nameContains($needle, $caseSensitive = null);
+    public function nameContains(string $needle, bool $caseSensitive = false);
 
     /**
      * Determine if this path's name starts with a substring.

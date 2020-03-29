@@ -6,3 +6,4 @@
 # archer end
 
 composer.lock
+infection.log

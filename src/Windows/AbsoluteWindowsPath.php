@@ -204,7 +204,7 @@ class AbsoluteWindowsPath extends AbsolutePath implements
      *
      * @return RelativePathInterface A relative path from the supplied path to this path.
      */
-    public function relativeTo(AbsolutePathInterface $path)
+    public function relativeTo(AbsolutePathInterface $path): RelativePathInterface
     {
         if (!$this->matchesDriveOrNull($this->pathDriveSpecifier($path))) {
             return $this->toRelative();

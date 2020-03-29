@@ -334,90 +334,63 @@ abstract class AbstractPath implements PathInterface
      * Determine if this path contains a substring.
      *
      * @param string       $needle        The substring to search for.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      *
      * @return boolean True if this path contains the substring.
      */
-    public function contains($needle, $caseSensitive = null)
+    public function contains($needle, $caseSensitive = false)
     {
         if ('' === $needle) {
             return true;
         }
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
-        }
 
         if ($caseSensitive) {
-            return false !== mb_strpos($this->string(), $needle);
+            return false !== strstr($this->string(), $needle);
         }
 
-        return false !== mb_stripos($this->string(), $needle);
+        return false !== stristr($this->string(), $needle);
     }
 
     /**
      * Determine if this path starts with a substring.
      *
      * @param string       $needle        The substring to search for.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      *
      * @return boolean True if this path starts with the substring.
      */
-    public function startsWith($needle, $caseSensitive = null)
+    public function startsWith($needle, $caseSensitive = false)
     {
         if ('' === $needle) {
             return true;
         }
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
-        }
-
-        if ($caseSensitive) {
-            return 0 === mb_strpos($this->string(), $needle);
-        }
-
-        return 0 === mb_stripos($this->string(), $needle);
+        return InfectionHelper::string_starts_with($this, $needle, $caseSensitive);
     }
 
     /**
      * Determine if this path ends with a substring.
      *
      * @param string       $needle        The substring to search for.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      *
      * @return boolean True if this path ends with the substring.
      */
-    public function endsWith($needle, $caseSensitive = null)
+    public function endsWith(string $needle, bool $caseSensitive = false): bool
     {
-        if ('' === $needle) {
-            return true;
-        }
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
-        }
-
-        $end = mb_substr($this->string(), -mb_strlen($needle));
-
-        if ($caseSensitive) {
-            return $end === $needle;
-        }
-
-        return mb_strtolower($end) === mb_strtolower($needle);
+        return InfectionHelper::string_starts_with(strrev($this), strrev($needle), $caseSensitive);
     }
 
     /**
      * Determine if this path matches a wildcard pattern.
      *
      * @param string       $pattern       The pattern to check against.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      * @param integer|null $flags         Additional flags.
      *
      * @return boolean True if this path matches the pattern.
      */
-    public function matches($pattern, $caseSensitive = null, $flags = null)
+    public function matches($pattern, $caseSensitive = false, $flags = null)
     {
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
-        }
         if (null === $flags) {
             $flags = 0;
         }
@@ -464,41 +437,38 @@ abstract class AbstractPath implements PathInterface
      * Determine if this path's name contains a substring.
      *
      * @param string       $needle        The substring to search for.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      *
      * @return boolean True if this path's name contains the substring.
      */
-    public function nameContains($needle, $caseSensitive = null)
+    public function nameContains(string $needle, bool $caseSensitive = false)
     {
-        if ('' === $needle) {
+        if (empty($needle)) {
             return true;
         }
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
+
+        $name = $this->name();
+
+        if (!$caseSensitive) {
+            $name = mb_strtolower($name);
+            $needle = mb_strtolower($needle);
         }
 
-        if ($caseSensitive) {
-            return false !== mb_strpos($this->name(), $needle);
-        }
-
-        return false !== mb_stripos($this->name(), $needle);
+        return strstr($name, $needle) !== false;
     }
 
     /**
      * Determine if this path's name starts with a substring.
      *
      * @param string       $needle        The substring to search for.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      *
      * @return boolean True if this path's name starts with the substring.
      */
-    public function nameStartsWith($needle, $caseSensitive = null)
+    public function nameStartsWith($needle, $caseSensitive = false)
     {
         if ('' === $needle) {
             return true;
-        }
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
         }
 
         if ($caseSensitive) {
@@ -512,16 +482,13 @@ abstract class AbstractPath implements PathInterface
      * Determine if this path's name matches a wildcard pattern.
      *
      * @param string       $pattern       The pattern to check against.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      * @param integer|null $flags         Additional flags.
      *
      * @return boolean True if this path's name matches the pattern.
      */
-    public function nameMatches($pattern, $caseSensitive = null, $flags = null)
+    public function nameMatches($pattern, $caseSensitive = false, $flags = null)
     {
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
-        }
         if (null === $flags) {
             $flags = 0;
         }

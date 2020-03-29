@@ -244,11 +244,11 @@ class RelativeUnixPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                needle       caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('.',                '',          null,          true),
-            'Prefix'                    => array('foo/bar/baz.qux',  'FOO/BAR',   null,          true),
-            'Middle'                    => array('foo/bar/baz.qux',  'BAR/BAZ',   null,          true),
-            'Suffix'                    => array('foo/bar/baz.qux',  '/BAZ.QUX',  null,          true),
-            'Not found'                 => array('foo/bar/baz.qux',  'DOOM',      null,          false),
+            'Empty'                     => array('.',                '',          false,          true),
+            'Prefix'                    => array('foo/bar/baz.qux',  'FOO/BAR',   false,          true),
+            'Middle'                    => array('foo/bar/baz.qux',  'BAR/BAZ',   false,          true),
+            'Suffix'                    => array('foo/bar/baz.qux',  '/BAZ.QUX',  false,          true),
+            'Not found'                 => array('foo/bar/baz.qux',  'DOOM',      false,          false),
 
             'Empty case sensitive'      => array('.',                '',          true,          true),
             'Prefix case sensitive'     => array('foo/bar/baz.qux',  'foo/bar',   true,          true),
@@ -273,11 +273,11 @@ class RelativeUnixPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                needle       caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('.',                '',          null,          true),
-            'Prefix'                    => array('foo/bar/baz.qux',  'FOO/BAR',   null,          true),
-            'Middle'                    => array('foo/bar/baz.qux',  'BAR/BAZ',   null,          false),
-            'Suffix'                    => array('foo/bar/baz.qux',  '/BAZ.QUX',  null,          false),
-            'Not found'                 => array('foo/bar/baz.qux',  'DOOM',      null,          false),
+            'Empty'                     => array('.',                '',          false,          true),
+            'Prefix'                    => array('foo/bar/baz.qux',  'FOO/BAR',   false,          true),
+            'Middle'                    => array('foo/bar/baz.qux',  'BAR/BAZ',   false,          false),
+            'Suffix'                    => array('foo/bar/baz.qux',  '/BAZ.QUX',  false,          false),
+            'Not found'                 => array('foo/bar/baz.qux',  'DOOM',      false,          false),
 
             'Empty case sensitive'      => array('.',                '',          true,          true),
             'Prefix case sensitive'     => array('foo/bar/baz.qux',  'foo/bar',   true,          true),
@@ -302,11 +302,11 @@ class RelativeUnixPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                needle       caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('.',                '',          null,          true),
-            'Prefix'                    => array('foo/bar/baz.qux',  'FOO/BAR',   null,          false),
-            'Middle'                    => array('foo/bar/baz.qux',  'BAR/BAZ',   null,          false),
-            'Suffix'                    => array('foo/bar/baz.qux',  '/BAZ.QUX',  null,          true),
-            'Not found'                 => array('foo/bar/baz.qux',  'DOOM',      null,          false),
+            'Empty'                     => array('.',                '',          false,          true),
+            'Prefix'                    => array('foo/bar/baz.qux',  'FOO/BAR',   false,          false),
+            'Middle'                    => array('foo/bar/baz.qux',  'BAR/BAZ',   false,          false),
+            'Suffix'                    => array('foo/bar/baz.qux',  '/BAZ.QUX',  false,          true),
+            'Not found'                 => array('foo/bar/baz.qux',  'DOOM',      false,          false),
 
             'Empty case sensitive'      => array('.',                '',          true,          true),
             'Prefix case sensitive'     => array('foo/bar/baz.qux',  'foo/bar',   true,          false),
@@ -331,22 +331,22 @@ class RelativeUnixPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                         path                pattern        caseSensitive  flags          expectedResult
         return array(
-            'Prefix'                      => array('foo/bar/baz.qux',  'FOO/BAR*',    null,          null,          true),
-            'Middle'                      => array('foo/bar/baz.qux',  '*BAR/BAZ*',   null,          null,          true),
-            'Suffix'                      => array('foo/bar/baz.qux',  '*/BAZ.QUX',   null,          null,          true),
-            'Surrounding'                 => array('foo/bar/baz.qux',  'FOO*.QUX',    null,          null,          true),
-            'Single character'            => array('foo/bar/baz.qux',  '*B?R*',       null,          null,          true),
-            'Single character no match'   => array('foo/bar/baz.qux',  '*F?X*',       null,          null,          false),
-            'Set'                         => array('foo/bar/baz.qux',  '*BA[RZ]*',    null,          null,          true),
-            'Set no match'                => array('foo/bar/baz.qux',  '*BA[X]*',     null,          null,          false),
-            'Negated set'                 => array('foo/bar/baz.qux',  '*BA[!RX]*',   null,          null,          true),
-            'Negated set no match'        => array('foo/bar/baz.qux',  '*BA[!RZ]*',   null,          null,          false),
-            'Range'                       => array('foo/bar/baz.qux',  '*BA[A-R]*',   null,          null,          true),
-            'Range no match'              => array('foo/bar/baz.qux',  '*BA[S-Y]*',   null,          null,          false),
-            'Negated range'               => array('foo/bar/baz.qux',  '*BA[!S-Y]*',  null,          null,          true),
-            'Negated range no match'      => array('foo/bar/baz.qux',  '*BA[!R-Z]*',  null,          null,          false),
-            'No partial match'            => array('foo/bar/baz.qux',  'BAR',         null,          null,          false),
-            'Not found'                   => array('foo/bar/baz.qux',  'DOOM',        null,          null,          false),
+            'Prefix'                      => array('foo/bar/baz.qux',  'FOO/BAR*',    false,          null,          true),
+            'Middle'                      => array('foo/bar/baz.qux',  '*BAR/BAZ*',   false,          null,          true),
+            'Suffix'                      => array('foo/bar/baz.qux',  '*/BAZ.QUX',   false,          null,          true),
+            'Surrounding'                 => array('foo/bar/baz.qux',  'FOO*.QUX',    false,          null,          true),
+            'Single character'            => array('foo/bar/baz.qux',  '*B?R*',       false,          null,          true),
+            'Single character no match'   => array('foo/bar/baz.qux',  '*F?X*',       false,          null,          false),
+            'Set'                         => array('foo/bar/baz.qux',  '*BA[RZ]*',    false,          null,          true),
+            'Set no match'                => array('foo/bar/baz.qux',  '*BA[X]*',     false,          null,          false),
+            'Negated set'                 => array('foo/bar/baz.qux',  '*BA[!RX]*',   false,          null,          true),
+            'Negated set no match'        => array('foo/bar/baz.qux',  '*BA[!RZ]*',   false,          null,          false),
+            'Range'                       => array('foo/bar/baz.qux',  '*BA[A-R]*',   false,          null,          true),
+            'Range no match'              => array('foo/bar/baz.qux',  '*BA[S-Y]*',   false,          null,          false),
+            'Negated range'               => array('foo/bar/baz.qux',  '*BA[!S-Y]*',  false,          null,          true),
+            'Negated range no match'      => array('foo/bar/baz.qux',  '*BA[!R-Z]*',  false,          null,          false),
+            'No partial match'            => array('foo/bar/baz.qux',  'BAR',         false,          null,          false),
+            'Not found'                   => array('foo/bar/baz.qux',  'DOOM',        false,          null,          false),
 
             'Case sensitive'              => array('foo/bar/baz.qux',  '*bar/baz*',   true,          null,          true),
             'Case sensitive no match'     => array('foo/bar/baz.qux',  '*FOO*',       true,          null,          false),
@@ -394,18 +394,22 @@ class RelativeUnixPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                       path                needle      caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('.',                '',         null,          true),
-            'Prefix'                    => array('foo/bar.baz.qux',  'BAR.BAZ',  null,          true),
-            'Middle'                    => array('foo/bar.baz.qux',  'BAZ',      null,          true),
-            'Suffix'                    => array('foo/bar.baz.qux',  'BAZ.QUX',  null,          true),
-            'Not found'                 => array('foo/bar.baz.qux',  'DOOM',     null,          false),
-            'Match only in name'        => array('foo/bar.baz.qux',  'foo',      null,          false),
+            'Empty'                     => array('.',                '',         false,          true),
+            'Prefix'                    => array('foo/bar.baz.qux',  'BAR.BAZ',  false,          true),
+            'Middle'                    => array('foo/bar.baz.qux',  'BAZ',      false,          true),
+            'Suffix'                    => array('foo/bar.baz.qux',  'BAZ.QUX',  false,          true),
+            'Not found'                 => array('foo/bar.baz.qux',  'DOOM',     false,          false),
+            'Match only in name'        => array('foo/bar.baz.qux',  'foo',      false,          false),
 
             'Empty case sensitive'      => array('.',                '',         true,          true),
             'Prefix case sensitive'     => array('foo/bar.baz.qux',  'bar.baz',  true,          true),
             'Middle case sensitive'     => array('foo/bar.baz.qux',  'baz',      true,          true),
             'Suffix case sensitive'     => array('foo/bar.baz.qux',  'baz.qux',  true,          true),
             'Not found case sensitive'  => array('foo/bar.baz.qux',  'BAR',      true,          false),
+
+            'MB'                            => array('foo/bär.txt',      'bär',     true,           true),
+            'MB sensitive haystack upper'   => array('foo/bÄr.txt',      'bär',     false,           true),
+            'MB sensitive needle upper'     => array('foo/bär.txt',      'bÄr',     false,           true),
         );
     }
 
@@ -420,15 +424,24 @@ class RelativeUnixPathTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function testNameContainsDefault()
+    {
+        $this->assertSame(
+            true,
+            $this->factory->create('/foo/bar.baz.qux')->nameContains('BAR'),
+            'By default, nameContains should be case insensitive'
+        );
+    }
+
     public function nameStartsWithData()
     {
         //                                       path                needle      caseSensitive  expectedResult
         return array(
-            'Empty'                     => array('.',                '',         null,          true),
-            'Prefix'                    => array('foo/bar.baz.qux',  'BAR.BAZ',  null,          true),
-            'Middle'                    => array('foo/bar.baz.qux',  'BAZ',      null,          false),
-            'Suffix'                    => array('foo/bar.baz.qux',  'BAZ.QUX',  null,          false),
-            'Not found'                 => array('foo/bar.baz.qux',  'DOOM',     null,          false),
+            'Empty'                     => array('.',                '',         false,          true),
+            'Prefix'                    => array('foo/bar.baz.qux',  'BAR.BAZ',  false,          true),
+            'Middle'                    => array('foo/bar.baz.qux',  'BAZ',      false,          false),
+            'Suffix'                    => array('foo/bar.baz.qux',  'BAZ.QUX',  false,          false),
+            'Not found'                 => array('foo/bar.baz.qux',  'DOOM',     false,          false),
 
             'Empty case sensitive'      => array('.',                '',         true,          true),
             'Prefix case sensitive'     => array('foo/bar.baz.qux',  'bar.baz',  true,          true),
@@ -453,22 +466,22 @@ class RelativeUnixPathTest extends \PHPUnit\Framework\TestCase
     {
         //                                         path                pattern        caseSensitive  flags        expectedResult
         return array(
-            'Prefix'                      => array('foo/bar.baz.qux',  'BAR.BAZ*',    null,          null,        true),
-            'Middle'                      => array('foo/bar.baz.qux',  '*BAZ*',       null,          null,        true),
-            'Suffix'                      => array('foo/bar.baz.qux',  '*BAZ.QUX',    null,          null,        true),
-            'Surrounding'                 => array('foo/bar.baz.qux',  'BAR.*.QUX',   null,          null,        true),
-            'Single character'            => array('foo/bar.baz.qux',  '*B?R*',       null,          null,        true),
-            'Single character no match'   => array('foo/bar.baz.qux',  '*B?X*',       null,          null,        false),
-            'Set'                         => array('foo/bar.baz.qux',  '*BA[RZ]*',    null,          null,        true),
-            'Set no match'                => array('foo/bar.baz.qux',  '*BA[X]*',     null,          null,        false),
-            'Negated set'                 => array('foo/bar.baz.qux',  '*BA[!RX]*',   null,          null,        true),
-            'Negated set no match'        => array('foo/bar.baz.qux',  '*BA[!RZ]*',   null,          null,        false),
-            'Range'                       => array('foo/bar.baz.qux',  '*BA[A-R]*',   null,          null,        true),
-            'Range no match'              => array('foo/bar.baz.qux',  '*BA[S-Y]*',   null,          null,        false),
-            'Negated range'               => array('foo/bar.baz.qux',  '*BA[!S-Y]*',  null,          null,        true),
-            'Negated range no match'      => array('foo/bar.baz.qux',  '*BA[!R-Z]*',  null,          null,        false),
-            'No partial match'            => array('foo/bar.baz.qux',  'BAZ',         null,          null,        false),
-            'Not found'                   => array('foo/bar.baz.qux',  'DOOM',        null,          null,        false),
+            'Prefix'                      => array('foo/bar.baz.qux',  'BAR.BAZ*',    false,          null,        true),
+            'Middle'                      => array('foo/bar.baz.qux',  '*BAZ*',       false,          null,        true),
+            'Suffix'                      => array('foo/bar.baz.qux',  '*BAZ.QUX',    false,          null,        true),
+            'Surrounding'                 => array('foo/bar.baz.qux',  'BAR.*.QUX',   false,          null,        true),
+            'Single character'            => array('foo/bar.baz.qux',  '*B?R*',       false,          null,        true),
+            'Single character no match'   => array('foo/bar.baz.qux',  '*B?X*',       false,          null,        false),
+            'Set'                         => array('foo/bar.baz.qux',  '*BA[RZ]*',    false,          null,        true),
+            'Set no match'                => array('foo/bar.baz.qux',  '*BA[X]*',     false,          null,        false),
+            'Negated set'                 => array('foo/bar.baz.qux',  '*BA[!RX]*',   false,          null,        true),
+            'Negated set no match'        => array('foo/bar.baz.qux',  '*BA[!RZ]*',   false,          null,        false),
+            'Range'                       => array('foo/bar.baz.qux',  '*BA[A-R]*',   false,          null,        true),
+            'Range no match'              => array('foo/bar.baz.qux',  '*BA[S-Y]*',   false,          null,        false),
+            'Negated range'               => array('foo/bar.baz.qux',  '*BA[!S-Y]*',  false,          null,        true),
+            'Negated range no match'      => array('foo/bar.baz.qux',  '*BA[!R-Z]*',  false,          null,        false),
+            'No partial match'            => array('foo/bar.baz.qux',  'BAZ',         false,          null,        false),
+            'Not found'                   => array('foo/bar.baz.qux',  'DOOM',        false,          null,        false),
 
             'Case sensitive'              => array('foo/bar.baz.qux',  '*baz*',       true,          null,        true),
             'Case sensitive no match'     => array('foo/bar.baz.qux',  '*BAZ*',       true,          null,        false),
