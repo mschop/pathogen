@@ -334,17 +334,14 @@ abstract class AbstractPath implements PathInterface
      * Determine if this path contains a substring.
      *
      * @param string       $needle        The substring to search for.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      *
      * @return boolean True if this path contains the substring.
      */
-    public function contains($needle, $caseSensitive = null)
+    public function contains($needle, $caseSensitive = false)
     {
         if ('' === $needle) {
             return true;
-        }
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
         }
 
         if ($caseSensitive) {
@@ -387,16 +384,13 @@ abstract class AbstractPath implements PathInterface
      * Determine if this path matches a wildcard pattern.
      *
      * @param string       $pattern       The pattern to check against.
-     * @param boolean|null $caseSensitive True if case sensitive.
+     * @param boolean $caseSensitive True if case sensitive.
      * @param integer|null $flags         Additional flags.
      *
      * @return boolean True if this path matches the pattern.
      */
-    public function matches($pattern, $caseSensitive = null, $flags = null)
+    public function matches($pattern, $caseSensitive = false, $flags = null)
     {
-        if (null === $caseSensitive) {
-            $caseSensitive = false;
-        }
         if (null === $flags) {
             $flags = 0;
         }
