@@ -11,16 +11,18 @@
 
 namespace Eloquent\Pathogen\Windows;
 
-use Eloquent\Pathogen\Exception\EmptyPathAtomException;
+use Eloquent\Pathogen\AbsolutePathInterface;
 use Eloquent\Pathogen\Exception\EmptyPathException;
 use Eloquent\Pathogen\Exception\InvalidPathAtomCharacterException;
 use Eloquent\Pathogen\Exception\InvalidPathAtomExceptionInterface;
 use Eloquent\Pathogen\Exception\InvalidPathStateException;
 use Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException;
 use Eloquent\Pathogen\FileSystem\RelativeFileSystemPathInterface;
+use Eloquent\Pathogen\Normalizer\PathNormalizerInterface;
 use Eloquent\Pathogen\PathInterface;
 use Eloquent\Pathogen\RelativePath;
 use Eloquent\Pathogen\RelativePathInterface;
+use Eloquent\Pathogen\Windows\Factory\WindowsPathFactoryInterface;
 
 /**
  * Represents a relative Windows path.
@@ -211,7 +213,7 @@ class RelativeWindowsPath extends RelativePath implements
      *
      * @return boolean True if this path is the self path.
      */
-    public function isSelf()
+    public function isSelf(): bool
     {
         return !$this->isAnchored() && !$this->hasDrive() && parent::isSelf();
     }
@@ -223,7 +225,7 @@ class RelativeWindowsPath extends RelativePath implements
      *
      * @return string A string representation of this path.
      */
-    public function string()
+    public function string(): string
     {
         return
             ($this->hasDrive() ? $this->drive() . ':' : '') .
@@ -237,10 +239,10 @@ class RelativeWindowsPath extends RelativePath implements
      *
      * @param RelativePathInterface $path The path whose atoms should be joined to this path.
      *
-     * @return PathInterface                    A new path with the supplied path suffixed to this path.
+     * @return WindowsPathInterface                    A new path with the supplied path suffixed to this path.
      * @throws Exception\DriveMismatchException If the supplied path has a drive that does not match this path's drive.
      */
-    public function join(RelativePathInterface $path)
+    public function join(RelativePathInterface $path): WindowsPathInterface
     {
         if ($path instanceof RelativeWindowsPathInterface) {
             if (!$this->matchesDriveOrNull($this->pathDriveSpecifier($path))) {
@@ -267,7 +269,7 @@ class RelativeWindowsPath extends RelativePath implements
      * @return AbsolutePathInterface     An absolute version of this path.
      * @throws InvalidPathStateException If absolute conversion is not possible for this path.
      */
-    public function toAbsolute()
+    public function toAbsolute(): AbsolutePathInterface
     {
         if (!$this->hasDrive()) {
             throw new InvalidPathStateException(
@@ -297,10 +299,8 @@ class RelativeWindowsPath extends RelativePath implements
      * @param mixed<string> $atoms The path atoms to normalize.
      *
      * @return array<string>                      The normalized path atoms.
-     * @throws EmptyPathAtomException             If any path atom is empty.
-     * @throws PathAtomContainsSeparatorException If any path atom contains a separator.
      */
-    protected function normalizeAtoms($atoms)
+    protected function normalizeAtoms($atoms): array
     {
         $normalizedAtoms = array();
         foreach ($atoms as $atom) {
@@ -412,7 +412,7 @@ class RelativeWindowsPath extends RelativePath implements
         $atoms,
         $isAbsolute,
         $hasTrailingSeparator = null
-    ) {
+    ): WindowsPathInterface {
         if ($isAbsolute) {
             return $this->createPathFromDriveAndAtoms(
                 $atoms,
@@ -451,7 +451,7 @@ class RelativeWindowsPath extends RelativePath implements
         $isAbsolute = null,
         $isAnchored = null,
         $hasTrailingSeparator = null
-    ) {
+    ): WindowsPathInterface {
         return static::factory()->createFromDriveAndAtoms(
             $atoms,
             $drive,
@@ -466,7 +466,7 @@ class RelativeWindowsPath extends RelativePath implements
      *
      * @return Factory\WindowsPathFactoryInterface The path factory.
      */
-    protected static function factory()
+    protected static function factory(): WindowsPathFactoryInterface
     {
         return Factory\WindowsPathFactory::instance();
     }
@@ -476,11 +476,11 @@ class RelativeWindowsPath extends RelativePath implements
      *
      * @return PathNormalizerInterface The path normalizer.
      */
-    protected static function normalizer()
+    protected static function normalizer(): PathNormalizerInterface
     {
         return Normalizer\WindowsPathNormalizer::instance();
     }
 
-    private $drive;
-    private $isAnchored;
+    private ?string $drive = null;
+    private bool $isAnchored;
 }

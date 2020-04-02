@@ -13,6 +13,7 @@ namespace Eloquent\Pathogen\Windows;
 
 use Eloquent\Pathogen\Exception\InvalidPathAtomExceptionInterface;
 use Eloquent\Pathogen\Path;
+use Eloquent\Pathogen\Windows\Factory\WindowsPathFactoryInterface;
 
 /**
  * A static utility class for constructing Windows paths.
@@ -55,7 +56,7 @@ abstract class WindowsPath extends Path
      *
      * @return Factory\WindowsPathFactoryInterface The path factory.
      */
-    protected static function factory()
+    protected static function factory(): WindowsPathFactoryInterface
     {
         return Factory\WindowsPathFactory::instance();
     }

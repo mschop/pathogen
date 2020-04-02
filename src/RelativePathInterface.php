@@ -24,7 +24,7 @@ interface RelativePathInterface extends PathInterface
      *
      * @return boolean True if this path is the self path.
      */
-    public function isSelf();
+    public function isSelf(): bool;
 
     /**
      * Resolve this path against the supplied path.
@@ -33,5 +33,5 @@ interface RelativePathInterface extends PathInterface
      *
      * @return AbsolutePathInterface The resolved path.
      */
-    public function resolveAgainst(AbsolutePathInterface $basePath);
+    public function resolveAgainst(AbsolutePathInterface $basePath): AbsolutePathInterface;
 }

@@ -22,7 +22,7 @@ final class PathAtomContainsSeparatorException
      *
      * @return string The reason message.
      */
-    public function reason()
+    public function reason(): string
     {
         return 'Path atoms must not contain separators.';
     }

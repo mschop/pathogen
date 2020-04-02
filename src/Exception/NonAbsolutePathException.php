@@ -21,7 +21,7 @@ final class NonAbsolutePathException extends AbstractInvalidPathException
      *
      * @return string The reason message.
      */
-    public function reason()
+    public function reason(): string
     {
         return 'The supplied path is not absolute.';
     }

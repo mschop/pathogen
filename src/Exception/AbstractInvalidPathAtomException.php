@@ -17,16 +17,17 @@ use Exception;
  * Abstract base class for exceptions implementing
  * InvalidPathAtomExceptionInterface.
  */
-abstract class AbstractInvalidPathAtomException extends Exception
-    implements InvalidPathAtomExceptionInterface
+abstract class AbstractInvalidPathAtomException extends Exception implements InvalidPathAtomExceptionInterface
 {
+    private string $atom;
+
     /**
      * Construct a new invalid path atom exception.
      *
      * @param string         $atom     The invalid path atom.
      * @param Exception|null $previous The cause, if available.
      */
-    public function __construct($atom, Exception $previous = null)
+    public function __construct(string $atom, Exception $previous = null)
     {
         $this->atom = $atom;
 
@@ -46,7 +47,7 @@ abstract class AbstractInvalidPathAtomException extends Exception
      *
      * @return string The invalid path atom.
      */
-    public function atom()
+    public function atom(): string
     {
         return $this->atom;
     }
@@ -56,7 +57,5 @@ abstract class AbstractInvalidPathAtomException extends Exception
      *
      * @return string The reason message.
      */
-    abstract public function reason();
-
-    private $atom;
+    abstract public function reason(): string;
 }

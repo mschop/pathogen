@@ -22,6 +22,7 @@ use Eloquent\Pathogen\Normalizer\PathNormalizerInterface;
 use Eloquent\Pathogen\PathInterface;
 use Eloquent\Pathogen\RelativePathInterface;
 use Eloquent\Pathogen\Resolver\BasePathResolverInterface;
+use Eloquent\Pathogen\Windows\Factory\WindowsPathFactoryInterface;
 
 /**
  * Represents an absolute Windows path.
@@ -169,7 +170,7 @@ class AbsoluteWindowsPath extends AbsolutePath implements
      *
      * @return boolean True if this path is the direct parent of the supplied path.
      */
-    public function isParentOf(AbsolutePathInterface $path)
+    public function isParentOf(AbsolutePathInterface $path): bool
     {
         if (!$this->matchesDriveOrNull($this->pathDriveSpecifier($path))) {
             return false;
@@ -185,7 +186,7 @@ class AbsoluteWindowsPath extends AbsolutePath implements
      *
      * @return boolean True if this path is an ancestor of the supplied path.
      */
-    public function isAncestorOf(AbsolutePathInterface $path)
+    public function isAncestorOf(AbsolutePathInterface $path): bool
     {
         if (!$this->matchesDriveOrNull($this->pathDriveSpecifier($path))) {
             return false;
@@ -220,7 +221,7 @@ class AbsoluteWindowsPath extends AbsolutePath implements
      *
      * @return string A string representation of this path.
      */
-    public function string()
+    public function string(): string
     {
         return
             $this->drive() .
@@ -235,10 +236,10 @@ class AbsoluteWindowsPath extends AbsolutePath implements
      *
      * @param RelativePathInterface $path The path whose atoms should be joined to this path.
      *
-     * @return PathInterface                    A new path with the supplied path suffixed to this path.
+     * @return AbsoluteWindowsPathInterface                    A new path with the supplied path suffixed to this path.
      * @throws Exception\DriveMismatchException If the supplied path has a drive that does not match this path's drive.
      */
-    public function join(RelativePathInterface $path)
+    public function join(RelativePathInterface $path): AbsoluteWindowsPathInterface
     {
         if ($path instanceof RelativeWindowsPathInterface) {
             if (!$this->matchesDriveOrNull($this->pathDriveSpecifier($path))) {
@@ -262,10 +263,10 @@ class AbsoluteWindowsPath extends AbsolutePath implements
      * If this path is absolute, a new relative path with equivalent atoms will
      * be returned. Otherwise, this path will be retured unaltered.
      *
-     * @return RelativePathInterface A relative version of this path.
+     * @return RelativeWindowsPathInterface A relative version of this path.
      * @throws EmptyPathException    If this path has no atoms.
      */
-    public function toRelative()
+    public function toRelative(): RelativeWindowsPathInterface
     {
         return $this->createPathFromDriveAndAtoms(
             $this->atoms(),
@@ -379,7 +380,7 @@ class AbsoluteWindowsPath extends AbsolutePath implements
         $atoms,
         $isAbsolute,
         $hasTrailingSeparator = null
-    ) {
+    ): WindowsPathInterface {
         if ($isAbsolute) {
             return $this->createPathFromDriveAndAtoms(
                 $atoms,
@@ -433,7 +434,7 @@ class AbsoluteWindowsPath extends AbsolutePath implements
      *
      * @return Factory\WindowsPathFactoryInterface The path factory.
      */
-    protected static function factory()
+    protected static function factory(): WindowsPathFactoryInterface
     {
         return Factory\WindowsPathFactory::instance();
     }
@@ -443,7 +444,7 @@ class AbsoluteWindowsPath extends AbsolutePath implements
      *
      * @return PathNormalizerInterface The path normalizer.
      */
-    protected static function normalizer()
+    protected static function normalizer(): PathNormalizerInterface
     {
         return Normalizer\WindowsPathNormalizer::instance();
     }
@@ -453,10 +454,10 @@ class AbsoluteWindowsPath extends AbsolutePath implements
      *
      * @return BasePathResolverInterface The base path resolver.
      */
-    protected static function resolver()
+    protected static function resolver(): BasePathResolverInterface
     {
         return Resolver\WindowsBasePathResolver::instance();
     }
 
-    private $drive;
+    private string $drive;
 }

@@ -28,7 +28,7 @@ trait PlatformFileSystemPathFactoryTrait
      *
      * @return PathFactoryInterface The new default path factory instance.
      */
-    protected function createDefaultPathFactory()
+    protected function createDefaultPathFactory(): PathFactoryInterface
     {
         return PlatformFileSystemPathFactory::instance();
     }

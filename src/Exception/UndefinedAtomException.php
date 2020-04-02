@@ -18,13 +18,15 @@ use Exception;
  */
 final class UndefinedAtomException extends Exception
 {
+    private int $index;
+
     /**
      * Construct a new undefined atom exception.
      *
      * @param integer        $index    The requested atom index.
      * @param Exception|null $previous The cause, if available.
      */
-    public function __construct($index, Exception $previous = null)
+    public function __construct(int $index, Exception $previous = null)
     {
         $this->index = $index;
 
@@ -41,12 +43,10 @@ final class UndefinedAtomException extends Exception
     /**
      * Get the requested atom index.
      *
-     * @return string The requested index.
+     * @return int The requested index.
      */
-    public function index()
+    public function index(): int
     {
         return $this->index;
     }
-
-    private $index;
 }

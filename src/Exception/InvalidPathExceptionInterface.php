@@ -23,12 +23,12 @@ interface InvalidPathExceptionInterface
      *
      * @return PathInterface The invalid path.
      */
-    public function path();
+    public function path(): PathInterface;
 
     /**
      * Get the reason message.
      *
      * @return string The reason message.
      */
-    public function reason();
+    public function reason(): string;
 }

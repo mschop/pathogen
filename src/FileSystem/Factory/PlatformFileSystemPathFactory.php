@@ -41,7 +41,7 @@ class PlatformFileSystemPathFactory extends AbstractFileSystemPathFactory
      *
      * @return PathInterface The newly created path instance.
      */
-    public function create($path)
+    public function create($path): PathInterface
     {
         return $this->factoryByPlatform()->create($path);
     }

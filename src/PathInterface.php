@@ -11,6 +11,9 @@
 
 namespace Eloquent\Pathogen;
 
+
+use Eloquent\Pathogen\Exception\InvalidPathStateException;
+
 /**
  * The interface implemented by all Pathogen paths.
  */
@@ -33,7 +36,7 @@ interface PathInterface
      * @return string                           The path atom.
      * @throws Exception\UndefinedAtomException If the index does not exist in this path's atoms.
      */
-    public function atomAt($index);
+    public function atomAt(int $index): string;
 
     /**
      * Get a single path atom by index, falling back to a default if the index
@@ -44,7 +47,7 @@ interface PathInterface
      *
      * @return mixed The path atom, or $default if no atom is defined for the supplied index.
      */
-    public function atomAtDefault($index, $default = null);
+    public function atomAtDefault(int $index, string $default = null): ?string;
 
     /**
      * Get a subset of the atoms of this path.
@@ -54,28 +57,28 @@ interface PathInterface
      *
      * @return array<integer,string> An array of strings representing the subset of path atoms.
      */
-    public function sliceAtoms($index, $length = null);
+    public function sliceAtoms(int $index, int $length = null): array;
 
     /**
      * Determine if this path has any atoms.
      *
      * @return boolean True if this path has at least one atom.
      */
-    public function hasAtoms();
+    public function hasAtoms(): bool;
 
     /**
      * Determine if this path has a trailing separator.
      *
      * @return boolean True if this path has a trailing separator.
      */
-    public function hasTrailingSeparator();
+    public function hasTrailingSeparator(): bool;
 
     /**
      * Generate a string representation of this path.
      *
      * @return string A string representation of this path.
      */
-    public function string();
+    public function string(): string;
 
     /**
      * Generate a string representation of this path.
@@ -89,7 +92,7 @@ interface PathInterface
      *
      * @return string The last path atom if one exists, otherwise an empty string.
      */
-    public function name();
+    public function name(): string;
 
     /**
      * Get this path's name atoms.
@@ -98,7 +101,7 @@ interface PathInterface
      *
      * @return array<integer,string> The atoms of this path's name as an array of strings.
      */
-    public function nameAtoms();
+    public function nameAtoms(): array;
 
     /**
      * Get a single path name atom by index.
@@ -108,18 +111,18 @@ interface PathInterface
      * @return string                           The path name atom.
      * @throws Exception\UndefinedAtomException If the index does not exist in this path's name atoms.
      */
-    public function nameAtomAt($index);
+    public function nameAtomAt(int $index): string;
 
     /**
      * Get a single path name atom by index, falling back to a default if the
      * index is undefined.
      *
      * @param integer $index   The index to search for.
-     * @param mixed   $default The default value to return if no atom is defined for the supplied index.
+     * @param string   $default The default value to return if no atom is defined for the supplied index.
      *
-     * @return mixed The path name atom, or $default if no atom is defined for the supplied index.
+     * @return string The path name atom, or $default if no atom is defined for the supplied index.
      */
-    public function nameAtomAtDefault($index, $default = null);
+    public function nameAtomAtDefault(int $index, string $default = null): ?string;
 
     /**
      * Get a subset of this path's name atoms.
@@ -129,42 +132,42 @@ interface PathInterface
      *
      * @return array<integer,string> An array of strings representing the subset of path name atoms.
      */
-    public function sliceNameAtoms($index, $length = null);
+    public function sliceNameAtoms(int $index, int $length = null): array;
 
     /**
      * Get this path's name, excluding the last extension.
      *
      * @return string The last atom of this path, excluding the last extension. If this path has no atoms, an empty string is returned.
      */
-    public function nameWithoutExtension();
+    public function nameWithoutExtension(): string;
 
     /**
      * Get this path's name, excluding all extensions.
      *
      * @return string The last atom of this path, excluding any extensions. If this path has no atoms, an empty string is returned.
      */
-    public function namePrefix();
+    public function namePrefix(): string;
 
     /**
      * Get all of this path's extensions.
      *
      * @return string|null The extensions of this path's last atom. If the last atom has no extensions, or this path has no atoms, this method will return null.
      */
-    public function nameSuffix();
+    public function nameSuffix(): ?string;
 
     /**
      * Get this path's last extension.
      *
      * @return string|null The last extension of this path's last atom. If the last atom has no extensions, or this path has no atoms, this method will return null.
      */
-    public function extension();
+    public function extension(): ?string;
 
     /**
      * Determine if this path has any extensions.
      *
      * @return boolean True if this path's last atom has any extensions.
      */
-    public function hasExtension();
+    public function hasExtension(): bool;
 
     /**
      * Determine if this path contains a substring.
@@ -174,7 +177,7 @@ interface PathInterface
      *
      * @return boolean True if this path contains the substring.
      */
-    public function contains($needle, $caseSensitive = null);
+    public function contains(string $needle, bool $caseSensitive = false): bool;
 
     /**
      * Determine if this path starts with a substring.
@@ -184,7 +187,7 @@ interface PathInterface
      *
      * @return boolean True if this path starts with the substring.
      */
-    public function startsWith($needle, $caseSensitive = null);
+    public function startsWith(string $needle, bool $caseSensitive = false): bool;
 
     /**
      * Determine if this path ends with a substring.
@@ -205,7 +208,7 @@ interface PathInterface
      *
      * @return boolean True if this path matches the pattern.
      */
-    public function matches($pattern, $caseSensitive = null, $flags = null);
+    public function matches(string $pattern, bool $caseSensitive = false, int $flags = null);
 
     /**
      * Determine if this path matches a regular expression.
@@ -218,11 +221,11 @@ interface PathInterface
      * @return boolean True if this path matches the pattern.
      */
     public function matchesRegex(
-        $pattern,
+        string $pattern,
         array &$matches = null,
-        $flags = null,
-        $offset = null
-    );
+        int $flags = null,
+        int $offset = null
+    ): bool;
 
     /**
      * Determine if this path's name contains a substring.
@@ -232,7 +235,7 @@ interface PathInterface
      *
      * @return boolean True if this path's name contains the substring.
      */
-    public function nameContains(string $needle, bool $caseSensitive = false);
+    public function nameContains(string $needle, bool $caseSensitive = false): bool;
 
     /**
      * Determine if this path's name starts with a substring.
@@ -242,7 +245,7 @@ interface PathInterface
      *
      * @return boolean True if this path's name starts with the substring.
      */
-    public function nameStartsWith($needle, $caseSensitive = null);
+    public function nameStartsWith(string $needle, bool $caseSensitive = false): bool;
 
     /**
      * Determine if this path's name matches a wildcard pattern.
@@ -253,7 +256,7 @@ interface PathInterface
      *
      * @return boolean True if this path's name matches the pattern.
      */
-    public function nameMatches($pattern, $caseSensitive = null, $flags = null);
+    public function nameMatches(string $pattern, bool $caseSensitive = false, int $flags = null): bool;
 
     /**
      * Determine if this path's name matches a regular expression.
@@ -266,11 +269,11 @@ interface PathInterface
      * @return boolean True if this path's name matches the pattern.
      */
     public function nameMatchesRegex(
-        $pattern,
+        string $pattern,
         array &$matches = null,
-        $flags = null,
-        $offset = null
-    );
+        int $flags = null,
+        int $offset = null
+    ): bool;
 
     /**
      * Get the parent of this path a specified number of levels up.
@@ -278,29 +281,30 @@ interface PathInterface
      * @param integer|null $numLevels The number of levels up. Defaults to 1.
      *
      * @return PathInterface The parent of this path $numLevels up.
+     * @throws InvalidPathStateException
      */
-    public function parent($numLevels = null);
+    public function parent(int $numLevels = null): PathInterface;
 
     /**
      * Strips the trailing slash from this path.
      *
      * @return PathInterface A new path instance with the trailing slash removed from this path. If this path has no trailing slash, the path is returned unmodified.
      */
-    public function stripTrailingSlash();
+    public function stripTrailingSlash(): PathInterface;
 
     /**
      * Strips the last extension from this path.
      *
      * @return PathInterface A new path instance with the last extension removed from this path. If this path has no extensions, the path is returned unmodified.
      */
-    public function stripExtension();
+    public function stripExtension(): PathInterface;
 
     /**
      * Strips all extensions from this path.
      *
      * @return PathInterface A new path instance with all extensions removed from this path. If this path has no extensions, the path is returned unmodified.
      */
-    public function stripNameSuffix();
+    public function stripNameSuffix(): PathInterface;
 
     /**
      * Joins one or more atoms to this path.
@@ -311,7 +315,7 @@ interface PathInterface
      * @return PathInterface                               A new path with the supplied atom(s) suffixed to this path.
      * @throws Exception\InvalidPathAtomExceptionInterface If any joined atoms are invalid.
      */
-    public function joinAtoms($atom);
+    public function joinAtoms(string ...$atom): PathInterface;
 
     /**
      * Joins a sequence of atoms to this path.
@@ -321,7 +325,7 @@ interface PathInterface
      * @return PathInterface                               A new path with the supplied sequence of atoms suffixed to this path.
      * @throws Exception\InvalidPathAtomExceptionInterface If any joined atoms are invalid.
      */
-    public function joinAtomSequence($atoms);
+    public function joinAtomSequence(iterable $atoms): PathInterface;
 
     /**
      * Joins the supplied path to this path.
@@ -330,14 +334,14 @@ interface PathInterface
      *
      * @return PathInterface A new path with the supplied path suffixed to this path.
      */
-    public function join(RelativePathInterface $path);
+    public function join(RelativePathInterface $path): PathInterface;
 
     /**
      * Adds a trailing slash to this path.
      *
      * @return PathInterface A new path instance with a trailing slash suffixed to this path.
      */
-    public function joinTrailingSlash();
+    public function joinTrailingSlash(): PathInterface;
 
     /**
      * Joins one or more extensions to this path.
@@ -348,7 +352,7 @@ interface PathInterface
      * @return PathInterface                               A new path instance with the supplied extensions suffixed to this path.
      * @throws Exception\InvalidPathAtomExceptionInterface If the suffixed extensions cause the atom to be invalid.
      */
-    public function joinExtensions($extension);
+    public function joinExtensions(string ...$extension): PathInterface;
 
     /**
      * Joins a sequence of extensions to this path.
@@ -358,7 +362,7 @@ interface PathInterface
      * @return PathInterface                               A new path instance with the supplied extensions suffixed to this path.
      * @throws Exception\InvalidPathAtomExceptionInterface If the suffixed extensions cause the atom to be invalid.
      */
-    public function joinExtensionSequence($extensions);
+    public function joinExtensionSequence(iterable $extensions): PathInterface;
 
     /**
      * Suffixes this path's name with a supplied string.
@@ -368,7 +372,7 @@ interface PathInterface
      * @return PathInterface                               A new path instance with the supplied string suffixed to the last path atom.
      * @throws Exception\InvalidPathAtomExceptionInterface If the suffix causes the atom to be invalid.
      */
-    public function suffixName($suffix);
+    public function suffixName(string $suffix): PathInterface;
 
     /**
      * Prefixes this path's name with a supplied string.
@@ -378,7 +382,7 @@ interface PathInterface
      * @return PathInterface                               A new path instance with the supplied string prefixed to the last path atom.
      * @throws Exception\InvalidPathAtomExceptionInterface If the prefix causes the atom to be invalid.
      */
-    public function prefixName($prefix);
+    public function prefixName(string $prefix): PathInterface;
 
     /**
      * Replace a section of this path with the supplied atom sequence.
@@ -389,7 +393,7 @@ interface PathInterface
      *
      * @return PathInterface A new path instance that has a portion of this path's atoms replaced with a different sequence of atoms.
      */
-    public function replace($index, $replacement, $length = null);
+    public function replace(int $index, iterable $replacement, int $length = null): PathInterface;
 
     /**
      * Replace this path's name.
@@ -398,7 +402,7 @@ interface PathInterface
      *
      * @return PathInterface A new path instance with the supplied name replacing the existing one.
      */
-    public function replaceName($name);
+    public function replaceName(string $name): PathInterface;
 
     /**
      * Replace this path's name, but keep the last extension.
@@ -407,7 +411,7 @@ interface PathInterface
      *
      * @return PathInterface A new path instance with the supplied name replacing the portion of the existing name preceding the last extension.
      */
-    public function replaceNameWithoutExtension($nameWithoutExtension);
+    public function replaceNameWithoutExtension(string $nameWithoutExtension): PathInterface;
 
     /**
      * Replace this path's name, but keep any extensions.
@@ -416,7 +420,7 @@ interface PathInterface
      *
      * @return PathInterface A new path instance with the supplied name prefix replacing the existing one.
      */
-    public function replaceNamePrefix($namePrefix);
+    public function replaceNamePrefix(string $namePrefix): PathInterface;
 
     /**
      * Replace all of this path's extensions.
@@ -425,7 +429,7 @@ interface PathInterface
      *
      * @return PathInterface A new path instance with the supplied name suffix replacing the existing one.
      */
-    public function replaceNameSuffix($nameSuffix);
+    public function replaceNameSuffix(?string $nameSuffix): PathInterface;
 
     /**
      * Replace this path's last extension.
@@ -434,7 +438,7 @@ interface PathInterface
      *
      * @return PathInterface A new path instance with the supplied extension replacing the existing one.
      */
-    public function replaceExtension($extension);
+    public function replaceExtension(?string $extension): PathInterface;
 
     /**
      * Replace a section of this path's name with the supplied name atom
@@ -446,7 +450,7 @@ interface PathInterface
      *
      * @return PathInterface A new path instance that has a portion of this name's atoms replaced with a different sequence of atoms.
      */
-    public function replaceNameAtoms($index, $replacement, $length = null);
+    public function replaceNameAtoms(int $index, iterable $replacement, int $length = null): PathInterface;
 
     /**
      * Get an absolute version of this path.
@@ -457,7 +461,7 @@ interface PathInterface
      * @return AbsolutePathInterface               An absolute version of this path.
      * @throws Exception\InvalidPathStateException If absolute conversion is not possible for this path.
      */
-    public function toAbsolute();
+    public function toAbsolute(): AbsolutePathInterface;
 
     /**
      * Get a relative version of this path.
@@ -468,12 +472,12 @@ interface PathInterface
      * @return RelativePathInterface        A relative version of this path.
      * @throws Exception\EmptyPathException If this path has no atoms.
      */
-    public function toRelative();
+    public function toRelative(): RelativePathInterface;
 
     /**
      * Normalize this path to its most canonical form.
      *
      * @return PathInterface The normalized path.
      */
-    public function normalize();
+    public function normalize(): PathInterface;
 }

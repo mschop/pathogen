@@ -27,12 +27,12 @@ interface PathFactoryInterface
      *
      * @return PathInterface The newly created path instance.
      */
-    public function create($path);
+    public function create(string $path): PathInterface;
 
     /**
      * Creates a new path instance from a set of path atoms.
      *
-     * @param mixed<string> $atoms                The path atoms.
+     * @param iterable<string> $atoms                The path atoms.
      * @param boolean|null  $isAbsolute           True if the path is absolute.
      * @param boolean|null  $hasTrailingSeparator True if the path has a trailing separator.
      *
@@ -41,8 +41,8 @@ interface PathFactoryInterface
      * @throws InvalidPathStateException         If the supplied arguments would produce an invalid path.
      */
     public function createFromAtoms(
-        $atoms,
-        $isAbsolute = null,
-        $hasTrailingSeparator = null
+        iterable $atoms,
+        bool $isAbsolute = false,
+        bool $hasTrailingSeparator = false
     );
 }

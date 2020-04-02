@@ -13,6 +13,7 @@ namespace Eloquent\Pathogen\FileSystem\Factory;
 
 use Eloquent\Pathogen\Exception\InvalidPathAtomExceptionInterface;
 use Eloquent\Pathogen\Exception\InvalidPathStateException;
+use Eloquent\Pathogen\FileSystem\FileSystemPathInterface;
 use Eloquent\Pathogen\PathInterface;
 
 /**
@@ -40,9 +41,9 @@ class FileSystemPathFactory extends AbstractFileSystemPathFactory
      *
      * @param string $path The string representation of the path.
      *
-     * @return PathInterface The newly created path instance.
+     * @return FileSystemPathInterface The newly created path instance.
      */
-    public function create($path)
+    public function create($path): FileSystemPathInterface
     {
         if (preg_match('{^([a-zA-Z]):}', $path)) {
             return $this->windowsFactory()->create($path);

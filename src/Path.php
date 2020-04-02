@@ -11,6 +11,8 @@
 
 namespace Eloquent\Pathogen;
 
+use Eloquent\Pathogen\Factory\PathFactoryInterface;
+
 /**
  * A static utility class for constructing generic paths.
  *
@@ -57,7 +59,7 @@ abstract class Path
      *
      * @return Factory\PathFactoryInterface The path factory.
      */
-    protected static function factory()
+    protected static function factory(): PathFactoryInterface
     {
         return Factory\PathFactory::instance();
     }

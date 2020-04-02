@@ -18,6 +18,7 @@ use Eloquent\Pathogen\Factory\PathFactory;
 use Eloquent\Pathogen\PathInterface;
 use Eloquent\Pathogen\Windows\AbsoluteWindowsPath;
 use Eloquent\Pathogen\Windows\RelativeWindowsPath;
+use Eloquent\Pathogen\Windows\WindowsPathInterface;
 
 /**
  * A path factory that creates Windows path instances.
@@ -30,7 +31,7 @@ class WindowsPathFactory extends PathFactory implements
      *
      * @return WindowsPathFactoryInterface The static path factory.
      */
-    public static function instance()
+    public static function instance(): WindowsPathFactoryInterface
     {
         if (null === self::$instance) {
             self::$instance = new self;
@@ -46,9 +47,9 @@ class WindowsPathFactory extends PathFactory implements
      *
      * @param string $path The string representation of the path.
      *
-     * @return PathInterface The newly created path instance.
+     * @return WindowsPathInterface The newly created path instance.
      */
-    public function create($path)
+    public function create($path): WindowsPathInterface
     {
         $drive = null;
         $isAbsolute = false;
@@ -110,7 +111,7 @@ class WindowsPathFactory extends PathFactory implements
      * @param boolean|null  $isAbsolute           True if the path is absolute.
      * @param boolean|null  $hasTrailingSeparator True if the path has a trailing separator.
      *
-     * @return PathInterface                     The newly created path instance.
+     * @return WindowsPathInterface                     The newly created path instance.
      * @throws InvalidPathAtomExceptionInterface If any of the supplied atoms are invalid.
      * @throws InvalidPathStateException         If the supplied arguments would produce an invalid path.
      */
@@ -118,7 +119,7 @@ class WindowsPathFactory extends PathFactory implements
         $atoms,
         $isAbsolute = null,
         $hasTrailingSeparator = null
-    ) {
+    ): WindowsPathInterface {
         return $this->createFromDriveAndAtoms(
             $atoms,
             null,
@@ -150,7 +151,7 @@ class WindowsPathFactory extends PathFactory implements
         $isAbsolute = null,
         $isAnchored = null,
         $hasTrailingSeparator = null
-    ) {
+    ): WindowsPathInterface {
         if (null === $isAnchored) {
             $isAnchored = false;
         }

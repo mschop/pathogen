@@ -44,5 +44,5 @@ interface FileSystemPathFactoryInterface extends PathFactoryInterface
      *
      * @return AbsoluteFileSystemPathInterface A new path instance representing the new temporary path.
      */
-    public function createTemporaryPath($prefix = null);
+    public function createTemporaryPath(string $prefix = null);
 }

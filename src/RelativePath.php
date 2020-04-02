@@ -64,7 +64,7 @@ class RelativePath extends AbstractPath implements RelativePathInterface
      * @return AbsolutePathInterface               An absolute version of this path.
      * @throws Exception\InvalidPathStateException If absolute conversion is not possible for this path.
      */
-    public function toAbsolute()
+    public function toAbsolute(): AbsolutePathInterface
     {
         return $this->createPath(
             $this->atoms(),
@@ -80,9 +80,8 @@ class RelativePath extends AbstractPath implements RelativePathInterface
      * be returned. Otherwise, this path will be retured unaltered.
      *
      * @return RelativePathInterface        A relative version of this path.
-     * @throws Exception\EmptyPathException If this path has no atoms.
      */
-    public function toRelative()
+    public function toRelative(): RelativePathInterface
     {
         return $this;
     }
@@ -97,7 +96,7 @@ class RelativePath extends AbstractPath implements RelativePathInterface
      *
      * @return boolean True if this path is the self path.
      */
-    public function isSelf()
+    public function isSelf(): bool
     {
         $atoms = $this->normalize()->atoms();
 
@@ -111,7 +110,7 @@ class RelativePath extends AbstractPath implements RelativePathInterface
      *
      * @return AbsolutePathInterface The resolved path.
      */
-    public function resolveAgainst(AbsolutePathInterface $basePath)
+    public function resolveAgainst(AbsolutePathInterface $basePath): AbsolutePathInterface
     {
         return static::resolver()->resolve($basePath, $this);
     }
@@ -131,7 +130,7 @@ class RelativePath extends AbstractPath implements RelativePathInterface
      * @throws Exception\EmptyPathAtomException             If any path atom is empty.
      * @throws Exception\PathAtomContainsSeparatorException If any path atom contains a separator.
      */
-    protected function normalizeAtoms($atoms)
+    protected function normalizeAtoms($atoms): iterable
     {
         $atoms = parent::normalizeAtoms($atoms);
         if (count($atoms) < 1) {

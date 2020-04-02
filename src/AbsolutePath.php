@@ -24,7 +24,7 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      * @return AbsolutePathInterface              The newly created absolute path.
      * @throws Exception\NonAbsolutePathException If the supplied string represents a non-absolute path.
      */
-    public static function fromString($path)
+    public static function fromString(string $path)
     {
         $pathObject = static::factory()->create($path);
         if (!$pathObject instanceof AbsolutePathInterface) {
@@ -44,7 +44,7 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      * @throws Exception\InvalidPathAtomExceptionInterface If any of the supplied atoms are invalid.
      * @throws Exception\InvalidPathStateException         If the supplied arguments would produce an invalid path.
      */
-    public static function fromAtoms($atoms, $hasTrailingSeparator = null)
+    public static function fromAtoms($atoms, $hasTrailingSeparator = null): AbsolutePathInterface
     {
         return static::factory()->createFromAtoms(
             $atoms,
@@ -60,7 +60,7 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      *
      * @return string A string representation of this path.
      */
-    public function string()
+    public function string(): string
     {
         return static::ATOM_SEPARATOR . parent::string();
     }
@@ -70,7 +70,7 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      *
      * @return PathInterface A new path instance with a trailing slash suffixed to this path.
      */
-    public function joinTrailingSlash()
+    public function joinTrailingSlash(): PathInterface
     {
         if (!$this->hasAtoms()) {
             return $this;
@@ -86,9 +86,8 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      * be returned. Otherwise, this path will be retured unaltered.
      *
      * @return AbsolutePathInterface               An absolute version of this path.
-     * @throws Exception\InvalidPathStateException If absolute conversion is not possible for this path.
      */
-    public function toAbsolute()
+    public function toAbsolute(): AbsolutePathInterface
     {
         return $this;
     }
@@ -100,9 +99,9 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      * be returned. Otherwise, this path will be retured unaltered.
      *
      * @return RelativePathInterface        A relative version of this path.
-     * @throws Exception\EmptyPathException If this path has no atoms.
+     * @throws Exception\InvalidPathStateException
      */
-    public function toRelative()
+    public function toRelative(): RelativePathInterface
     {
         return $this->createPath(
             $this->atoms(),
@@ -120,7 +119,7 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      *
      * @return boolean True if this path is the root path.
      */
-    public function isRoot()
+    public function isRoot(): bool
     {
         return !$this->normalize()->hasAtoms();
     }
@@ -132,7 +131,7 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      *
      * @return boolean True if this path is the direct parent of the supplied path.
      */
-    public function isParentOf(AbsolutePathInterface $path)
+    public function isParentOf(AbsolutePathInterface $path): bool
     {
         return $path->hasAtoms() &&
             $this->normalize()->atoms() ===
@@ -146,7 +145,7 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      *
      * @return boolean True if this path is an ancestor of the supplied path.
      */
-    public function isAncestorOf(AbsolutePathInterface $path)
+    public function isAncestorOf(AbsolutePathInterface $path): bool
     {
         $parentAtoms = $this->normalize()->atoms();
 
@@ -195,7 +194,7 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
      *
      * @return AbsolutePathInterface The resolved path.
      */
-    public function resolve(PathInterface $path)
+    public function resolve(PathInterface $path): AbsolutePathInterface
     {
         return static::resolver()->resolve($this, $path);
     }

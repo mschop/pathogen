@@ -18,13 +18,15 @@ use Exception;
  */
 final class InvalidPathStateException extends Exception
 {
+    private string $reason;
+
     /**
      * Construct a new invalid path state exception.
      *
      * @param string         $reason   The reason message.
      * @param Exception|null $previous The cause, if available.
      */
-    public function __construct($reason, Exception $previous = null)
+    public function __construct(string $reason, Exception $previous = null)
     {
         $this->reason = $reason;
 
@@ -40,10 +42,8 @@ final class InvalidPathStateException extends Exception
      *
      * @return string The reason message.
      */
-    public function reason()
+    public function reason(): string
     {
         return $this->reason;
     }
-
-    private $reason;
 }
