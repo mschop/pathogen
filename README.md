@@ -10,6 +10,11 @@
 [Semantic versioning]: http://semver.org/
 [version-image]: http://img.shields.io/:semver-0.6.1-yellow.svg "This project uses semantic versioning"
 
+## Future development
+
+This package is a fork of the abandoned package eloquent/pathogen. I will continue the work on this lib. Please feel
+free to issue feature requests or bug reports.
+
 ## Installation and documentation
 
 - Available as [Composer] package [eloquent/pathogen].
