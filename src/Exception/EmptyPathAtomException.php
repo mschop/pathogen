@@ -33,7 +33,7 @@ final class EmptyPathAtomException extends AbstractInvalidPathAtomException
      *
      * @return string The reason message.
      */
-    public function reason()
+    public function reason(): string
     {
         return 'Path atoms must not be empty strings.';
     }

@@ -23,7 +23,7 @@ interface AbsolutePathInterface extends PathInterface
      *
      * @return boolean True if this path is the root path.
      */
-    public function isRoot();
+    public function isRoot(): bool;
 
     /**
      * Determine if this path is the direct parent of the supplied path.
@@ -32,7 +32,7 @@ interface AbsolutePathInterface extends PathInterface
      *
      * @return boolean True if this path is the direct parent of the supplied path.
      */
-    public function isParentOf(AbsolutePathInterface $path);
+    public function isParentOf(AbsolutePathInterface $path): bool;
 
     /**
      * Determine if this path is an ancestor of the supplied path.
@@ -41,7 +41,7 @@ interface AbsolutePathInterface extends PathInterface
      *
      * @return boolean True if this path is an ancestor of the supplied path.
      */
-    public function isAncestorOf(AbsolutePathInterface $path);
+    public function isAncestorOf(AbsolutePathInterface $path): bool;
 
     /**
      * Determine the shortest path from the supplied path to this path.
@@ -62,5 +62,5 @@ interface AbsolutePathInterface extends PathInterface
      *
      * @return AbsolutePathInterface The resolved path.
      */
-    public function resolve(PathInterface $path);
+    public function resolve(PathInterface $path): AbsolutePathInterface;
 }

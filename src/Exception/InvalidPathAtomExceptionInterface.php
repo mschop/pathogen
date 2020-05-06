@@ -21,12 +21,12 @@ interface InvalidPathAtomExceptionInterface
      *
      * @return string The invalid path atom.
      */
-    public function atom();
+    public function atom(): string;
 
     /**
      * Get the reason message.
      *
      * @return string The reason message.
      */
-    public function reason();
+    public function reason(): string;
 }

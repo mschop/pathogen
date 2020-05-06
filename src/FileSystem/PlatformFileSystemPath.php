@@ -11,6 +11,7 @@
 
 namespace Eloquent\Pathogen\FileSystem;
 
+use Eloquent\Pathogen\FileSystem\Factory\FileSystemPathFactoryInterface;
 use Eloquent\Pathogen\Path;
 
 /**
@@ -28,7 +29,7 @@ abstract class PlatformFileSystemPath extends Path
      *
      * @return Factory\FileSystemPathFactoryInterface The path factory.
      */
-    protected static function factory()
+    protected static function factory(): FileSystemPathFactoryInterface
     {
         return Factory\PlatformFileSystemPathFactory::instance();
     }

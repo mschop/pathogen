@@ -23,12 +23,14 @@ use Eloquent\Pathogen\RelativePath;
  */
 class PathFactory implements PathFactoryInterface
 {
+    private static ?PathFactoryInterface $instance = null;
+
     /**
      * Get a static instance of this path factory.
      *
      * @return PathFactoryInterface The static path factory.
      */
-    public static function instance()
+    public static function instance(): PathFactoryInterface
     {
         if (null === self::$instance) {
             self::$instance = new self;
@@ -44,7 +46,7 @@ class PathFactory implements PathFactoryInterface
      *
      * @return PathInterface The newly created path instance.
      */
-    public function create($path)
+    public function create($path): PathInterface
     {
         if ('' === $path) {
             $path = AbstractPath::SELF_ATOM;
@@ -85,7 +87,6 @@ class PathFactory implements PathFactoryInterface
      *
      * @return PathInterface                     The newly created path instance.
      * @throws InvalidPathAtomExceptionInterface If any of the supplied atoms are invalid.
-     * @throws InvalidPathStateException         If the supplied arguments would produce an invalid path.
      */
     public function createFromAtoms(
         $atoms,
@@ -102,6 +103,4 @@ class PathFactory implements PathFactoryInterface
 
         return new RelativePath($atoms, $hasTrailingSeparator);
     }
-
-    private static $instance;
 }

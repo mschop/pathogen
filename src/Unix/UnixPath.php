@@ -26,7 +26,7 @@ abstract class UnixPath extends Path
      *
      * @return PathFactoryInterface The path factory.
      */
-    protected static function factory()
+    protected static function factory(): PathFactoryInterface
     {
         return Factory\UnixPathFactory::instance();
     }

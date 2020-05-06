@@ -30,7 +30,7 @@ class AbsoluteUnixPath extends AbsolutePath implements
      *
      * @return PathFactoryInterface The path factory.
      */
-    protected static function factory()
+    protected static function factory(): PathFactoryInterface
     {
         return Factory\UnixPathFactory::instance();
     }
@@ -40,7 +40,7 @@ class AbsoluteUnixPath extends AbsolutePath implements
      *
      * @return PathNormalizerInterface The path normalizer.
      */
-    protected static function normalizer()
+    protected static function normalizer(): PathNormalizerInterface
     {
         return Normalizer\UnixPathNormalizer::instance();
     }

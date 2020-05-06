@@ -11,6 +11,15 @@
 
 namespace Eloquent\Pathogen;
 
+use Traversable;
+use Eloquent\Pathogen\Exception\EmptyPathAtomException;
+use Eloquent\Pathogen\Exception\InvalidPathAtomExceptionInterface;
+use Eloquent\Pathogen\Exception\InvalidPathStateException;
+use Eloquent\Pathogen\Exception\PathAtomContainsSeparatorException;
+use Eloquent\Pathogen\Factory\PathFactoryInterface;
+use Eloquent\Pathogen\Normalizer\PathNormalizerInterface;
+use Eloquent\Pathogen\Resolver\BasePathResolverInterface;
+
 /**
  * Abstract base class for implementing PathInterface.
  */
@@ -39,12 +48,12 @@ abstract class AbstractPath implements PathInterface
     /**
      * Construct a new path instance.
      *
-     * @param mixed<string> $atoms                The path atoms.
+     * @param iterable<string> $atoms                The path atoms.
      * @param boolean|null  $hasTrailingSeparator True if this path has a trailing separator.
      *
      * @throws Exception\InvalidPathAtomExceptionInterface If any of the supplied path atoms are invalid.
      */
-    public function __construct($atoms, $hasTrailingSeparator = null)
+    public function __construct(iterable $atoms, bool $hasTrailingSeparator = null)
     {
         if (null === $hasTrailingSeparator) {
             $hasTrailingSeparator = false;
@@ -63,7 +72,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return array<integer,string> The atoms of this path as an array of strings.
      */
-    public function atoms()
+    public function atoms(): array
     {
         return $this->atoms;
     }
@@ -76,7 +85,7 @@ abstract class AbstractPath implements PathInterface
      * @return string                           The path atom.
      * @throws Exception\UndefinedAtomException If the index does not exist in this path's atoms.
      */
-    public function atomAt($index)
+    public function atomAt(int $index): string
     {
         $atom = $this->atomAtDefault($index);
         if (null === $atom) {
@@ -95,7 +104,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return mixed The path atom, or $default if no atom is defined for the supplied index.
      */
-    public function atomAtDefault($index, $default = null)
+    public function atomAtDefault(int $index, string $default = null): ?string
     {
         $atoms = $this->atoms();
         if ($index < 0) {
@@ -117,7 +126,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return array<integer,string> An array of strings representing the subset of path atoms.
      */
-    public function sliceAtoms($index, $length = null)
+    public function sliceAtoms(int $index, int $length = null): array
     {
         $atoms = $this->atoms();
         if (null === $length) {
@@ -132,7 +141,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path has at least one atom.
      */
-    public function hasAtoms()
+    public function hasAtoms(): bool
     {
         return count($this->atoms()) > 0;
     }
@@ -142,7 +151,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path has a trailing separator.
      */
-    public function hasTrailingSeparator()
+    public function hasTrailingSeparator(): bool
     {
         return $this->hasTrailingSeparator;
     }
@@ -152,7 +161,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return string A string representation of this path.
      */
-    public function string()
+    public function string(): string
     {
         return
             implode(static::ATOM_SEPARATOR, $this->atoms()) .
@@ -174,7 +183,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return string The last path atom if one exists, otherwise an empty string.
      */
-    public function name()
+    public function name(): string
     {
         $atoms = $this->atoms();
         $numAtoms = count($atoms);
@@ -193,7 +202,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return array<integer,string> The atoms of this path's name as an array of strings.
      */
-    public function nameAtoms()
+    public function nameAtoms(): array
     {
         return explode(static::EXTENSION_SEPARATOR, $this->name());
     }
@@ -206,7 +215,7 @@ abstract class AbstractPath implements PathInterface
      * @return string                           The path name atom.
      * @throws Exception\UndefinedAtomException If the index does not exist in this path's name atoms.
      */
-    public function nameAtomAt($index)
+    public function nameAtomAt(int $index): string
     {
         $atom = $this->nameAtomAtDefault($index);
         if (null === $atom) {
@@ -221,11 +230,11 @@ abstract class AbstractPath implements PathInterface
      * index is undefined.
      *
      * @param integer $index   The index to search for.
-     * @param mixed   $default The default value to return if no atom is defined for the supplied index.
+     * @param string   $default The default value to return if no atom is defined for the supplied index.
      *
-     * @return mixed The path name atom, or $default if no atom is defined for the supplied index.
+     * @return string The path name atom, or $default if no atom is defined for the supplied index.
      */
-    public function nameAtomAtDefault($index, $default = null)
+    public function nameAtomAtDefault(int $index, string $default = null): ?string
     {
         $atoms = $this->nameAtoms();
         if ($index < 0) {
@@ -247,7 +256,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return array<integer,string> An array of strings representing the subset of path name atoms.
      */
-    public function sliceNameAtoms($index, $length = null)
+    public function sliceNameAtoms(int $index, int $length = null): array
     {
         $atoms = $this->nameAtoms();
         if (null === $length) {
@@ -262,7 +271,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return string The last atom of this path, excluding the last extension. If this path has no atoms, an empty string is returned.
      */
-    public function nameWithoutExtension()
+    public function nameWithoutExtension(): string
     {
         $atoms = $this->nameAtoms();
         if (count($atoms) > 1) {
@@ -279,7 +288,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return string The last atom of this path, excluding any extensions. If this path has no atoms, an empty string is returned.
      */
-    public function namePrefix()
+    public function namePrefix(): string
     {
         $atoms = $this->nameAtoms();
 
@@ -291,7 +300,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return string|null The extensions of this path's last atom. If the last atom has no extensions, or this path has no atoms, this method will return null.
      */
-    public function nameSuffix()
+    public function nameSuffix(): ?string
     {
         $atoms = $this->nameAtoms();
         if (count($atoms) > 1) {
@@ -308,7 +317,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return string|null The last extension of this path's last atom. If the last atom has no extensions, or this path has no atoms, this method will return null.
      */
-    public function extension()
+    public function extension(): ?string
     {
         $atoms = $this->nameAtoms();
         $numParts = count($atoms);
@@ -325,7 +334,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path's last atom has any extensions.
      */
-    public function hasExtension()
+    public function hasExtension(): bool
     {
         return count($this->nameAtoms()) > 1;
     }
@@ -338,7 +347,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path contains the substring.
      */
-    public function contains($needle, $caseSensitive = false)
+    public function contains(string $needle, bool $caseSensitive = false): bool
     {
         if ('' === $needle) {
             return true;
@@ -359,7 +368,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path starts with the substring.
      */
-    public function startsWith($needle, $caseSensitive = false)
+    public function startsWith(string $needle, bool $caseSensitive = false): bool
     {
         if ('' === $needle) {
             return true;
@@ -389,7 +398,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path matches the pattern.
      */
-    public function matches($pattern, $caseSensitive = false, $flags = null)
+    public function matches(string $pattern, bool $caseSensitive = false, int $flags = null)
     {
         if (null === $flags) {
             $flags = 0;
@@ -412,11 +421,11 @@ abstract class AbstractPath implements PathInterface
      * @return boolean True if this path matches the pattern.
      */
     public function matchesRegex(
-        $pattern,
+        string $pattern,
         array &$matches = null,
-        $flags = null,
-        $offset = null
-    ) {
+        int $flags = null,
+        int $offset = null
+    ): bool {
         if (null === $flags) {
             $flags = 0;
         }
@@ -441,7 +450,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path's name contains the substring.
      */
-    public function nameContains(string $needle, bool $caseSensitive = false)
+    public function nameContains(string $needle, bool $caseSensitive = false): bool
     {
         if (empty($needle)) {
             return true;
@@ -465,7 +474,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path's name starts with the substring.
      */
-    public function nameStartsWith($needle, $caseSensitive = false)
+    public function nameStartsWith(string $needle, bool $caseSensitive = false): bool
     {
         if ('' === $needle) {
             return true;
@@ -487,7 +496,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return boolean True if this path's name matches the pattern.
      */
-    public function nameMatches($pattern, $caseSensitive = false, $flags = null)
+    public function nameMatches(string $pattern, bool $caseSensitive = false, int $flags = null): bool
     {
         if (null === $flags) {
             $flags = 0;
@@ -510,11 +519,11 @@ abstract class AbstractPath implements PathInterface
      * @return boolean True if this path's name matches the pattern.
      */
     public function nameMatchesRegex(
-        $pattern,
+        string $pattern,
         array &$matches = null,
-        $flags = null,
-        $offset = null
-    ) {
+        int $flags = null,
+        int $offset = null
+    ): bool {
         if (null === $flags) {
             $flags = 0;
         }
@@ -537,8 +546,9 @@ abstract class AbstractPath implements PathInterface
      * @param integer|null $numLevels The number of levels up. Defaults to 1.
      *
      * @return PathInterface The parent of this path $numLevels up.
+     * @throws InvalidPathStateException
      */
-    public function parent($numLevels = null)
+    public function parent(int $numLevels = null): PathInterface
     {
         if (null === $numLevels) {
             $numLevels = 1;
@@ -559,7 +569,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface A new path instance with the trailing slash removed from this path. If this path has no trailing slash, the path is returned unmodified.
      */
-    public function stripTrailingSlash()
+    public function stripTrailingSlash(): PathInterface
     {
         if (!$this->hasTrailingSeparator()) {
             return $this;
@@ -577,7 +587,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface A new path instance with the last extension removed from this path. If this path has no extensions, the path is returned unmodified.
      */
-    public function stripExtension()
+    public function stripExtension(): PathInterface
     {
         return $this->replaceExtension(null);
     }
@@ -587,7 +597,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface A new path instance with all extensions removed from this path. If this path has no extensions, the path is returned unmodified.
      */
-    public function stripNameSuffix()
+    public function stripNameSuffix(): PathInterface
     {
         return $this->replaceNameSuffix(null);
     }
@@ -595,15 +605,14 @@ abstract class AbstractPath implements PathInterface
     /**
      * Joins one or more atoms to this path.
      *
-     * @param string     $atom            A path atom to append.
-     * @param string,... $additionalAtoms Additional path atoms to append.
+     * @param string     ...$atom            A path atom to append.
      *
      * @return PathInterface                               A new path with the supplied atom(s) suffixed to this path.
      * @throws Exception\InvalidPathAtomExceptionInterface If any joined atoms are invalid.
      */
-    public function joinAtoms($atom)
+    public function joinAtoms(string ...$atom): PathInterface
     {
-        return $this->joinAtomSequence(func_get_args());
+        return $this->joinAtomSequence($atom);
     }
 
     /**
@@ -614,7 +623,7 @@ abstract class AbstractPath implements PathInterface
      * @return PathInterface                               A new path with the supplied sequence of atoms suffixed to this path.
      * @throws Exception\InvalidPathAtomExceptionInterface If any joined atoms are invalid.
      */
-    public function joinAtomSequence($atoms)
+    public function joinAtomSequence(iterable $atoms): PathInterface
     {
         if (!is_array($atoms)) {
             $atoms = iterator_to_array($atoms);
@@ -634,7 +643,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface A new path with the supplied path suffixed to this path.
      */
-    public function join(RelativePathInterface $path)
+    public function join(RelativePathInterface $path): PathInterface
     {
         return $this->joinAtomSequence($path->atoms());
     }
@@ -644,7 +653,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface A new path instance with a trailing slash suffixed to this path.
      */
-    public function joinTrailingSlash()
+    public function joinTrailingSlash(): PathInterface
     {
         if ($this->hasTrailingSeparator()) {
             return $this;
@@ -660,13 +669,12 @@ abstract class AbstractPath implements PathInterface
     /**
      * Joins one or more extensions to this path.
      *
-     * @param string     $extension            An extension to append.
-     * @param string,... $additionalExtensions Additional extensions to append.
+     * @param string     ...$extension            An extension to append.
      *
      * @return PathInterface                               A new path instance with the supplied extensions suffixed to this path.
      * @throws Exception\InvalidPathAtomExceptionInterface If the suffixed extensions cause the atom to be invalid.
      */
-    public function joinExtensions($extension)
+    public function joinExtensions(string ...$extension): PathInterface
     {
         return $this->joinExtensionSequence(func_get_args());
     }
@@ -679,7 +687,7 @@ abstract class AbstractPath implements PathInterface
      * @return PathInterface                               A new path instance with the supplied extensions suffixed to this path.
      * @throws Exception\InvalidPathAtomExceptionInterface If the suffixed extensions cause the atom to be invalid.
      */
-    public function joinExtensionSequence($extensions)
+    public function joinExtensionSequence(iterable $extensions): PathInterface
     {
         if (!is_array($extensions)) {
             $extensions = iterator_to_array($extensions);
@@ -706,7 +714,7 @@ abstract class AbstractPath implements PathInterface
      * @return PathInterface                               A new path instance with the supplied string suffixed to the last path atom.
      * @throws Exception\InvalidPathAtomExceptionInterface If the suffix causes the atom to be invalid.
      */
-    public function suffixName($suffix)
+    public function suffixName(string $suffix): PathInterface
     {
         $name = $this->name();
         if (static::SELF_ATOM === $name) {
@@ -724,7 +732,7 @@ abstract class AbstractPath implements PathInterface
      * @return PathInterface                               A new path instance with the supplied string prefixed to the last path atom.
      * @throws Exception\InvalidPathAtomExceptionInterface If the prefix causes the atom to be invalid.
      */
-    public function prefixName($prefix)
+    public function prefixName(string $prefix): PathInterface
     {
         $name = $this->name();
         if (static::SELF_ATOM === $name) {
@@ -738,12 +746,12 @@ abstract class AbstractPath implements PathInterface
      * Replace a section of this path with the supplied atom sequence.
      *
      * @param integer       $index       The start index of the replacement.
-     * @param mixed<string> $replacement The replacement atom sequence.
+     * @param iterable<string> $replacement The replacement atom sequence.
      * @param integer|null  $length      The number of atoms to replace. If $length is null, the entire remainder of the path will be replaced.
      *
      * @return PathInterface A new path instance that has a portion of this path's atoms replaced with a different sequence of atoms.
      */
-    public function replace($index, $replacement, $length = null)
+    public function replace(int $index, iterable $replacement, int $length = null): PathInterface
     {
         $atoms = $this->atoms();
 
@@ -770,7 +778,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface A new path instance with the supplied name replacing the existing one.
      */
-    public function replaceName($name)
+    public function replaceName(string $name): PathInterface
     {
         $atoms = $this->atoms();
         $numAtoms = count($atoms);
@@ -799,7 +807,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface A new path instance with the supplied name replacing the portion of the existing name preceding the last extension.
      */
-    public function replaceNameWithoutExtension($nameWithoutExtension)
+    public function replaceNameWithoutExtension(string $nameWithoutExtension): PathInterface
     {
         $atoms = $this->nameAtoms();
         if (count($atoms) < 2) {
@@ -818,7 +826,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface A new path instance with the supplied name prefix replacing the existing one.
      */
-    public function replaceNamePrefix($namePrefix)
+    public function replaceNamePrefix(string $namePrefix): PathInterface
     {
         return $this->replaceNameAtoms(0, array($namePrefix), 1);
     }
@@ -830,7 +838,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface A new path instance with the supplied name suffix replacing the existing one.
      */
-    public function replaceNameSuffix($nameSuffix)
+    public function replaceNameSuffix(?string $nameSuffix): PathInterface
     {
         $atoms = $this->nameAtoms();
         if (array('', '') === $atoms) {
@@ -862,7 +870,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface A new path instance with the supplied extension replacing the existing one.
      */
-    public function replaceExtension($extension)
+    public function replaceExtension(?string $extension): PathInterface
     {
         $atoms = $this->nameAtoms();
         if (array('', '') === $atoms) {
@@ -897,16 +905,16 @@ abstract class AbstractPath implements PathInterface
      * sequence.
      *
      * @param integer       $index       The start index of the replacement.
-     * @param mixed<string> $replacement The replacement name atom sequence.
+     * @param iterable <string> $replacement The replacement name atom sequence.
      * @param integer|null  $length      The number of atoms to replace. If $length is null, the entire remainder of the path name will be replaced.
      *
      * @return PathInterface A new path instance that has a portion of this name's atoms replaced with a different sequence of atoms.
      */
-    public function replaceNameAtoms($index, $replacement, $length = null)
+    public function replaceNameAtoms(int $index, iterable $replacement, int $length = null): PathInterface
     {
         $atoms = $this->nameAtoms();
 
-        if (!is_array($replacement)) {
+        if ($replacement instanceof Traversable) {
             $replacement = iterator_to_array($replacement);
         }
         if (null === $length) {
@@ -923,7 +931,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return PathInterface The normalized path.
      */
-    public function normalize()
+    public function normalize(): PathInterface
     {
         return static::normalizer()->normalize($this);
     }
@@ -939,11 +947,11 @@ abstract class AbstractPath implements PathInterface
      *
      * @param mixed<string> $atoms The path atoms to normalize.
      *
-     * @return array<string>                                The normalized path atoms.
+     * @return iterable<string>                                The normalized path atoms.
      * @throws Exception\EmptyPathAtomException             If any path atom is empty.
      * @throws Exception\PathAtomContainsSeparatorException If any path atom contains a separator.
      */
-    protected function normalizeAtoms($atoms)
+    protected function normalizeAtoms(iterable $atoms): iterable
     {
         $normalizedAtoms = array();
         foreach ($atoms as $atom) {
@@ -963,14 +971,15 @@ abstract class AbstractPath implements PathInterface
      *
      * @param string $atom The atom to validate.
      *
-     * @throws Exception\InvalidPathAtomExceptionInterface If an invalid path atom is encountered.
+     * @throws EmptyPathAtomException
+     * @throws PathAtomContainsSeparatorException
      */
-    protected function validateAtom($atom)
+    protected function validateAtom(string $atom)
     {
         if ('' === $atom) {
-            throw new Exception\EmptyPathAtomException;
+            throw new EmptyPathAtomException;
         } elseif (false !== strpos($atom, static::ATOM_SEPARATOR)) {
-            throw new Exception\PathAtomContainsSeparatorException($atom);
+            throw new PathAtomContainsSeparatorException($atom);
         }
     }
 
@@ -984,15 +993,18 @@ abstract class AbstractPath implements PathInterface
      *
      * @param mixed<string> $atoms                The path atoms.
      * @param boolean       $isAbsolute           True if the new path should be absolute.
-     * @param boolean|null  $hasTrailingSeparator True if the new path should have a trailing separator.
+     * @param boolean  $hasTrailingSeparator True if the new path should have a trailing separator.
      *
      * @return PathInterface The newly created path instance.
+     *
+     * @throws InvalidPathAtomExceptionInterface If any of the supplied atoms are invalid.
+     * @throws InvalidPathStateException         If the supplied arguments would produce an invalid path.
      */
     protected function createPath(
-        $atoms,
-        $isAbsolute,
-        $hasTrailingSeparator = null
-    ) {
+        iterable $atoms,
+        bool $isAbsolute,
+        bool $hasTrailingSeparator = false
+    ): PathInterface {
         return static::factory()->createFromAtoms(
             $atoms,
             $isAbsolute,
@@ -1005,7 +1017,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return Factory\PathFactoryInterface The path factory.
      */
-    protected static function factory()
+    protected static function factory(): PathFactoryInterface
     {
         return Factory\PathFactory::instance();
     }
@@ -1015,7 +1027,7 @@ abstract class AbstractPath implements PathInterface
      *
      * @return Normalizer\PathNormalizerInterface The path normalizer.
      */
-    protected static function normalizer()
+    protected static function normalizer(): PathNormalizerInterface
     {
         return Normalizer\PathNormalizer::instance();
     }
@@ -1025,11 +1037,11 @@ abstract class AbstractPath implements PathInterface
      *
      * @return Resolver\BasePathResolverInterface The base path resolver.
      */
-    protected static function resolver()
+    protected static function resolver(): BasePathResolverInterface
     {
         return Resolver\BasePathResolver::instance();
     }
 
-    private $atoms;
-    private $hasTrailingSeparator;
+    private array $atoms;
+    private bool $hasTrailingSeparator;
 }

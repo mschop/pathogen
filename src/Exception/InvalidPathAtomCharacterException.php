@@ -25,7 +25,7 @@ final class InvalidPathAtomCharacterException extends AbstractInvalidPathAtomExc
      * @param string         $character The invalid character.
      * @param Exception|null $previous  The cause, if available.
      */
-    public function __construct($atom, $character, Exception $previous = null)
+    public function __construct(string $atom, string $character, Exception $previous = null)
     {
         $this->character = $character;
 
@@ -37,7 +37,7 @@ final class InvalidPathAtomCharacterException extends AbstractInvalidPathAtomExc
      *
      * @return string The invalid character.
      */
-    public function character()
+    public function character(): string
     {
         return $this->character;
     }
@@ -47,7 +47,7 @@ final class InvalidPathAtomCharacterException extends AbstractInvalidPathAtomExc
      *
      * @return string The reason message.
      */
-    public function reason()
+    public function reason(): string
     {
         return sprintf(
             'Path atom contains invalid character %s.',

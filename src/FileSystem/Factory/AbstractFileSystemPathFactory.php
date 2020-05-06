@@ -52,7 +52,7 @@ abstract class AbstractFileSystemPathFactory implements
      *
      * @return PathFactoryInterface The path factory used for Unix paths.
      */
-    public function unixFactory()
+    public function unixFactory(): PathFactoryInterface
     {
         return $this->unixFactory;
     }
@@ -62,7 +62,7 @@ abstract class AbstractFileSystemPathFactory implements
      *
      * @return PathFactoryInterface The path factory used for Windows paths.
      */
-    public function windowsFactory()
+    public function windowsFactory(): PathFactoryInterface
     {
         return $this->windowsFactory;
     }
@@ -72,7 +72,7 @@ abstract class AbstractFileSystemPathFactory implements
      *
      * @return AbsoluteFileSystemPathInterface A new path instance representing the current working directory path.
      */
-    public function createWorkingDirectoryPath()
+    public function createWorkingDirectoryPath(): AbsoluteFileSystemPathInterface
     {
         return $this->factoryByPlatform()
             ->create($this->isolator()->getcwd());
@@ -100,7 +100,7 @@ abstract class AbstractFileSystemPathFactory implements
      *
      * @return AbsoluteFileSystemPathInterface A new path instance representing the new temporary path.
      */
-    public function createTemporaryPath($prefix = null)
+    public function createTemporaryPath(string $prefix = null)
     {
         if (null === $prefix) {
             $prefix = '';
@@ -115,7 +115,7 @@ abstract class AbstractFileSystemPathFactory implements
      *
      * @return Isolator The isolator.
      */
-    protected function isolator()
+    protected function isolator(): Isolator
     {
         return $this->isolator;
     }
@@ -126,7 +126,7 @@ abstract class AbstractFileSystemPathFactory implements
      *
      * @return PathFactoryInterface The most appropriate path factory.
      */
-    protected function factoryByPlatform()
+    protected function factoryByPlatform(): PathFactoryInterface
     {
         if ($this->isolator()->defined('PHP_WINDOWS_VERSION_BUILD')) {
             return $this->windowsFactory();

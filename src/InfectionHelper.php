@@ -17,7 +17,7 @@ class InfectionHelper
      * the parameter `start_index` of the `array_fill` method.
      *
      * @param int $num
-     * @param $value
+     * @param mixed $value
      * @return array
      */
     public static function array_fill(int $num, $value)

@@ -26,9 +26,9 @@ class UnixPathFactory extends PathFactory
     /**
      * Get a static instance of this path factory.
      *
-     * @return PathFactoryInterface The static path factory.
+     * @return UnixPathFactory The static path factory.
      */
-    public static function instance()
+    public static function instance(): UnixPathFactory
     {
         if (null === self::$instance) {
             self::$instance = new self;

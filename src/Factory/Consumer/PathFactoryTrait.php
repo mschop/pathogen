@@ -19,12 +19,14 @@ use Eloquent\Pathogen\Factory\PathFactoryInterface;
  */
 trait PathFactoryTrait
 {
+    private ?PathFactoryInterface $pathFactory = null;
+
     /**
      * Set the path factory.
      *
      * @param PathFactoryInterface $pathFactory The path factory to use.
      */
-    public function setPathFactory(PathFactoryInterface $pathFactory)
+    public function setPathFactory(PathFactoryInterface $pathFactory): void
     {
         $this->pathFactory = $pathFactory;
     }
@@ -34,7 +36,7 @@ trait PathFactoryTrait
      *
      * @return PathFactoryInterface The path factory.
      */
-    public function pathFactory()
+    public function pathFactory(): PathFactoryInterface
     {
         if (null === $this->pathFactory) {
             $this->pathFactory = $this->createDefaultPathFactory();
@@ -48,10 +50,8 @@ trait PathFactoryTrait
      *
      * @return PathFactoryInterface The new default path factory instance.
      */
-    protected function createDefaultPathFactory()
+    protected function createDefaultPathFactory(): PathFactoryInterface
     {
         return PathFactory::instance();
     }
-
-    private $pathFactory;
 }

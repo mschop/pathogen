@@ -18,9 +18,10 @@ use Exception;
  * Abstract base class for exceptions implementing
  * InvalidPathExceptionInterface.
  */
-abstract class AbstractInvalidPathException extends Exception
-    implements InvalidPathExceptionInterface
+abstract class AbstractInvalidPathException extends Exception implements InvalidPathExceptionInterface
 {
+    private PathInterface $path;
+
     /**
      * Construct a new invalid path exception.
      *
@@ -47,7 +48,7 @@ abstract class AbstractInvalidPathException extends Exception
      *
      * @return PathInterface The invalid path.
      */
-    public function path()
+    public function path(): PathInterface
     {
         return $this->path;
     }
@@ -57,7 +58,5 @@ abstract class AbstractInvalidPathException extends Exception
      *
      * @return string The reason message.
      */
-    abstract public function reason();
-
-    private $path;
+    abstract public function reason(): string;
 }
