@@ -13,6 +13,7 @@ namespace Eloquent\Pathogen\Windows;
 
 use ArrayIterator;
 use Eloquent\Pathogen\Factory\PathFactory;
+use Eloquent\Pathogen\Windows\Factory\WindowsPathFactoryInterface;
 
 
 /**
@@ -22,6 +23,8 @@ use Eloquent\Pathogen\Factory\PathFactory;
  */
 class AbsoluteWindowsPathTest extends \PHPUnit\Framework\TestCase
 {
+    private WindowsPathFactoryInterface $factory;
+
     protected function setUp(): void
     {
         parent::setUp();

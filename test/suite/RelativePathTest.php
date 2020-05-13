@@ -12,6 +12,7 @@
 namespace Eloquent\Pathogen;
 
 use ArrayIterator;
+use Eloquent\Pathogen\Factory\PathFactoryInterface;
 
 
 /**
@@ -20,6 +21,8 @@ use ArrayIterator;
  */
 class RelativePathTest extends \PHPUnit\Framework\TestCase
 {
+    private PathFactoryInterface $factory;
+
     protected function setUp(): void
     {
         parent::setUp();

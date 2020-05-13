@@ -12,6 +12,7 @@
 namespace Eloquent\Pathogen\Unix;
 
 use ArrayIterator;
+use Eloquent\Pathogen\Unix\Factory\UnixPathFactory;
 
 
 /**
@@ -21,6 +22,8 @@ use ArrayIterator;
  */
 class RelativeUnixPathTest extends \PHPUnit\Framework\TestCase
 {
+    private UnixPathFactory $factory;
+
     protected function setUp(): void
     {
         parent::setUp();
