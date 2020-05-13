@@ -175,7 +175,7 @@ class AbsolutePath extends AbstractPath implements AbsolutePathInterface
             $diffAtoms = [static::SELF_ATOM];
         } else {
             $equalAmount = 0;
-            while (isset($parentAtoms[$equalAmount]) && $childAtoms[$equalAmount] && $parentAtoms[$equalAmount] === $childAtoms[$equalAmount]) {
+            while (isset($parentAtoms[$equalAmount], $childAtoms[$equalAmount]) && $parentAtoms[$equalAmount] === $childAtoms[$equalAmount]) {
                 $equalAmount++;
             }
             $diffAtoms = array_merge(
