@@ -5,10 +5,7 @@
 [![The most recent stable version is 0.6.1][version-image]][Semantic versioning]
 [![Current build status image][build-image]][Current build status]
 
-[build-image]: http://img.shields.io/travis/eloquent/pathogen/develop.svg "Current build status for the develop branch"
-[Current build status]: https://travis-ci.org/mschop/pathogen
-[Semantic versioning]: http://semver.org/
-[version-image]: http://img.shields.io/:semver-0.6.1-yellow.svg "This project uses semantic versioning"
+[![Build Status](https://travis-ci.org/mschop/pathogen.svg?branch=master)](https://travis-ci.org/mschop/pathogen)
 
 ## Future development
 
