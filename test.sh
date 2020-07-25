@@ -22,9 +22,11 @@ for option in "$@"; do
   esac
 done
 
+declare -a php_versions=("7.4" "8.0.0alpha3")
 
-for version in "7.4" # Later add further versions here
+for version in "${php_versions[@]}" # Later add further versions here
 do
+    printf "\n\n> Testing PHP-Version $version \n\n"
     docker build "$DOCKER_DIR" -t "pathogen-php-$version" --build-arg "PHP_VERSION=$version"
     docker run -v "$DIR:/code" -w "/code" "pathogen-php-$version" composer install --no-interaction --no-progress
 
