@@ -2,10 +2,8 @@
 
 *General-purpose path library for PHP.*
 
-[![The most recent stable version is 0.6.1][version-image]][Semantic versioning]
-[![Current build status image][build-image]][Current build status]
-
 [![Build Status](https://travis-ci.org/mschop/pathogen.svg?branch=master)](https://travis-ci.org/mschop/pathogen)
+
 
 ## Future development
 
