@@ -16,9 +16,7 @@ use Eloquent\Pathogen\FileSystem\RelativeFileSystemPathInterface;
 /**
  * The interface implemented by relative Windows paths.
  */
-interface RelativeWindowsPathInterface extends
-    RelativeFileSystemPathInterface,
-    WindowsPathInterface
+interface RelativeWindowsPathInterface extends RelativeFileSystemPathInterface, WindowsPathInterface
 {
     /**
      * Returns true if this path is 'anchored' to the drive root.

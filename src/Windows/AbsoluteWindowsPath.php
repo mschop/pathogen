@@ -27,9 +27,7 @@ use Eloquent\Pathogen\Windows\Factory\WindowsPathFactoryInterface;
 /**
  * Represents an absolute Windows path.
  */
-class AbsoluteWindowsPath extends AbsolutePath implements
-    AbsoluteFileSystemPathInterface,
-    AbsoluteWindowsPathInterface
+class AbsoluteWindowsPath extends AbsolutePath implements AbsoluteFileSystemPathInterface, AbsoluteWindowsPathInterface
 {
     /**
      * Creates a new absolute Windows path from a set of path atoms and a drive

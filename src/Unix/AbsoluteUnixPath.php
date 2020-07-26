@@ -19,9 +19,7 @@ use Eloquent\Pathogen\Normalizer\PathNormalizerInterface;
 /**
  * Represents an absolute Unix path.
  */
-class AbsoluteUnixPath extends AbsolutePath implements
-    AbsoluteFileSystemPathInterface,
-    AbsoluteUnixPathInterface
+class AbsoluteUnixPath extends AbsolutePath implements AbsoluteFileSystemPathInterface, AbsoluteUnixPathInterface
 {
     // Implementation details ==================================================
 

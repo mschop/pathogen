@@ -27,9 +27,7 @@ use Eloquent\Pathogen\Windows\Factory\WindowsPathFactoryInterface;
 /**
  * Represents a relative Windows path.
  */
-class RelativeWindowsPath extends RelativePath implements
-    RelativeFileSystemPathInterface,
-    RelativeWindowsPathInterface
+class RelativeWindowsPath extends RelativePath implements RelativeFileSystemPathInterface, RelativeWindowsPathInterface
 {
     /**
      * Creates a new relative Windows path from a set of path atoms and a drive

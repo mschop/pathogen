@@ -23,8 +23,7 @@ use Eloquent\Pathogen\Windows\WindowsPathInterface;
 /**
  * A path factory that creates Windows path instances.
  */
-class WindowsPathFactory extends PathFactory implements
-    WindowsPathFactoryInterface
+class WindowsPathFactory extends PathFactory implements WindowsPathFactoryInterface
 {
     /**
      * Get a static instance of this path factory.

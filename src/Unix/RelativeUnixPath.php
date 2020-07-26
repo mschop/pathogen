@@ -19,9 +19,7 @@ use Eloquent\Pathogen\RelativePath;
 /**
  * Represents a relative Unix path.
  */
-class RelativeUnixPath extends RelativePath implements
-    RelativeFileSystemPathInterface,
-    RelativeUnixPathInterface
+class RelativeUnixPath extends RelativePath implements RelativeFileSystemPathInterface, RelativeUnixPathInterface
 {
     // Implementation details ==================================================
 

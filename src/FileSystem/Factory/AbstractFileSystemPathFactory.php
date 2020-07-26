@@ -20,8 +20,7 @@ use Icecave\Isolator\Isolator;
 /**
  * Abstract base class for classes implementing FileSystemPathFactoryInterface.
  */
-abstract class AbstractFileSystemPathFactory implements
-    FileSystemPathFactoryInterface
+abstract class AbstractFileSystemPathFactory implements FileSystemPathFactoryInterface
 {
     /**
      * Construct a new file system path factory.

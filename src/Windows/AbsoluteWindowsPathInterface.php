@@ -16,8 +16,6 @@ use Eloquent\Pathogen\FileSystem\AbsoluteFileSystemPathInterface;
 /**
  * The interface implemented by absolute Windows paths.
  */
-interface AbsoluteWindowsPathInterface extends
-    AbsoluteFileSystemPathInterface,
-    WindowsPathInterface
+interface AbsoluteWindowsPathInterface extends AbsoluteFileSystemPathInterface, WindowsPathInterface
 {
 }
