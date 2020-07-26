@@ -18,6 +18,8 @@ use Exception;
  */
 final class InvalidDriveSpecifierException extends Exception
 {
+    private $drive;
+
     /**
      * Constructs a new invalid drive specifier exception.
      *
@@ -44,6 +46,4 @@ final class InvalidDriveSpecifierException extends Exception
     {
         return $this->drive;
     }
-
-    private $drive;
 }

@@ -25,6 +25,9 @@ use Eloquent\Pathogen\Windows\WindowsPathInterface;
  */
 class WindowsPathFactory extends PathFactory implements WindowsPathFactoryInterface
 {
+    private static $instance;
+    private $defaultDrive;
+
     /**
      * Get a static instance of this path factory.
      *
@@ -179,7 +182,4 @@ class WindowsPathFactory extends PathFactory implements WindowsPathFactoryInterf
             $hasTrailingSeparator
         );
     }
-
-    private static $instance;
-    private $defaultDrive;
 }

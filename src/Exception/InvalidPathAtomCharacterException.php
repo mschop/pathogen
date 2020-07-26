@@ -18,6 +18,8 @@ use Exception;
  */
 final class InvalidPathAtomCharacterException extends AbstractInvalidPathAtomException
 {
+    private $character;
+
     /**
      * Construct a new invalid path atom character exception.
      *
@@ -54,6 +56,4 @@ final class InvalidPathAtomCharacterException extends AbstractInvalidPathAtomExc
             var_export($this->character(), true)
         );
     }
-
-    private $character;
 }

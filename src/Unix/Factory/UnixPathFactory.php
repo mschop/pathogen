@@ -23,6 +23,8 @@ use Eloquent\Pathogen\Unix\RelativeUnixPath;
  */
 class UnixPathFactory extends PathFactory
 {
+    private static $instance;
+
     /**
      * Get a static instance of this path factory.
      *
@@ -63,6 +65,4 @@ class UnixPathFactory extends PathFactory
 
         return new RelativeUnixPath($atoms, $hasTrailingSeparator);
     }
-
-    private static $instance;
 }

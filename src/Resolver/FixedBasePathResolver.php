@@ -19,6 +19,9 @@ use Eloquent\Pathogen\PathInterface;
  */
 class FixedBasePathResolver implements PathResolverInterface
 {
+    private $basePath;
+    private $resolver;
+
     /**
      * Construct a new fixed base path resolver.
      *
@@ -68,7 +71,4 @@ class FixedBasePathResolver implements PathResolverInterface
     {
         return $this->resolver()->resolve($this->basePath(), $path);
     }
-
-    private $basePath;
-    private $resolver;
 }

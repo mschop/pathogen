@@ -29,6 +29,8 @@ use Eloquent\Pathogen\Windows\Factory\WindowsPathFactoryInterface;
  */
 class AbsoluteWindowsPath extends AbsolutePath implements AbsoluteFileSystemPathInterface, AbsoluteWindowsPathInterface
 {
+    private string $drive;
+
     /**
      * Creates a new absolute Windows path from a set of path atoms and a drive
      * specifier.
@@ -456,6 +458,4 @@ class AbsoluteWindowsPath extends AbsolutePath implements AbsoluteFileSystemPath
     {
         return Resolver\WindowsBasePathResolver::instance();
     }
-
-    private string $drive;
 }

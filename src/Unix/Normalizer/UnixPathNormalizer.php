@@ -21,6 +21,8 @@ use Eloquent\Pathogen\Unix\Factory\UnixPathFactory;
  */
 class UnixPathNormalizer extends PathNormalizer
 {
+    private static $instance;
+
     /**
      * Get a static instance of this path normalizer.
      *
@@ -48,6 +50,4 @@ class UnixPathNormalizer extends PathNormalizer
 
         parent::__construct($factory);
     }
-
-    private static $instance;
 }

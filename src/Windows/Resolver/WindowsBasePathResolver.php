@@ -21,6 +21,8 @@ use Eloquent\Pathogen\Windows\RelativeWindowsPathInterface;
  */
 class WindowsBasePathResolver implements BasePathResolverInterface
 {
+    private static $instance;
+
     /**
      * Get a static instance of this base path resolver.
      *
@@ -61,6 +63,4 @@ class WindowsBasePathResolver implements BasePathResolverInterface
 
         return $basePath->join($path);
     }
-
-    private static $instance;
 }

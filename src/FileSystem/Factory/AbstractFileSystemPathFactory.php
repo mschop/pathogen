@@ -22,6 +22,10 @@ use Icecave\Isolator\Isolator;
  */
 abstract class AbstractFileSystemPathFactory implements FileSystemPathFactoryInterface
 {
+    private $unixFactory;
+    private $windowsFactory;
+    private $isolator;
+
     /**
      * Construct a new file system path factory.
      *
@@ -133,8 +137,4 @@ abstract class AbstractFileSystemPathFactory implements FileSystemPathFactoryInt
 
         return $this->unixFactory();
     }
-
-    private $unixFactory;
-    private $windowsFactory;
-    private $isolator;
 }

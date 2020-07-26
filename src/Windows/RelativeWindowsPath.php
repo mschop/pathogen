@@ -29,6 +29,9 @@ use Eloquent\Pathogen\Windows\Factory\WindowsPathFactoryInterface;
  */
 class RelativeWindowsPath extends RelativePath implements RelativeFileSystemPathInterface, RelativeWindowsPathInterface
 {
+    private ?string $drive = null;
+    private bool $isAnchored;
+
     /**
      * Creates a new relative Windows path from a set of path atoms and a drive
      * specifier.
@@ -478,7 +481,4 @@ class RelativeWindowsPath extends RelativePath implements RelativeFileSystemPath
     {
         return Normalizer\WindowsPathNormalizer::instance();
     }
-
-    private ?string $drive = null;
-    private bool $isAnchored;
 }

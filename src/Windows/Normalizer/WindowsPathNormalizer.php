@@ -24,6 +24,8 @@ use Eloquent\Pathogen\Windows\RelativeWindowsPathInterface;
  */
 class WindowsPathNormalizer extends PathNormalizer
 {
+    private static $instance;
+
     /**
      * Get a static instance of this path normalizer.
      *
@@ -127,6 +129,4 @@ class WindowsPathNormalizer extends PathNormalizer
 
         return strtoupper($drive);
     }
-
-    private static $instance;
 }

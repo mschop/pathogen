@@ -18,6 +18,9 @@ use Exception;
  */
 final class DriveMismatchException extends Exception
 {
+    private $leftDrive;
+    private $rightDrive;
+
     /**
      * Constructs a new drive specifier mismatch exception.
      *
@@ -63,7 +66,4 @@ final class DriveMismatchException extends Exception
     {
         return $this->rightDrive;
     }
-
-    private $leftDrive;
-    private $rightDrive;
 }

@@ -20,6 +20,8 @@ use Eloquent\Pathogen\PathInterface;
  */
 class PlatformFileSystemPathFactory extends AbstractFileSystemPathFactory
 {
+    private static $instance;
+
     /**
      * Get a static instance of this path factory.
      *
@@ -68,6 +70,4 @@ class PlatformFileSystemPathFactory extends AbstractFileSystemPathFactory
             $hasTrailingSeparator
         );
     }
-
-    private static $instance;
 }

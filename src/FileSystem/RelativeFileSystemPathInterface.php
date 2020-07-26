@@ -16,8 +16,6 @@ use Eloquent\Pathogen\RelativePathInterface;
 /**
  * The interface implemented by relative file system paths.
  */
-interface RelativeFileSystemPathInterface extends
-    RelativePathInterface,
-    FileSystemPathInterface
+interface RelativeFileSystemPathInterface extends RelativePathInterface, FileSystemPathInterface
 {
 }

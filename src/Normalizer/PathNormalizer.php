@@ -23,6 +23,9 @@ use Eloquent\Pathogen\RelativePathInterface;
  */
 class PathNormalizer implements PathNormalizerInterface
 {
+    private static $instance;
+    private $factory;
+
     /**
      * Get a static instance of this path normalizer.
      *
@@ -165,7 +168,4 @@ class PathNormalizer implements PathNormalizerInterface
 
         return $resultingAtoms;
     }
-
-    private static $instance;
-    private $factory;
 }

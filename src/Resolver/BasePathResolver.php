@@ -19,6 +19,8 @@ use Eloquent\Pathogen\PathInterface;
  */
 class BasePathResolver implements BasePathResolverInterface
 {
+    private static $instance;
+
     /**
      * Get a static instance of this base path resolver.
      *
@@ -51,6 +53,4 @@ class BasePathResolver implements BasePathResolverInterface
 
         return $basePath->join($path);
     }
-
-    private static $instance;
 }

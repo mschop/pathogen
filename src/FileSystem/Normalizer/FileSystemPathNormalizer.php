@@ -22,6 +22,11 @@ use Eloquent\Pathogen\Windows\WindowsPathInterface;
  */
 class FileSystemPathNormalizer implements PathNormalizerInterface
 {
+
+    private static $instance;
+    private $unixNormalizer;
+    private $windowsNormalizer;
+
     /**
      * Get a static instance of this path normalizer.
      *
@@ -92,8 +97,4 @@ class FileSystemPathNormalizer implements PathNormalizerInterface
 
         return $this->unixNormalizer()->normalize($path);
     }
-
-    private static $instance;
-    private $unixNormalizer;
-    private $windowsNormalizer;
 }

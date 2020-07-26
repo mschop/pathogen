@@ -16,8 +16,6 @@ use Eloquent\Pathogen\FileSystem\AbsoluteFileSystemPathInterface;
 /**
  * The interface implemented by absolute Unix paths.
  */
-interface AbsoluteUnixPathInterface extends
-    AbsoluteFileSystemPathInterface,
-    UnixPathInterface
+interface AbsoluteUnixPathInterface extends AbsoluteFileSystemPathInterface, UnixPathInterface
 {
 }

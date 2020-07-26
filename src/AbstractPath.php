@@ -25,6 +25,9 @@ use Eloquent\Pathogen\Resolver\BasePathResolverInterface;
  */
 abstract class AbstractPath implements PathInterface
 {
+    private array $atoms;
+    private bool $hasTrailingSeparator;
+
     /**
      * The character used to separate path atoms.
      */
@@ -1041,7 +1044,4 @@ abstract class AbstractPath implements PathInterface
     {
         return Resolver\BasePathResolver::instance();
     }
-
-    private array $atoms;
-    private bool $hasTrailingSeparator;
 }
