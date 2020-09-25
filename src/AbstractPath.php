@@ -484,7 +484,7 @@ abstract class AbstractPath implements PathInterface
         }
 
         if ($caseSensitive) {
-            return 0 === mb_strpos($this->name(), $needle);
+            return 0 === strpos($this->name(), $needle);
         }
 
         return 0 === mb_stripos($this->name(), $needle);

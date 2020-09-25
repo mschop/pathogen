@@ -70,4 +70,22 @@ class PathTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($path instanceof RelativePath);
         $this->assertFalse($path->hasTrailingSeparator());
     }
+
+    public function test_nameStartsWith_caseSensitivityForMultibyte()
+    {
+        $name1 = 'dätei';
+        $name2 = 'dÄtei';
+
+        $path = RelativePath::fromString($name1);
+
+        $this->assertTrue(
+            $path->nameStartsWith($name2),
+            "Failed asserting that nameStartsWith (case insensitive) matches '$name1' and '$name2'",
+        );
+
+        $this->assertFalse(
+            $path->nameStartsWith($name2, true),
+            "Failed asserting that nameStartsWith (case sensitive) does not match '$name1' and '$name2'",
+        );
+    }
 }
