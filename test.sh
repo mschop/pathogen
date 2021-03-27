@@ -3,7 +3,7 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-DOCKER_DIR=$DIR/docker
+DOCKER_DIR=$DIR
 
 docker=`command -v docker`
 
@@ -22,15 +22,16 @@ for option in "$@"; do
   esac
 done
 
+versions=( "8.0" )
 
-for version in "7.4" # Later add further versions here
+for version in "${versions[@]}"
 do
     docker build "$DOCKER_DIR" -t "pathogen-php-$version" --build-arg "PHP_VERSION=$version"
-    docker run -v "$DIR:/code" -w "/code" "pathogen-php-$version" composer install --no-interaction --no-progress
+    docker run --rm -v "$DIR:/code" -w "/code" "pathogen-php-$version" composer update --no-interaction --no-progress
 
     if [[ $mutations == "YES" ]]; then
-        docker run -v "$DIR:/code" -w "/code" "pathogen-php-$version" vendor/bin/infection
+        docker run --rm -v "$DIR:/code" -w "/code" "pathogen-php-$version" vendor/bin/infection
     else
-        docker run -v "$DIR:/code" -w "/code" "pathogen-php-$version" vendor/bin/phpunit
+        docker run --rm -v "$DIR:/code" -w "/code" "pathogen-php-$version" vendor/bin/phpunit
     fi
 done

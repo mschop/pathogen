@@ -2,7 +2,7 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-cli
 
-ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update && apt-get -y upgrade \
