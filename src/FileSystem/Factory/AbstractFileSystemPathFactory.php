@@ -15,7 +15,6 @@ use Eloquent\Pathogen\Factory\PathFactoryInterface;
 use Eloquent\Pathogen\FileSystem\AbsoluteFileSystemPathInterface;
 use Eloquent\Pathogen\Unix\Factory\UnixPathFactory;
 use Eloquent\Pathogen\Windows\Factory\WindowsPathFactory;
-use Icecave\Isolator\Isolator;
 
 /**
  * Abstract base class for classes implementing FileSystemPathFactoryInterface.
@@ -24,19 +23,16 @@ abstract class AbstractFileSystemPathFactory implements FileSystemPathFactoryInt
 {
     private $unixFactory;
     private $windowsFactory;
-    private $isolator;
 
     /**
      * Construct a new file system path factory.
      *
      * @param PathFactoryInterface|null $unixFactory    The path factory to use for Unix paths.
      * @param PathFactoryInterface|null $windowsFactory The path factory to use for Windows paths.
-     * @param Isolator|null             $isolator       The isolator to use.
      */
     public function __construct(
         PathFactoryInterface $unixFactory = null,
         PathFactoryInterface $windowsFactory = null,
-        Isolator $isolator = null
     ) {
         if (null === $unixFactory) {
             $unixFactory = UnixPathFactory::instance();
@@ -47,7 +43,6 @@ abstract class AbstractFileSystemPathFactory implements FileSystemPathFactoryInt
 
         $this->unixFactory = $unixFactory;
         $this->windowsFactory = $windowsFactory;
-        $this->isolator = Isolator::get($isolator);
     }
 
     /**
@@ -78,7 +73,7 @@ abstract class AbstractFileSystemPathFactory implements FileSystemPathFactoryInt
     public function createWorkingDirectoryPath(): AbsoluteFileSystemPathInterface
     {
         return $this->factoryByPlatform()
-            ->create($this->isolator()->getcwd());
+            ->create(getcwd());
     }
 
     /**
@@ -89,7 +84,7 @@ abstract class AbstractFileSystemPathFactory implements FileSystemPathFactoryInt
     public function createTemporaryDirectoryPath()
     {
         return $this->factoryByPlatform()
-            ->create($this->isolator()->sys_get_temp_dir());
+            ->create(sys_get_temp_dir());
     }
 
     /**
@@ -110,17 +105,7 @@ abstract class AbstractFileSystemPathFactory implements FileSystemPathFactoryInt
         }
 
         return $this->createTemporaryDirectoryPath()
-            ->joinAtoms($this->isolator()->uniqid($prefix, true));
-    }
-
-    /**
-     * Get the isolator.
-     *
-     * @return Isolator The isolator.
-     */
-    protected function isolator(): Isolator
-    {
-        return $this->isolator;
+            ->joinAtoms(uniqid($prefix, true));
     }
 
     /**
@@ -131,7 +116,7 @@ abstract class AbstractFileSystemPathFactory implements FileSystemPathFactoryInt
      */
     protected function factoryByPlatform(): PathFactoryInterface
     {
-        if ($this->isolator()->defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             return $this->windowsFactory();
         }
 
