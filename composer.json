@@ -14,14 +14,14 @@
     "require": {
         "php": ">=7.4",
         "ext-mbstring": "*",
-        "icecave/isolator": "~2"
+        "mschop/simplified-isolator": "^0.1"
     },
     "require-dev": {
         "ext-xdebug": "*",
         "eloquent/liberator": "~2",
-        "infection/infection": "^0.15.3",
-        "phpunit/phpunit": "^7.0",
-        "phake/phake": "^3.1"
+        "infection/infection": "^0.26.5",
+        "phpunit/phpunit": "^9.5",
+        "phake/phake": "^4.2"
     },
     "autoload": {
         "psr-4": {

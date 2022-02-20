@@ -15,7 +15,7 @@ use Eloquent\Pathogen\Factory\PathFactoryInterface;
 use Eloquent\Pathogen\FileSystem\AbsoluteFileSystemPathInterface;
 use Eloquent\Pathogen\Unix\Factory\UnixPathFactory;
 use Eloquent\Pathogen\Windows\Factory\WindowsPathFactory;
-use Icecave\Isolator\Isolator;
+use Eloquent\Pathogen\Isolator;
 
 /**
  * Abstract base class for classes implementing FileSystemPathFactoryInterface.
