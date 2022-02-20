@@ -16,7 +16,7 @@ use Eloquent\Pathogen\Unix\AbsoluteUnixPath;
 use Eloquent\Pathogen\Unix\RelativeUnixPath;
 use Eloquent\Pathogen\Windows\AbsoluteWindowsPath;
 use Eloquent\Pathogen\Windows\RelativeWindowsPath;
-use Icecave\Isolator\Isolator;
+use Eloquent\Pathogen\Isolator;
 
 use Phake;
 
@@ -26,7 +26,7 @@ class PlatformFileSystemPathTest extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->isolator = Phake::mock(Isolator::className());
+        $this->isolator = Phake::mock(Isolator::class);
         $this->factory = Phake::partialMock(
             __NAMESPACE__ . '\Factory\PlatformFileSystemPathFactory',
             null,

@@ -27,7 +27,7 @@ class FileSystemPathFactoryTest extends \PHPUnit\Framework\TestCase
 
         $this->unixFactory = Phake::partialMock('Eloquent\Pathogen\Unix\Factory\UnixPathFactory');
         $this->windowsFactory = Phake::partialMock('Eloquent\Pathogen\Windows\Factory\WindowsPathFactory');
-        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
+        $this->isolator = Phake::mock('Eloquent\Pathogen\Isolator');
         $this->factory = new FileSystemPathFactory($this->unixFactory, $this->windowsFactory, $this->isolator);
 
         Phake::when($this->isolator)->getcwd()->thenReturn('/path/to/cwd');

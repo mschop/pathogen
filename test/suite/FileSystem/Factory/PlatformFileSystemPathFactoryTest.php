@@ -31,7 +31,7 @@ class PlatformFileSystemPathFactoryTest extends \PHPUnit\Framework\TestCase
         $this->windowsFactory = Phake::partialMock(
             'Eloquent\Pathogen\Windows\Factory\WindowsPathFactory'
         );
-        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
+        $this->isolator = Phake::mock('Eloquent\Pathogen\Isolator');
         $this->factory = new PlatformFileSystemPathFactory(
             $this->unixFactory,
             $this->windowsFactory,
