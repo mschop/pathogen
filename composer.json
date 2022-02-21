@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=7.4",
-        "ext-mbstring": "*",
+        "symfony/polyfill-mbstring": "*",
         "mschop/simplified-isolator": "^0.1"
     },
     "require-dev": {
