@@ -18,7 +18,7 @@
     },
     "require-dev": {
         "ext-xdebug": "*",
-        "eloquent/liberator": "~2",
+        "eloquent/liberator": "~3",
         "infection/infection": "^0.26.5",
         "phpunit/phpunit": "^9.5",
         "phake/phake": "^4.2"
