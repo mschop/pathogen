@@ -31,7 +31,7 @@ do
     docker run -v "$DIR:/code" -w "/code" "pathogen-php-$version" composer update --no-interaction --no-progress
 
     if [[ $mutations == "YES" ]]; then
-        docker run -v "$DIR:/code" -w "/code" "pathogen-php-$version" vendor/bin/infection
+        docker run -v "$DIR:/code" -w "/code" -e XDEBUG_MODE=coverage "pathogen-php-$version" vendor/bin/infection
     else
         docker run -v "$DIR:/code" -w "/code" "pathogen-php-$version" vendor/bin/phpunit
     fi
