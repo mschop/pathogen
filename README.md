@@ -12,7 +12,7 @@ free to issue feature requests or bug reports.
 
 ## Installation and documentation
 
-- Available as [Composer] package [eloquent/pathogen].
+- Available as [Composer] package [mschop/pathogen].
 - [API documentation] available.
 
 [API documentation]: http://lqnt.co/pathogen/artifacts/documentation/api/
