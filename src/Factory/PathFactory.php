@@ -1,106 +1,88 @@
 <?php
 
-/*
- * This file is part of the Pathogen package.
- *
- * Copyright © 2014 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE file
- * that was distributed with this source code.
- */
+namespace Mschop\Pathogen\Factory;
 
-namespace Eloquent\Pathogen\Factory;
+use Mschop\Pathogen\AbsoluteDriveAnchoredPath;
+use Mschop\Pathogen\AbsolutePath;
+use Mschop\Pathogen\DriveAnchoredInterface;
+use Mschop\Pathogen\Exception\MissingDriveException;
+use Mschop\Pathogen\Exception\PathTypeMismatch;
+use Mschop\Pathogen\Parsing\ParseOptions;
+use Mschop\Pathogen\Parsing\Parser;
+use Mschop\Pathogen\Parsing\ParserInterface;
+use Mschop\Pathogen\Path;
+use Mschop\Pathogen\PathType;
+use Mschop\Pathogen\RelativeDriveAnchoredPath;
+use Mschop\Pathogen\RelativePath;
 
-use Eloquent\Pathogen\AbsolutePath;
-use Eloquent\Pathogen\AbstractPath;
-use Eloquent\Pathogen\Exception\InvalidPathAtomExceptionInterface;
-use Eloquent\Pathogen\Exception\InvalidPathStateException;
-use Eloquent\Pathogen\PathInterface;
-use Eloquent\Pathogen\RelativePath;
 
-/**
- * A path factory that creates generic, Unix-style path instances.
- */
 class PathFactory implements PathFactoryInterface
 {
-    private static ?PathFactoryInterface $instance = null;
+    protected static ?self $defaultInstance = null;
 
-    /**
-     * Get a static instance of this path factory.
-     *
-     * @return PathFactoryInterface The static path factory.
-     */
-    public static function instance(): PathFactoryInterface
+    public function __construct(
+        protected ParserInterface $parser,
+    )
     {
-        if (null === self::$instance) {
-            self::$instance = new self;
-        }
+    }
 
-        return self::$instance;
+    public static function getDefaultInstance(): self
+    {
+        if (self::$defaultInstance === null) {
+            self::$defaultInstance = new self(new Parser);
+        }
+        return self::$defaultInstance;
+    }
+
+    public static function setDefaultInstance(self $pathFactory): void
+    {
+        self::$defaultInstance = $pathFactory;
     }
 
     /**
-     * Creates a new path instance from its string representation.
-     *
-     * @param string $path The string representation of the path.
-     *
-     * @return PathInterface The newly created path instance.
+     * @inheritdoc
      */
-    public function create($path): PathInterface
+    public function fromString(string $path, string $type): Path
     {
-        if ('' === $path) {
-            $path = AbstractPath::SELF_ATOM;
+        $expectsDrive = is_a($type, DriveAnchoredInterface::class, true);
+        $options = new ParseOptions(parseWindowsDrive: $expectsDrive);
+        $parsingResult = $this->parser->parse($path, $options);
+
+        if ($parsingResult->drive === null && $expectsDrive) {
+            throw new MissingDriveException("Path '$path' is expected to have a drive, but has none");
         }
 
-        $isAbsolute = false;
-        $hasTrailingSeparator = false;
-
-        $atoms = explode(AbstractPath::ATOM_SEPARATOR, $path);
-        $numAtoms = count($atoms);
-
-        if ($numAtoms > 1) {
-            if ('' === $atoms[0]) {
-                $isAbsolute = true;
-                array_shift($atoms);
-                --$numAtoms;
-            }
-
-            if ('' === $atoms[$numAtoms - 1]) {
-                $hasTrailingSeparator = !$isAbsolute || $numAtoms > 1;
-                array_pop($atoms);
-            }
+        if (is_a($type, AbsolutePath::class, true) && $parsingResult->pathType !== PathType::ABSOLUTE) {
+            throw new PathTypeMismatch("Expected absolute path but relative path was provided");
         }
 
-        return $this->createFromAtoms(
-            array_filter($atoms, 'strlen'),
-            $isAbsolute,
-            $hasTrailingSeparator
-        );
+        if (is_a($type, RelativePath::class, true) && $parsingResult->pathType !== PathType::RELATIVE) {
+            throw new PathTypeMismatch("Expected relative path but absolute path was provided");
+        }
+
+        if ($type === Path::class) {
+            $type = match($parsingResult->pathType) {
+                PathType::ABSOLUTE => AbsolutePath::class,
+                PathType::RELATIVE => RelativePath::class,
+            };
+        }
+
+        return $this->fromAtoms($parsingResult->atoms, $type, $parsingResult->hasTrailingSeparator, $parsingResult->drive);
     }
 
     /**
-     * Creates a new path instance from a set of path atoms.
-     *
-     * @param mixed<string> $atoms                The path atoms.
-     * @param boolean|null  $isAbsolute           True if the path is absolute.
-     * @param boolean|null  $hasTrailingSeparator True if the path has a trailing separator.
-     *
-     * @return PathInterface                     The newly created path instance.
-     * @throws InvalidPathAtomExceptionInterface If any of the supplied atoms are invalid.
+     * @inheritdoc
      */
-    public function createFromAtoms(
-        $atoms,
-        $isAbsolute = null,
-        $hasTrailingSeparator = null
-    ) {
-        if (null === $isAbsolute) {
-            $isAbsolute = false;
+    public function fromAtoms(array $atoms, string $type, bool $hasTrailingSeparator, ?string $drive = null): Path
+    {
+        $expectsDrive = is_a($type, DriveAnchoredInterface::class, true);
+
+        if ($expectsDrive && $drive === null) {
+            throw new MissingDriveException("You cannot instantiate drive anchored path without giving a drive");
         }
 
-        if ($isAbsolute) {
-            return new AbsolutePath($atoms, $hasTrailingSeparator);
-        }
-
-        return new RelativePath($atoms, $hasTrailingSeparator);
+        return $expectsDrive
+            ? new $type($atoms, $hasTrailingSeparator, $drive)
+            : new $type($atoms, $hasTrailingSeparator);
     }
 }

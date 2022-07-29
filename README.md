@@ -155,11 +155,9 @@ This distinction provides, amongst other benefits, the ability to harness PHP's
 type hinting to restrict the type of path required:
 
 ```php
-use Eloquent\Pathogen\AbsolutePathInterface;
-use Eloquent\Pathogen\PathInterface;
-use Eloquent\Pathogen\RelativePathInterface;
+use Eloquent\Pathogen\AbsolutePathInterface;use Eloquent\Pathogen\Path;use Eloquent\Pathogen\RelativePathInterface;
 
-function anyPath(PathInterface $path)
+function anyPath(Path $path)
 {
     // accepts any path
 }
@@ -196,13 +194,7 @@ methods. To use this method effectively, simply choose the most appropriate
 class for the type of path:
 
 ```php
-use Eloquent\Pathogen\AbsolutePath;
-use Eloquent\Pathogen\FileSystem\FileSystemPath;
-use Eloquent\Pathogen\Path;
-use Eloquent\Pathogen\RelativePath;
-use Eloquent\Pathogen\Unix\UnixPath;
-use Eloquent\Pathogen\Windows\AbsoluteWindowsPath;
-use Eloquent\Pathogen\Windows\WindowsPath;
+use Eloquent\Pathogen\AbsolutePath;use Eloquent\Pathogen\FileSystem\FileSystemPath;use Eloquent\Pathogen\Path;use Eloquent\Pathogen\RelativePath;use Eloquent\Pathogen\Unix\UnixPath;use Eloquent\Pathogen\Windows\AbsoluteWindowsPath;use Eloquent\Pathogen\Windows\WindowsPath;
 
 $path = Path::fromString('/path/to/foo'); // absolute path
 $path = Path::fromString('bar/baz');      // relative path
@@ -223,8 +215,7 @@ In addition to the `fromString()` method, there are other factory methods, some
 common to all paths, others more specialized:
 
 ```php
-use Eloquent\Pathogen\Path;
-use Eloquent\Pathogen\Windows\AbsoluteWindowsPath;
+use Eloquent\Pathogen\Path;use Eloquent\Pathogen\Windows\AbsoluteWindowsPath;
 
 // Equivalent to '/path/to/foo'
 $path = Path::fromAtoms(array('path', 'to', 'foo'));

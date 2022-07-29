@@ -1,48 +1,33 @@
 <?php
 
-/*
- * This file is part of the Pathogen package.
- *
- * Copyright © 2014 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE file
- * that was distributed with this source code.
- */
+namespace Mschop\Pathogen\Factory;
 
-namespace Eloquent\Pathogen\Factory;
+use Mschop\Pathogen\AbsolutePath;
+use Mschop\Pathogen\Exception\MissingDriveException;
+use Mschop\Pathogen\Exception\PathTypeMismatch;
+use Mschop\Pathogen\Path;
+use Mschop\Pathogen\PathType;
+use Mschop\Pathogen\RelativePath;
 
-use Eloquent\Pathogen\Exception\InvalidPathAtomExceptionInterface;
-use Eloquent\Pathogen\Exception\InvalidPathStateException;
-use Eloquent\Pathogen\PathInterface;
-
-/**
- * The interface implemented by path factories.
- */
 interface PathFactoryInterface
 {
     /**
-     * Creates a new path instance from its string representation.
-     *
-     * @param string $path The string representation of the path.
-     *
-     * @return PathInterface The newly created path instance.
+     * @template T of Path
+     * @param string $path
+     * @param class-string<T> $type
+     * @return T
+     * @throws MissingDriveException
+     * @throws PathTypeMismatch
      */
-    public function create(string $path): PathInterface;
+    public function fromString(string $path, string $type): Path;
 
     /**
-     * Creates a new path instance from a set of path atoms.
-     *
-     * @param iterable<string> $atoms                The path atoms.
-     * @param boolean|null  $isAbsolute           True if the path is absolute.
-     * @param boolean|null  $hasTrailingSeparator True if the path has a trailing separator.
-     *
-     * @return PathInterface                     The newly created path instance.
-     * @throws InvalidPathAtomExceptionInterface If any of the supplied atoms are invalid.
-     * @throws InvalidPathStateException         If the supplied arguments would produce an invalid path.
+     * @template T of Path
+     * @param array $atoms
+     * @param class-string<T> $type
+     * @params ?string $drive
+     * @return T
+     * @throws MissingDriveException
      */
-    public function createFromAtoms(
-        iterable $atoms,
-        bool $isAbsolute = false,
-        bool $hasTrailingSeparator = false
-    );
+    public function fromAtoms(array $atoms, string $type, bool $hasTrailingSeparator, ?string $drive = null): Path;
 }
