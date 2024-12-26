@@ -22,7 +22,7 @@ for option in "$@"; do
   esac
 done
 
-declare -a php_versions=("7.4" "8.0" "8.1")
+declare -a php_versions=("8.3" "8.4")
 
 for version in "${php_versions[@]}" # Later add further versions here
 do
