@@ -2,7 +2,7 @@
 
 *General-purpose path library for PHP.*
 
-[![Build Status](https://app.travis-ci.com/mschop/pathogen.svg?branch=master)](https://app.travis-ci.com/mschop/pathogen)
+[![Run Unit Tests](https://github.com/mschop/pathogen/actions/workflows/docker-image.yml/badge.svg)](https://github.com/mschop/pathogen/actions/workflows/docker-image.yml)
 
 
 ## Future development
