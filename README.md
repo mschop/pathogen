@@ -1,7 +1,7 @@
-# Pathogen
-
-!!! WARNING !!!
+# !!! WARNING !!!
 You are watching the documentation for v1.X (unreleased). For current stable release see https://github.com/mschop/pathogen/tree/0.7.1
+
+# Pathogen
 
 *General-purpose path library for PHP.*
 
