@@ -15,6 +15,7 @@ readonly class Path
     public const string EXTENSION_SEPARATOR = '.';
     public const string DEFAULT_SEPARATOR = '/';
     public const string PARENT_ATOM = '..';
+    public const string SELF_ATOM = '.';
 
     function __construct(
         protected array $atoms,
@@ -33,17 +34,6 @@ readonly class Path
     public static function fromString(string $path): static
     {
         return PathFactory::getDefaultInstance()->fromString($path, static::class);
-    }
-
-    /**
-     * @param array $atoms
-     * @param bool $hasTrailingSeparator
-     * @return static
-     * @deprecated You should use `new Path|RelativePath|AbsolutePath|...` instead.
-     */
-    public static function fromAtoms(array $atoms, bool $hasTrailingSeparator): static
-    {
-        return new static($atoms, $hasTrailingSeparator);
     }
 
     /**
@@ -889,9 +879,31 @@ readonly class Path
         return $this->replaceName(implode(self::EXTENSION_SEPARATOR, $atoms));
     }
 
+    /**
+     * Removes / Resolves superfluous atoms '.' and '..'.
+     * Please note, that a normalized path can still contain '..' atoms at the start because those might not be resolvable.
+     *
+     * @return static
+     */
     public function normalize(): static
     {
-
+        $previousAtoms = array_values($this->atoms());
+        $newAtoms = [];
+        foreach($previousAtoms as $key => $atom) {
+            if ($atom === static::SELF_ATOM) {
+                continue;
+            } elseif ($atom === static::PARENT_ATOM) {
+                $previousIndex = $key - 1;
+                if (isset($newAtoms[$previousIndex]) && $newAtoms[$previousIndex] !== static::PARENT_ATOM) {
+                    array_pop($newAtoms);
+                } else {
+                    $newAtoms[$key] = $atom;
+                }
+            } else {
+                $newAtoms[$key] = $atom;
+            }
+        }
+        return $this->reCreate(atoms: array_values($newAtoms), hasTrailingSeparator: $this->hasTrailingSeparator);
     }
 
     /**
