@@ -1,5 +1,8 @@
 # Pathogen
 
+!!! WARNING !!!
+You are watching the documentation for v1.X (unreleased). For current stable release see https://github.com/mschop/pathogen/tree/0.7.1
+
 *General-purpose path library for PHP.*
 
 [![Run Unit Tests](https://github.com/mschop/pathogen/actions/workflows/docker-image.yml/badge.svg)](https://github.com/mschop/pathogen/actions/workflows/docker-image.yml)
