@@ -2,8 +2,8 @@
 
 namespace Eloquent\Pathogen;
 
-use Mschop\Pathogen\AbsolutePath;
-use Mschop\Pathogen\Exception\PathTypeMismatch;
+use Pathogen\AbsolutePath;
+use Pathogen\Exception\PathTypeMismatchException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -28,7 +28,7 @@ class AbsolutePathTest extends TestCase
     #[DataProvider('invalidAbsolutePaths')]
     public function testInvalidAbsolutePaths(string $path): void
     {
-        $this->expectException(PathTypeMismatch::class);
+        $this->expectException(PathTypeMismatchException::class);
         AbsolutePath::fromString($path);
     }
 

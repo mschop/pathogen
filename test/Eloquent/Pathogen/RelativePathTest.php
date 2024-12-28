@@ -2,8 +2,8 @@
 
 namespace Eloquent\Pathogen;
 
-use Mschop\Pathogen\Exception\PathTypeMismatch;
-use Mschop\Pathogen\RelativePath;
+use Pathogen\Exception\PathTypeMismatchException;
+use Pathogen\RelativePath;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -32,7 +32,7 @@ class RelativePathTest extends TestCase
     #[DataProvider('nonRelativePaths')]
     public function testInvalidRelativePaths(string $path): void
     {
-        $this->expectException(PathTypeMismatch::class);
+        $this->expectException(PathTypeMismatchException::class);
         RelativePath::fromString($path);
     }
 

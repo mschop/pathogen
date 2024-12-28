@@ -2,7 +2,7 @@
 
 namespace Eloquent\Pathogen\Convenience;
 
-use Mschop\Pathogen\AbsolutePath;
+use Pathogen\AbsolutePath;
 use PHPUnit\Framework\TestCase;
 
 class HasAtomsTest extends TestCase

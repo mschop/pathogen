@@ -1,8 +1,8 @@
 <?php
 
-namespace Mschop\Pathogen\Parsing;
+namespace Pathogen\Parsing;
 
-use Mschop\Pathogen\PathType;
+use Pathogen\PathType;
 
 readonly class ParsingResult
 {

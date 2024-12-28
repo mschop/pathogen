@@ -2,7 +2,7 @@
 
 namespace Eloquent\Pathogen\Convenience;
 
-use Mschop\Pathogen\Path;
+use Pathogen\Path;
 use PHPUnit\Framework\TestCase;
 
 class NamePrefixTest extends TestCase

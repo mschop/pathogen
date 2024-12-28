@@ -1,13 +1,13 @@
 <?php
 
-namespace Mschop\Pathogen\Factory;
+namespace Pathogen\Factory;
 
-use Mschop\Pathogen\AbsolutePath;
-use Mschop\Pathogen\Exception\MissingDriveException;
-use Mschop\Pathogen\Exception\PathTypeMismatch;
-use Mschop\Pathogen\Path;
-use Mschop\Pathogen\PathType;
-use Mschop\Pathogen\RelativePath;
+use Pathogen\AbsolutePath;
+use Pathogen\Exception\MissingDriveException;
+use Pathogen\Exception\PathTypeMismatchException;
+use Pathogen\Path;
+use Pathogen\PathType;
+use Pathogen\RelativePath;
 
 interface PathFactoryInterface
 {
@@ -17,7 +17,7 @@ interface PathFactoryInterface
      * @param class-string<T> $type
      * @return T
      * @throws MissingDriveException
-     * @throws PathTypeMismatch
+     * @throws PathTypeMismatchException
      */
     public function fromString(string $path, string $type): Path;
 

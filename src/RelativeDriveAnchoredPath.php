@@ -1,6 +1,6 @@
 <?php
 
-namespace Mschop\Pathogen;
+namespace Pathogen;
 
 readonly class RelativeDriveAnchoredPath extends RelativePath implements DriveAnchoredInterface
 {

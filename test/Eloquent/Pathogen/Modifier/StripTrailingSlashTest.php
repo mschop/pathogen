@@ -2,9 +2,9 @@
 
 namespace Eloquent\Pathogen\Modifier;
 
-use Mschop\Pathogen\AbsoluteDriveAnchoredPath;
-use Mschop\Pathogen\Path;
-use Mschop\Pathogen\RelativePath;
+use Pathogen\AbsoluteDriveAnchoredPath;
+use Pathogen\Path;
+use Pathogen\RelativePath;
 use PHPUnit\Framework\TestCase;
 
 class StripTrailingSlashTest extends TestCase

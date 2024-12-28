@@ -2,8 +2,8 @@
 
 namespace Eloquent\Pathogen\Convenience;
 
-use Mschop\Pathogen\Exception\InvalidArgumentException;
-use Mschop\Pathogen\Path;
+use Pathogen\Exception\InvalidArgumentException;
+use Pathogen\Path;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

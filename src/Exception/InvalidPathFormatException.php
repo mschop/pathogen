@@ -1,6 +1,6 @@
 <?php
 
-namespace Mschop\Pathogen\Exception;
+namespace Pathogen\Exception;
 
 class InvalidPathFormatException extends PathogenException
 {

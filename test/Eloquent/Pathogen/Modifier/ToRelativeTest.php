@@ -2,8 +2,8 @@
 
 namespace Eloquent\Pathogen\Modifier;
 
-use Mschop\Pathogen\AbsoluteDriveAnchoredPath;
-use Mschop\Pathogen\AbsolutePath;
+use Pathogen\AbsoluteDriveAnchoredPath;
+use Pathogen\AbsolutePath;
 use PHPUnit\Framework\TestCase;
 
 class ToRelativeTest extends TestCase

@@ -2,8 +2,8 @@
 
 namespace Eloquent\Pathogen\Modifier;
 
-use Mschop\Pathogen\Path;
-use Mschop\Pathogen\RelativePath;
+use Pathogen\Path;
+use Pathogen\RelativePath;
 use PHPUnit\Framework\TestCase;
 
 class JoinTest extends TestCase

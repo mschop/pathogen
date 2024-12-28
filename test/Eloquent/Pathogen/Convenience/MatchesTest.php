@@ -2,9 +2,9 @@
 
 namespace Eloquent\Pathogen\Convenience;
 
-use Mschop\Pathogen\AbsoluteDriveAnchoredPath;
-use Mschop\Pathogen\Exception\InvalidArgumentException;
-use Mschop\Pathogen\Path;
+use Pathogen\AbsoluteDriveAnchoredPath;
+use Pathogen\Exception\InvalidArgumentException;
+use Pathogen\Path;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

@@ -2,7 +2,7 @@
 
 namespace Eloquent\Pathogen\Modifier;
 
-use Mschop\Pathogen\Path;
+use Pathogen\Path;
 use PHPUnit\Framework\TestCase;
 
 class ReplaceNameWithoutExtensionTest extends TestCase

@@ -2,8 +2,8 @@
 
 namespace Eloquent\Pathogen;
 
-use Mschop\Pathogen\AbsolutePath;
-use Mschop\Pathogen\RelativePath;
+use Pathogen\AbsolutePath;
+use Pathogen\RelativePath;
 use PHPUnit\Framework\TestCase;
 
 class FormatTest extends TestCase

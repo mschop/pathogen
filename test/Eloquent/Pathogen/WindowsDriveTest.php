@@ -2,9 +2,9 @@
 
 namespace Eloquent\Pathogen;
 
-use Mschop\Pathogen\AbsoluteDriveAnchoredPath;
-use Mschop\Pathogen\RelativeDriveAnchoredPath;
-use Mschop\Pathogen\RelativePath;
+use Pathogen\AbsoluteDriveAnchoredPath;
+use Pathogen\RelativeDriveAnchoredPath;
+use Pathogen\RelativePath;
 use PHPUnit\Framework\TestCase;
 
 class WindowsDriveTest extends TestCase

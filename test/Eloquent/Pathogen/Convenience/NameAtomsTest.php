@@ -2,8 +2,8 @@
 
 namespace Eloquent\Pathogen\Convenience;
 
-use Mschop\Pathogen\AbsoluteDriveAnchoredPath;
-use Mschop\Pathogen\RelativePath;
+use Pathogen\AbsoluteDriveAnchoredPath;
+use Pathogen\RelativePath;
 use PHPUnit\Framework\TestCase;
 
 class NameAtomsTest extends TestCase

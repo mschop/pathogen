@@ -2,8 +2,8 @@
 
 namespace Eloquent\Pathogen\Convenience;
 
-use Mschop\Pathogen\AbsoluteDriveAnchoredPath;
-use Mschop\Pathogen\Path;
+use Pathogen\AbsoluteDriveAnchoredPath;
+use Pathogen\Path;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

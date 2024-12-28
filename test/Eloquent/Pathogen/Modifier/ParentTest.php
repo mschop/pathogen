@@ -2,10 +2,10 @@
 
 namespace Eloquent\Pathogen\Modifier;
 
-use Mschop\Pathogen\AbsolutePath;
-use Mschop\Pathogen\Exception\InvalidPathStateException;
-use Mschop\Pathogen\Path;
-use Mschop\Pathogen\RelativeDriveAnchoredPath;
+use Pathogen\AbsolutePath;
+use Pathogen\Exception\InvalidPathStateException;
+use Pathogen\Path;
+use Pathogen\RelativeDriveAnchoredPath;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

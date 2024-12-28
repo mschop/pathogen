@@ -2,8 +2,8 @@
 
 namespace Eloquent\Pathogen\Convenience;
 
-use Mschop\Pathogen\AbsolutePath;
-use Mschop\Pathogen\Exception\UndefinedAtomException;
+use Pathogen\AbsolutePath;
+use Pathogen\Exception\UndefinedAtomException;
 use PHPUnit\Framework\TestCase;
 
 class NameAtomAtTest extends TestCase

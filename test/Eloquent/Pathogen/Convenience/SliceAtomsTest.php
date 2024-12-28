@@ -2,8 +2,8 @@
 
 namespace Eloquent\Pathogen\Convenience;
 
-use Mschop\Pathogen\Exception\InvalidArgumentException;
-use Mschop\Pathogen\RelativePath;
+use Pathogen\Exception\InvalidArgumentException;
+use Pathogen\RelativePath;
 use PHPUnit\Framework\TestCase;
 
 class SliceAtomsTest extends TestCase

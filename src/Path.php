@@ -1,14 +1,14 @@
 <?php
 
-namespace Mschop\Pathogen;
+namespace Pathogen;
 
-use Mschop\Pathogen\Exception\EmptyPathAtomException;
-use Mschop\Pathogen\Exception\InvalidArgumentException;
-use Mschop\Pathogen\Exception\InvalidPathStateException;
-use Mschop\Pathogen\Exception\MissingDriveException;
-use Mschop\Pathogen\Exception\PathAtomContainsSeparatorException;
-use Mschop\Pathogen\Exception\PathTypeMismatch;
-use Mschop\Pathogen\Factory\PathFactory;
+use Pathogen\Exception\EmptyPathAtomException;
+use Pathogen\Exception\InvalidArgumentException;
+use Pathogen\Exception\InvalidPathStateException;
+use Pathogen\Exception\MissingDriveException;
+use Pathogen\Exception\PathAtomContainsSeparatorException;
+use Pathogen\Exception\PathTypeMismatchException;
+use Pathogen\Factory\PathFactory;
 
 readonly class Path
 {
@@ -28,7 +28,7 @@ readonly class Path
 
     /**
      * @throws MissingDriveException
-     * @throws PathTypeMismatch
+     * @throws PathTypeMismatchException
      */
     public static function fromString(string $path): static
     {
@@ -887,6 +887,11 @@ readonly class Path
         array_splice($atoms, $index, $length, $replacement);
 
         return $this->replaceName(implode(self::EXTENSION_SEPARATOR, $atoms));
+    }
+
+    public function normalize(): static
+    {
+
     }
 
     /**

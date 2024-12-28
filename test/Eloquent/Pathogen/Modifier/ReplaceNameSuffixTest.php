@@ -2,7 +2,7 @@
 
 namespace Eloquent\Pathogen\Modifier;
 
-use Mschop\Pathogen\Path;
+use Pathogen\Path;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

@@ -1,19 +1,19 @@
 <?php
 
-namespace Mschop\Pathogen\Factory;
+namespace Pathogen\Factory;
 
-use Mschop\Pathogen\AbsoluteDriveAnchoredPath;
-use Mschop\Pathogen\AbsolutePath;
-use Mschop\Pathogen\DriveAnchoredInterface;
-use Mschop\Pathogen\Exception\MissingDriveException;
-use Mschop\Pathogen\Exception\PathTypeMismatch;
-use Mschop\Pathogen\Parsing\ParseOptions;
-use Mschop\Pathogen\Parsing\Parser;
-use Mschop\Pathogen\Parsing\ParserInterface;
-use Mschop\Pathogen\Path;
-use Mschop\Pathogen\PathType;
-use Mschop\Pathogen\RelativeDriveAnchoredPath;
-use Mschop\Pathogen\RelativePath;
+use Pathogen\AbsoluteDriveAnchoredPath;
+use Pathogen\AbsolutePath;
+use Pathogen\DriveAnchoredInterface;
+use Pathogen\Exception\MissingDriveException;
+use Pathogen\Exception\PathTypeMismatchException;
+use Pathogen\Parsing\ParseOptions;
+use Pathogen\Parsing\Parser;
+use Pathogen\Parsing\ParserInterface;
+use Pathogen\Path;
+use Pathogen\PathType;
+use Pathogen\RelativeDriveAnchoredPath;
+use Pathogen\RelativePath;
 
 
 class PathFactory implements PathFactoryInterface
@@ -53,11 +53,11 @@ class PathFactory implements PathFactoryInterface
         }
 
         if (is_a($type, AbsolutePath::class, true) && $parsingResult->pathType !== PathType::ABSOLUTE) {
-            throw new PathTypeMismatch("Expected absolute path but relative path was provided");
+            throw new PathTypeMismatchException("Expected absolute path but relative path was provided");
         }
 
         if (is_a($type, RelativePath::class, true) && $parsingResult->pathType !== PathType::RELATIVE) {
-            throw new PathTypeMismatch("Expected relative path but absolute path was provided");
+            throw new PathTypeMismatchException("Expected relative path but absolute path was provided");
         }
 
         if ($type === Path::class) {

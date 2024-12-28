@@ -1,6 +1,6 @@
 <?php
 
-namespace Mschop\Pathogen\Parsing;
+namespace Pathogen\Parsing;
 
 readonly class ParseOptions
 {
