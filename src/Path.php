@@ -887,6 +887,11 @@ readonly class Path
      */
     public function normalize(): static
     {
+        return $this->reCreate(atoms: $this->getNormalizedAtoms(), hasTrailingSeparator: $this->hasTrailingSeparator);
+    }
+
+    public function getNormalizedAtoms(): array
+    {
         $previousAtoms = array_values($this->atoms());
         $newAtoms = [];
         foreach($previousAtoms as $key => $atom) {
@@ -903,7 +908,7 @@ readonly class Path
                 $newAtoms[$key] = $atom;
             }
         }
-        return $this->reCreate(atoms: array_values($newAtoms), hasTrailingSeparator: $this->hasTrailingSeparator);
+        return array_values($newAtoms);
     }
 
     /**

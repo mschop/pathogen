@@ -3,6 +3,7 @@
 namespace Eloquent\Pathogen;
 
 use Pathogen\AbsolutePath;
+use Pathogen\Exception\InvalidPathStateException;
 use Pathogen\Exception\PathTypeMismatchException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -39,5 +40,11 @@ class AbsolutePathTest extends TestCase
             ['./root/filesystem-blub/file.txt'],
             ['../root/filesystem-blub/file.txt'],
         ];
+    }
+
+    public function testOutOfBound(): void
+    {
+        $this->expectException(InvalidPathStateException::class);
+        new AbsolutePath(atoms: ['test', '..', '..', 'file.txt'], hasTrailingSeparator: true);
     }
 }
