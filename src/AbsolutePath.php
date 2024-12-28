@@ -29,7 +29,7 @@ readonly class AbsolutePath extends Path
         $normalized = $this->getNormalizedAtoms();
 
         if (empty($normalized)) {
-            throw new InvalidPathStateException("This path cannot be correct, since the normalized form does not have any atoms");
+            return;
         }
 
         if ($normalized[array_key_first($normalized)] === static::PARENT_ATOM) {
