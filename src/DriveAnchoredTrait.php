@@ -12,7 +12,7 @@ trait DriveAnchoredTrait
     }
 
     #[\Override]
-    public function format(string $separator): string
+    public function format(?string $separator = null): string
     {
         return strtoupper($this->drive) . ':' . parent::format($separator);
     }

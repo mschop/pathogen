@@ -11,7 +11,7 @@ class JoinExtensionsTest extends TestCase
     {
         $this->assertEquals(
             '/path/to/file.html.twig',
-            Path::fromString('/path/to/file')->joinExtensions('html', 'twig'),
+            (string)Path::fromString('/path/to/file')->joinExtensions('html', 'twig'),
             'joinExtensions must extend the given extensions to the path',
         );
     }

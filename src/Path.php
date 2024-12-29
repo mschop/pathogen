@@ -127,22 +127,30 @@ abstract readonly class Path
         return $this->hasTrailingSeparator;
     }
 
-    public function format(string $separator): string
+    /**
+     * Formats the path. If `$separator` is `null`, then the constant `static::DEFAULT_SEPARATOR` is used.
+     *
+     * @param string|null $separator
+     * @return string
+     */
+    public function format(?string $separator = null): string
     {
+        if ($separator === null) {
+            $separator = static::DEFAULT_SEPARATOR;
+        }
         return implode($separator, $this->atoms()) . ($this->hasTrailingSeparator() ? $separator : '');
     }
 
     /**
      * Generate a string representation of this path.
      *
-     * @return string A string representation of this path.
+     * Note: This method is just kept for backwards compatability.
      *
-     * @deprecated Please use method `format` instead.
+     * @return string A string representation of this path.
      */
     public function string(): string
     {
-        trigger_error('The method `->string()` is deprecated. Use `->format()` instead.', E_USER_DEPRECATED);
-        return $this->format(static::DEFAULT_SEPARATOR);
+        return $this->format();
     }
 
     /**
@@ -150,9 +158,9 @@ abstract readonly class Path
      *
      * @return string A string representation of this path.
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->format(static::DEFAULT_SEPARATOR);
+        return $this->format();
     }
 
     /**

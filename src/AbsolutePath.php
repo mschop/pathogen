@@ -14,8 +14,11 @@ readonly class AbsolutePath extends Path
     }
 
     #[\Override]
-    public function format(string $separator): string
+    public function format(?string $separator = null): string
     {
+        if ($separator === null) {
+            $separator = static::DEFAULT_SEPARATOR;
+        }
         return $separator . parent::format($separator);
     }
 
