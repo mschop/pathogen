@@ -1,6 +1,6 @@
 <?php
 
-namespace Eloquent\Pathogen\Convenience;
+namespace Pathogen\Convenience;
 
 use Pathogen\Path;
 use Pathogen\RelativePath;

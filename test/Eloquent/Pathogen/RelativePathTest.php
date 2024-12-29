@@ -1,6 +1,6 @@
 <?php
 
-namespace Eloquent\Pathogen;
+namespace Pathogen;
 
 use Pathogen\Exception\PathTypeMismatchException;
 use Pathogen\RelativePath;

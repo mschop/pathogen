@@ -1,6 +1,6 @@
 <?php
 
-namespace Eloquent\Pathogen\Modifier;
+namespace Pathogen\Modifier;
 
 use Pathogen\Path;
 use Pathogen\RelativePath;
