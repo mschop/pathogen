@@ -10,7 +10,7 @@ use Pathogen\Exception\PathAtomContainsSeparatorException;
 use Pathogen\Exception\PathTypeMismatchException;
 use Pathogen\Factory\PathFactory;
 
-readonly class Path
+abstract readonly class Path
 {
     public const string EXTENSION_SEPARATOR = '.';
     public const string DEFAULT_SEPARATOR = '/';
@@ -565,7 +565,7 @@ readonly class Path
      *
      * @return static A new path instance with the trailing slash removed from this path. If this path has no trailing slash, the path is returned unmodified.
      */
-    public function stripTrailingSlash(): static
+    public function stripTrailingSeparator(): static
     {
         if (!$this->hasTrailingSeparator()) {
             return $this;
@@ -675,7 +675,7 @@ readonly class Path
      *
      * @return static A new path instance with a trailing slash suffixed to this path.
      */
-    public function joinTrailingSlash(): static
+    public function joinTrailingSeparator(): static
     {
         if ($this->hasTrailingSeparator()) {
             return $this;
@@ -888,6 +888,38 @@ readonly class Path
     public function normalize(): static
     {
         return $this->reCreate(atoms: $this->getNormalizedAtoms(), hasTrailingSeparator: $this->hasTrailingSeparator);
+    }
+
+    /**
+     * @param Path $path
+     * @return static
+     */
+    public function resolve(Path $path): Path
+    {
+        if ($path instanceof RelativePath) {
+            $result = $this->join($path)->normalize();
+            if ($path->hasTrailingSeparator() && !$result->hasTrailingSeparator()) {
+                return $result->joinTrailingSeparator();
+            } elseif (!$path->hasTrailingSeparator() && $result->hasTrailingSeparator()) {
+                return $result->stripTrailingSeparator();
+            } else {
+                return $result;
+            }
+        } elseif ($path instanceof AbsolutePath) {
+            return $path;
+        } else {
+            throw new \Exception("Not implemented");
+        }
+    }
+
+    /**
+     * @param Path $path
+     * @return $this
+     * @throws \Exception
+     */
+    public function resolveAgainst(Path $path): Path
+    {
+        return $path->resolve($this);
     }
 
     public function getNormalizedAtoms(): array
